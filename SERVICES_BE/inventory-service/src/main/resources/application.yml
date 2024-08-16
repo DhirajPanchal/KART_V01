@@ -1,0 +1,18 @@
+server:
+  port: 8501
+spring:
+  application:
+    name: "inventory-service"
+  profiles:
+    active: "default"
+  config:
+    import: "optional:configserver:http://localhost:8401/"
+  datasource:
+    url: "jdbc:mysql://localhost:3306/active_kart"
+    username: root
+    password: Test12345
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
