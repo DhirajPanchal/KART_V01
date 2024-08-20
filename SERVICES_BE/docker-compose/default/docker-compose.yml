@@ -1,0 +1,68 @@
+services:
+  rabbit:
+    image: rabbitmq:3.13-management
+    hostname: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: rabbitmq-diagnostics check_port_connectivity
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+    extends:
+      file: common-config.yml
+      service: network-deploy-service
+
+  config-service:
+    image: "dhirajpanchal/config-service:R00"
+    container_name: config-service-ms
+    ports:
+      - "8401:8401"
+    depends_on:
+      rabbit:
+        condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:8401/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    extends:
+      file: common-config.yml
+      service: microservice-base-config
+
+  inventory-service:
+    image: "dhirajpanchal/inventory-service:R00"
+    container_name: inventory-service-ms
+    ports:
+      - "8501:8501"
+    depends_on:
+      config-service:
+        condition: service_healthy
+    environment:
+      SPRING_APPLICATION_NAME: "inventory-service"
+    extends:
+      file: common-config.yml
+      service: microservice-configserver-config
+
+  store-service:
+    image: "dhirajpanchal/store-service:R00"
+    container_name: store-service-ms
+    ports:
+      - "8502:8502"
+    depends_on:
+      config-service:
+        condition: service_healthy
+    environment:
+      SPRING_APPLICATION_NAME: "store-service"
+    extends:
+      file: common-config.yml
+      service: microservice-configserver-config
+
+
+
+networks:
+  dhirajpanchal:
+    driver: "bridge"

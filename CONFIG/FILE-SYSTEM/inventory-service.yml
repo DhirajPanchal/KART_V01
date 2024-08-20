@@ -2,4 +2,4 @@ service:
   name: "INVENTORY Service"
   tags:
     env: "DEV"
-    config: "CLASSPATH"
+    config: "FILE SYSTEM"

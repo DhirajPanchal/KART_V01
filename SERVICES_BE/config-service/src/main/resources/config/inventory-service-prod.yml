@@ -1,2 +1,5 @@
 service:
-  tag: "(C) INVENTORY SERVICE : PROD ENV : ver. 1.0.1"
+  name: "INVENTORY Service"
+  tags:
+    env: "PROD"
+    config: "CLASSPATH"

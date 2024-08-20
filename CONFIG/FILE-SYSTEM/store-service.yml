@@ -2,4 +2,4 @@ service:
   name: "STORE Service"
   tags:
     env: "PROD"
-    config: "CLASSPATH"
+    config: "FILE SYSTEM"

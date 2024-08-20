@@ -1,16 +1,52 @@
 server:
   port: 8502
+
 spring:
   application:
     name: "store-service"
+  profiles:
+    active: "default"
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password: ''
+  h2:
+    console:
+      enabled: true
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+#  datasource:
+#    url: "jdbc:mysql://localhost:3306/active_kart"
+#    username: root
+#    password: Test12345
+#  jpa:
+#    show-sql: true
+#    properties:
+#      hibernate:
+#        format_sql: true
   config:
     import: "optional:configserver:http://localhost:8401/"
-  datasource:
-    url: "jdbc:mysql://localhost:3306/active_kart"
-    username: root
-    password: Test12345
-  jpa:
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
+  rabbitmq:
+    host: "localhost"
+    port: 5672
+    username: "guest"
+    password: "guest"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    readiness-state:
+      enabled: true
+    liveness-state:
+      enabled: true
+  endpoint:
+    health:
+      probes:
+        enabled: true

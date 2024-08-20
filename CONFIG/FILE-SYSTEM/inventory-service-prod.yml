@@ -1,5 +1,5 @@
 service:
   name: "INVENTORY Service"
   tags:
-    env: "DEV"
-    config: "CLASSPATH"
+    env: "PROD"
+    config: "FILE SYSTEM"
