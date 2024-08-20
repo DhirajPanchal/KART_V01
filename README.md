@@ -1,11 +1,8 @@
 # _`KART v01`_
 ## _Backend   ::  Springboot base Microservices._
 ## _Frontend ::  React & Angular based Microfrontend_
-```sh
-```
+
 ## _Branch_ : `configuration`
-```sh
-```
 
 | Service |  |
 | ------ | ------ |
