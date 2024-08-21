@@ -1,28 +1,19 @@
 services:
-  rabbit:
-    image: rabbitmq:3.13-management
-    hostname: rabbitmq
+  kart-db-mysql:
+    container_name: kart-db-mysql-ms
     ports:
-      - "5672:5672"
-      - "15672:15672"
-    healthcheck:
-      test: rabbitmq-diagnostics check_port_connectivity
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 5s
+      - 8402:3306
+    environment:
+      MYSQL_DATABASE: active_kart_docker
     extends:
       file: common-config.yml
-      service: network-deploy-service
+      service: microservice-db-config
 
   config-service:
-    image: "dhirajpanchal/config-service:R00"
+    image: "kart/config-service:R01"
     container_name: config-service-ms
     ports:
       - "8401:8401"
-    depends_on:
-      rabbit:
-        condition: service_healthy
     healthcheck:
       test: "curl --fail --silent localhost:8401/actuator/health/readiness | grep UP || exit 1"
       interval: 10s
@@ -34,35 +25,39 @@ services:
       service: microservice-base-config
 
   inventory-service:
-    image: "dhirajpanchal/inventory-service:R00"
+    image: "kart/inventory-service:R01"
     container_name: inventory-service-ms
     ports:
       - "8501:8501"
+    environment:
+      SPRING_APPLICATION_NAME: "inventory-service"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://kart-db-mysql:3306/active_kart_docker"
     depends_on:
       config-service:
         condition: service_healthy
-    environment:
-      SPRING_APPLICATION_NAME: "inventory-service"
+      kart-db-mysql:
+        condition: service_healthy
     extends:
       file: common-config.yml
       service: microservice-configserver-config
 
   store-service:
-    image: "dhirajpanchal/store-service:R00"
+    image: "kart/store-service:R01"
     container_name: store-service-ms
     ports:
       - "8502:8502"
+    environment:
+      SPRING_APPLICATION_NAME: "store-service"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://kart-db-mysql:3306/active_kart_docker"
     depends_on:
       config-service:
         condition: service_healthy
-    environment:
-      SPRING_APPLICATION_NAME: "store-service"
+      kart-db-mysql:
+        condition: service_healthy
     extends:
       file: common-config.yml
       service: microservice-configserver-config
 
-
-
 networks:
-  dhirajpanchal:
+  active-kart-nw:
     driver: "bridge"
