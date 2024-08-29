@@ -1,14 +1,18 @@
 # _`KART v01`_
+
 ### _Backend   ::  Springboot base Microservices._
 ### _Frontend ::  React & Angular based Microfrontend_
 
-## _Branch_ : `main `
+## _Release R02_
+### _Branch_ : service_discovery_registration
 
-| Service |   |
+| Service | Desc / Features / References  |
 | ------ | ------ |
 | config-service | [Spring Cloud Config Server][PlDb] |
-| inventory-service |  |
-| store-service |  |
+| eureka-server | [Spring Cloud Netflix Eureka][PlOd] |
+|  | [Spring Cloud OpenFeign][PlAa] |
+| inventory-service | Business: Operations |
+| store-service | Business: Public |
 | RabbitMQ (A) | For config push - Refresh/BusRefresh/Monitor|
 | SQL (A)  |  Local (schema: active_kart) |
 | SQL (B) |  Dockerized (service: kart_db_mysql) |
@@ -16,5 +20,6 @@
 > Note: `Check proper branch. Not all branches have all the services.`
 
 
-   [PlDb]: <https://github.com/joemccann/dillinger/tree/master/plugins/dropbox/README.md>
-   [PlOd]: <https://github.com/joemccann/dillinger/tree/master/plugins/onedrive/README.md>
+   [PlDb]: <https://spring.io/projects/spring-cloud-config>
+   [PlOd]: <https://spring.io/projects/spring-cloud-netflix>
+   [PlAa]: <https://spring.io/projects/spring-cloud-openfeign>

@@ -12,7 +12,24 @@ services:
       start_period: 10s
     extends:
       file: common-config.yml
-      service: microservice-base-config
+      service: microservice-config
+
+  eureka-server:
+    image: "kart/eureka-server:R02"
+    container_name: eureka-server-ms
+    ports:
+      - "8402:8402"
+    environment:
+      SPRING_APPLICATION_NAME: "eureka-server"
+    healthcheck:
+      test: "curl --fail --silent localhost:8402/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    extends:
+      file: common-config.yml
+      service: microservice-eureka
 
   inventory-service:
     image: "kart/inventory-service:R02"
@@ -21,12 +38,9 @@ services:
       - "8501:8501"
     environment:
       SPRING_APPLICATION_NAME: "inventory-service"
-    depends_on:
-      config-service:
-        condition: service_healthy
     extends:
       file: common-config.yml
-      service: microservice-configserver-config
+      service: microservice-application
 
   store-service:
     image: "kart/store-service:R02"
@@ -35,12 +49,20 @@ services:
       - "8502:8502"
     environment:
       SPRING_APPLICATION_NAME: "store-service"
-    depends_on:
-      config-service:
-        condition: service_healthy
     extends:
       file: common-config.yml
-      service: microservice-configserver-config
+      service: microservice-application
+
+  store-service_extra:
+    image: "kart/store-service:R02"
+    container_name: store-service-ms-extra
+    ports:
+      - "8503:8502"
+    environment:
+      SPRING_APPLICATION_NAME: "store-service"
+    extends:
+      file: common-config.yml
+      service: microservice-application
 
 networks:
   active-kart-nw:

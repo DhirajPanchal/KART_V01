@@ -3,7 +3,7 @@ services:
     networks:
       - active-kart-nw
 
-  microservice-base-config:
+  microservice-config:
     extends:
       service: network-deploy-service
     deploy:
@@ -11,12 +11,24 @@ services:
         limits:
           memory: 700m
 
-  microservice-configserver-config:
+  microservice-eureka:
     extends:
-      service: microservice-base-config
+      service: microservice-config
+    depends_on:
+      config-service:
+        condition: service_healthy
     environment:
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://config-service:8401/
+
+  microservice-application:
+    extends:
+      service: microservice-eureka
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8402/eureka/
       SPRING_DATASOURCE_URL: "jdbc:mysql://host.docker.internal:3306/active_kart"
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: Test12345
