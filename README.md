@@ -1,9 +1,9 @@
 
 ![N|Solid](https://raw.githubusercontent.com/DhirajPanchal/KART_V01_CONFIG/main/cart_01.png) 
 # _active_ KART v01
-> Prototypal for online store and back operations application.
-> Backend :: Springboot based Microservices
-> Frontend :: React & Angular based Microfrontend
+Prototypal for online store and back operations application.
+Backend :: Springboot based Microservices.
+Frontend :: React & Angular based Microfrontend.
 
 [![N|Solid](https://raw.githubusercontent.com/DhirajPanchal/KART_V01_CONFIG/main/DP_02.png)](https://www.linkedin.com/in/dhirajpanchal)
 ```sh
