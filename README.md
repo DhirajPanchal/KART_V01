@@ -1,14 +1,20 @@
 
-![N|Solid](https://raw.githubusercontent.com/DhirajPanchal/KART_V01_CONFIG/main/cart_01.png)
-# active KART v01
+![N|Solid](https://raw.githubusercontent.com/DhirajPanchal/KART_V01_CONFIG/main/cart_01.png) 
+# _active_ KART v01
 > Prototypal for online store and back operations application.
 > Backend :: Springboot based Microservices
 > Frontend :: React & Angular based Microfrontend
+
 [![N|Solid](https://raw.githubusercontent.com/DhirajPanchal/KART_V01_CONFIG/main/DP_02.png)](https://www.linkedin.com/in/dhirajpanchal)
-### _[Profile][PlAc] | [dhiraj.r.panchal@gmail.com][PlAd]_
 ```sh
-Release : R03 | Branch : gateway
+dhiraj.r.panchal@gmail.com
 ```
+```sh
+https://www.linkedin.com/in/dhirajpanchal
+```
+
+# Release : R03 | Branch : gateway
+
 | Service | Desc / Features / References  |
 | ------ | ------ |
 | config-service | [Spring Cloud Config Server][PlDb] |
