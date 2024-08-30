@@ -1,38 +1,39 @@
 services:
   config-service:
-    image: "kart/config-service:R02"
+    image: "kart/config-service:R03"
     container_name: config-service-ms
     ports:
       - "8401:8401"
+    extends:
+      file: common-config.yml
+      service: microservice-config-base
     healthcheck:
       test: "curl --fail --silent localhost:8401/actuator/health/readiness | grep UP || exit 1"
       interval: 10s
       timeout: 5s
       retries: 10
       start_period: 10s
-    extends:
-      file: common-config.yml
-      service: microservice-config
 
   eureka-server:
-    image: "kart/eureka-server:R02"
+    image: "kart/eureka-server:R03"
     container_name: eureka-server-ms
     ports:
       - "8402:8402"
     environment:
       SPRING_APPLICATION_NAME: "eureka-server"
+    extends:
+      file: common-config.yml
+      service: microservice-eureka-base
     healthcheck:
       test: "curl --fail --silent localhost:8402/actuator/health/readiness | grep UP || exit 1"
       interval: 10s
       timeout: 5s
       retries: 10
       start_period: 10s
-    extends:
-      file: common-config.yml
-      service: microservice-eureka
+
 
   inventory-service:
-    image: "kart/inventory-service:R02"
+    image: "kart/inventory-service:R03"
     container_name: inventory-service-ms
     ports:
       - "8501:8501"
@@ -40,10 +41,17 @@ services:
       SPRING_APPLICATION_NAME: "inventory-service"
     extends:
       file: common-config.yml
-      service: microservice-application
+      service: microservice-application-base
+    healthcheck:
+      test: "curl --fail --silent localhost:8501/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
 
   store-service:
-    image: "kart/store-service:R02"
+    image: "kart/store-service:R03"
     container_name: store-service-ms
     ports:
       - "8502:8502"
@@ -51,18 +59,30 @@ services:
       SPRING_APPLICATION_NAME: "store-service"
     extends:
       file: common-config.yml
-      service: microservice-application
+      service: microservice-application-base
+    healthcheck:
+      test: "curl --fail --silent localhost:8502/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
 
-  store-service_extra:
-    image: "kart/store-service:R02"
-    container_name: store-service-ms-extra
+  gateway-server:
+    image: "kart/gateway-server:R03"
+    container_name: gateway-server-ms
     ports:
-      - "8503:8502"
+      - "8403:8403"
     environment:
-      SPRING_APPLICATION_NAME: "store-service"
+      SPRING_APPLICATION_NAME: "gateway-server"
     extends:
       file: common-config.yml
-      service: microservice-application
+      service: microservice-gateway-base
+    healthcheck:
+      test: "curl --fail --silent localhost:8403/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
 
 networks:
   active-kart-nw:

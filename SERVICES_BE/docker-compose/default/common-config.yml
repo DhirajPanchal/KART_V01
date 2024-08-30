@@ -3,7 +3,7 @@ services:
     networks:
       - active-kart-nw
 
-  microservice-config:
+  microservice-config-base:
     extends:
       service: network-deploy-service
     deploy:
@@ -11,9 +11,9 @@ services:
         limits:
           memory: 700m
 
-  microservice-eureka:
+  microservice-eureka-base:
     extends:
-      service: microservice-config
+      service: microservice-config-base
     depends_on:
       config-service:
         condition: service_healthy
@@ -21,9 +21,22 @@ services:
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://config-service:8401/
 
-  microservice-application:
+  microservice-gateway-base:
     extends:
-      service: microservice-eureka
+      service: microservice-eureka-base
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+      inventory-service:
+        condition: service_healthy
+      store-service:
+        condition: service_healthy
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8402/eureka/
+
+  microservice-application-base:
+    extends:
+      service: microservice-eureka-base
     depends_on:
       eureka-server:
         condition: service_healthy

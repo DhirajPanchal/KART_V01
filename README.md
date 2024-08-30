@@ -1,16 +1,20 @@
-# _`KART v01`_
 
-### _Backend   ::  Springboot base Microservices._
-### _Frontend ::  React & Angular based Microfrontend_
-
-## _Release R02_
-### _Branch_ : service_discovery_registration
-
+![N|Solid](https://raw.githubusercontent.com/DhirajPanchal/KART_V01_CONFIG/main/cart_01.png)
+# active KART v01
+> Prototypal for online store and back operations application.
+> Backend :: Springboot based Microservices
+> Frontend :: React & Angular based Microfrontend
+[![N|Solid](https://raw.githubusercontent.com/DhirajPanchal/KART_V01_CONFIG/main/DP_02.png)](https://www.linkedin.com/in/dhirajpanchal)
+### _[Profile][PlAc] | [dhiraj.r.panchal@gmail.com][PlAd]_
+```sh
+Release : R03 | Branch : gateway
+```
 | Service | Desc / Features / References  |
 | ------ | ------ |
 | config-service | [Spring Cloud Config Server][PlDb] |
 | eureka-server | [Spring Cloud Netflix Eureka][PlOd] |
 |  | [Spring Cloud OpenFeign][PlAa] |
+| gateway-server | [Spring Cloud Gateway][PlAb] |
 | inventory-service | Business: Operations |
 | store-service | Business: Public |
 | RabbitMQ (A) | For config push - Refresh/BusRefresh/Monitor|
@@ -19,7 +23,9 @@
 
 > Note: `Check proper branch. Not all branches have all the services.`
 
-
    [PlDb]: <https://spring.io/projects/spring-cloud-config>
    [PlOd]: <https://spring.io/projects/spring-cloud-netflix>
    [PlAa]: <https://spring.io/projects/spring-cloud-openfeign>
+   [PlAb]: <https://spring.io/projects/spring-cloud-gateway>
+   [PlAc]: <https://www.linkedin.com/in/dhirajpanchal>
+   [PlAd]: <mailto:dhiraj.r.panchal@gmail.com>

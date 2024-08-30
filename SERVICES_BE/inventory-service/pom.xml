@@ -115,7 +115,7 @@
                 <version>3.4.2</version>
                 <configuration>
                     <to>
-                        <image>kart/${project.artifactId}:R02</image>
+                        <image>kart/${project.artifactId}:R03</image>
                     </to>
                 </configuration>
             </plugin>

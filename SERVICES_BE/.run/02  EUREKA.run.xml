@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="02  EUREKA" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="io.active.kart.eureka.EurekaServerApplication" />
+    <module name="eureka-server" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
