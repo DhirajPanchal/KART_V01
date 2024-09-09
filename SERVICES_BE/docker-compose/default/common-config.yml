@@ -1,21 +1,47 @@
 services:
   network-deploy-service:
     networks:
-      - dhirajpanchal
+      - active-kart-nw
 
-  microservice-base-config:
+  microservice-config-base:
     extends:
       service: network-deploy-service
     deploy:
       resources:
         limits:
           memory: 700m
-    environment:
-      SPRING_RABBITMQ_HOST: "rabbit"
 
-  microservice-configserver-config:
+  microservice-eureka-base:
     extends:
-      service: microservice-base-config
+      service: microservice-config-base
+    depends_on:
+      config-service:
+        condition: service_healthy
     environment:
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://config-service:8401/
+
+  microservice-gateway-base:
+    extends:
+      service: microservice-eureka-base
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+      inventory-service:
+        condition: service_healthy
+      store-service:
+        condition: service_healthy
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8402/eureka/
+
+  microservice-application-base:
+    extends:
+      service: microservice-eureka-base
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8402/eureka/
+      SPRING_DATASOURCE_URL: "jdbc:mysql://host.docker.internal:3306/active_kart"
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: Test12345

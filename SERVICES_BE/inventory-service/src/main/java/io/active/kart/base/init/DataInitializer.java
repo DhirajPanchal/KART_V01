@@ -7,6 +7,8 @@ import io.active.kart.inventory.repository.CategoryRepository;
 import io.active.kart.inventory.repository.ProductRepository;
 import io.active.kart.inventory.repository.SubCategoryRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +21,7 @@ public class DataInitializer {
     private final CategoryRepository categoryRepository;
     private final SubCategoryRepository subCategoryRepository;
     private final ProductRepository productRepository;
-
+    private final Logger LOGGER = LoggerFactory.getLogger("DataInitializer.class");
 
     public DataInitializer(CategoryRepository categoryRepository,
                            SubCategoryRepository subCategoryRepository,
@@ -32,7 +34,7 @@ public class DataInitializer {
 
     @Bean
     public CommandLineRunner initializeData() {
-
+        //LOGGER.info("========================================================= AnnotationDrivenEndpointsListener");
         return args -> {
 
             // Category
