@@ -8,6 +8,8 @@ import io.active.kart.store.client.InventoryFeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class InventoryFeignService {
 
@@ -25,7 +27,13 @@ public class InventoryFeignService {
         ResponseEntity<ListResponse<CategoryDTO>> response
                 = inventoryFeignClient.list(index, size, requestBody);
 
-        return response.getBody();
+        System.out.println(" Store: Cat from Inventory FC : "+response);
+
+        if (response != null) {
+            return response.getBody();
+        } else {
+            return null;
+        }
 
     }
 
@@ -36,7 +44,17 @@ public class InventoryFeignService {
         ResponseEntity<ListResponse<SubCategoryDTO>> response
                 = inventoryFeignClient.list(categoryId, index, size, requestBody);
 
-        return response.getBody();
+        System.out.println(" Store: SubCat from Inventory FC : "+response);
+
+        if (response != null) {
+            return response.getBody();
+        } else {
+            // F A L L B A C K
+            // Dummy Response
+            ListResponse<SubCategoryDTO> dummyResponse = new ListResponse<>();
+
+            return dummyResponse;
+        }
 
     }
 

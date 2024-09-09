@@ -12,9 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import static io.active.kart.base.core.BaseConstant.*;
-import static io.active.kart.base.core.BaseConstant.PAGE_SIZE_DEFAULT;
 
-@FeignClient("inventory-service")
+@FeignClient(name = "inventory-service", fallback = InventoryFallback.class)
 public interface InventoryFeignClient {
 
     @PostMapping("/api/inventory/category/list")

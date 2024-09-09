@@ -31,13 +31,14 @@ public class InventoryController {
             requestBody = defaultListRequest;
         }
         // Always return Non-Deleted Categories irrespective of request.
-        if(requestBody.isIncludeDeleted()){
+        if (requestBody.isIncludeDeleted()) {
             requestBody.setIncludeDeleted(false);
         }
 
         requestBody.getSort().forEach((key, value) -> System.out.println(key + " :: " + value));
         ListResponse<CategoryDTO> listResponse =
                 inventoryFeignService.getCategoryList(index, size, requestBody);
+
 
         return ResponseEntity.status(HttpStatus.OK).body(listResponse);
 
@@ -53,15 +54,18 @@ public class InventoryController {
             requestBody = defaultListRequest;
         }
         // Always return Non-Deleted Categories irrespective of request.
-        if(requestBody.isIncludeDeleted()){
+        if (requestBody.isIncludeDeleted()) {
             requestBody.setIncludeDeleted(false);
         }
 
         requestBody.getSort().forEach((key, value) -> System.out.println(key + " :: " + value));
+
         ListResponse<SubCategoryDTO> listResponse =
                 inventoryFeignService.getSubCategoryList(categoryId, index, size, requestBody);
+
 
         return ResponseEntity.status(HttpStatus.OK).body(listResponse);
 
     }
+
 }
