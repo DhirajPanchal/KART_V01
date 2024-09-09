@@ -1,17 +1,10 @@
 
-![N|Solid](https://raw.githubusercontent.com/DhirajPanchal/KART_V01_CONFIG/main/cart_01.png) 
-# _active_ KART v01
-Prototypal for online store and back operations application.
-Backend :: Springboot based Microservices.
-Frontend :: React & Angular based Microfrontend.
+![N|Solid](https://raw.githubusercontent.com/DhirajPanchal/KART_V01_CONFIG/main/active-cart-01.jpg) 
 
-[![N|Solid](https://raw.githubusercontent.com/DhirajPanchal/KART_V01_CONFIG/main/DP_02.png)](https://www.linkedin.com/in/dhirajpanchal)
-```sh
-dhiraj.r.panchal@gmail.com
-```
-```sh
-https://www.linkedin.com/in/dhirajpanchal
-```
+### Prototypal for online store and back operations application.
+#### Backend :: Springboot based Microservices.
+#### Frontend :: React & Angular based Microfrontend.
+
 
 # Release : R03 | Branch : gateway
 
@@ -28,6 +21,17 @@ https://www.linkedin.com/in/dhirajpanchal
 | SQL (B) |  Dockerized (service: kart_db_mysql) |
 
 > Note: `Check proper branch. Not all branches have all the services.`
+
+Maintained by:
+
+[![N|Solid](https://raw.githubusercontent.com/DhirajPanchal/KART_V01_CONFIG/main/DP_02.png)](https://www.linkedin.com/in/dhirajpanchal)
+
+email: dhiraj.r.panchal@gmail.com
+
+linkedin: https://www.linkedin.com/in/dhirajpanchal
+
+
+
 
    [PlDb]: <https://spring.io/projects/spring-cloud-config>
    [PlOd]: <https://spring.io/projects/spring-cloud-netflix>
