@@ -97,7 +97,7 @@
 				<version>3.4.2</version>
 				<configuration>
 					<to>
-						<image>kart/${project.artifactId}:R03</image>
+						<image>kart/${project.artifactId}:R05</image>
 					</to>
 				</configuration>
 			</plugin>

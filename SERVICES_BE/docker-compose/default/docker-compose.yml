@@ -1,6 +1,18 @@
 services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:25.0.4
+    container_name: keycloak
+    ports:
+      - "8404:8080"
+    environment:
+      KEYCLOAK_ADMIN: "admin"
+      KEYCLOAK_ADMIN_PASSWORD: "admin"
+    command: "start-dev"
+    extends:
+      file: common-config.yml
+      service: network-deploy-service
   config-service:
-    image: "kart/config-service:R03"
+    image: "kart/config-service:R05"
     container_name: config-service-ms
     ports:
       - "8401:8401"
@@ -15,7 +27,7 @@ services:
       start_period: 10s
 
   eureka-server:
-    image: "kart/eureka-server:R03"
+    image: "kart/eureka-server:R05"
     container_name: eureka-server-ms
     ports:
       - "8402:8402"
@@ -33,10 +45,8 @@ services:
 
 
   inventory-service:
-    image: "kart/inventory-service:R03"
+    image: "kart/inventory-service:R05"
     container_name: inventory-service-ms
-    ports:
-      - "8501:8501"
     environment:
       SPRING_APPLICATION_NAME: "inventory-service"
     extends:
@@ -51,10 +61,8 @@ services:
 
 
   store-service:
-    image: "kart/store-service:R03"
+    image: "kart/store-service:R05"
     container_name: store-service-ms
-    ports:
-      - "8502:8502"
     environment:
       SPRING_APPLICATION_NAME: "store-service"
     extends:
@@ -68,12 +76,13 @@ services:
       start_period: 10s
 
   gateway-server:
-    image: "kart/gateway-server:R03"
+    image: "kart/gateway-server:R05"
     container_name: gateway-server-ms
     ports:
       - "8403:8403"
     environment:
       SPRING_APPLICATION_NAME: "gateway-server"
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI: "http://keycloak:8080/realms/master/protocol/openid-connect/certs"
     extends:
       file: common-config.yml
       service: microservice-gateway-base
