@@ -1,0 +1,30 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.main-container {
+  font-size: 3rem;
+  margin: auto;
+  max-width: 800px;
+  margin-top: 20px;
+  background-color: blanchedalmond;
+}
+
+.auth-root-container {
+  padding: 40px;
+  align-items: center;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.navLink {
+  color: #00838f;
+  font-weight: bold;
+  text-decoration: none;
+}
+.navLinkActive {
+  color: #006064;
+  font-weight: bolder;
+  text-decoration: none;
+  border-bottom: solid 2px #006064;
+}

@@ -1,5 +1,6 @@
 
-SERVICES_FE/
+SERVICES_FE/store
+SERVICES_FE/order
 
 # Compiled class file
 *.class
