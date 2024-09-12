@@ -13,7 +13,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 
-
+import UserService from "../../service/UserService";
 //cfd8dc , #2F90B0, 1c5669
 
 type PageType = {
@@ -31,22 +31,18 @@ const settings = ["Profile", "Logout"];
 const navLink = "navLink";
 const navLinkActive = "navLinkActive";
 export default function Header() {
-  const [isLoggedIn, setIsLoggedIn] = React.useState<boolean>(false);
-
   let pages: PageType[] = [...PAGE_LINKS];
-  let pagesMobile: PageType[] = !isLoggedIn
-    ? [...PAGE_LINKS, { label: "LOGIN", route: "/auth/login-progress" }]
+  let pagesMobile: PageType[] = !UserService.isLoggedIn()
+    ? [...PAGE_LINKS, { label: "LOGIN", route: "LOGIN_MENU" }]
     : [...PAGE_LINKS];
   const navigation = useNavigate();
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
-
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
-
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -57,22 +53,51 @@ export default function Header() {
   const handleCloseNavMenu = (page: PageType) => {
     setAnchorElNav(null);
     console.log("NAV ::::: " + page);
-    if (page.route !== "") {
+    if (page.route === "LOGIN_MENU") {
+      handleLogin();
+      console.log("A");
+    } else if (page.route !== "") {
+      console.log("B");
       navigation(page.route);
     }
-  };
-
-  const handleLogin = () => {
-    console.log("LOGIN");
-  };
-
-  const handleLogout = () => {
-    console.log("LOGOUT");
   };
 
   const handleCloseUserMenu = (setting: string) => {
     setAnchorElUser(null);
     console.log("USER MENU :: " + setting);
+    if (setting === "Profile") {
+      navigation("/profile");
+    } else if (setting === "Logout") {
+      handleLogout();
+    }
+  };
+
+  const handleLogin = () => {
+    console.log("Login ::");
+    UserService.doLogin();
+  };
+
+  const handleLogout = () => {
+    console.log("Logout ::");
+    navigation("/");
+    UserService.doLogout();
+  };
+
+  const handleAuth = () => {
+    console.log("_B3 - Info");
+    console.log(" Name : " + UserService.getUsername());
+    console.log("-----");
+    console.log(" Parsed : " + UserService.getTokenParsed());
+    console.log("-----");
+    console.log(" Token : " + UserService.getToken());
+    console.log("-----");
+    console.log(" isLoggedIn : " + UserService.isLoggedIn());
+    console.log("-----");
+    console.log(" Role STORE : " + UserService.hasRole(["STORE"]));
+    console.log("-----");
+    console.log(" Role OPERATIONS : " + UserService.hasRole(["OPERATIONS"]));
+    console.log("-----");
+    console.log(" Role XXX : " + UserService.hasRole(["XXX"]));
   };
 
   return (
@@ -83,8 +108,8 @@ export default function Header() {
         backgroundColor: "#E0F7FA",
         boxShadow: "0px 0px 0px 0px",
         p: 0,
-        borderLeft: 2,
-        borderLeftColor: "#00838f",
+        borderBottom: 0.5,
+        borderBottomColor: "#00838f",
       }}
     >
       {/*  
@@ -101,10 +126,9 @@ export default function Header() {
           <Box
             component="img"
             sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-            src="/logo01.jpg"
+            src="/cart-header.jpg"
             onClick={() => handleCloseNavMenu({ label: "Home", route: "/" })}
           />
-
           {/*  
           -  -  -  -  -   MENU (mobile)   -  -  -  -  -   
           */}
@@ -154,7 +178,7 @@ export default function Header() {
           <Box
             component="img"
             sx={{ display: { xs: "flex", md: "none" } }}
-            src="/logo01.jpg"
+            src="/cart-header.jpg"
             onClick={() => handleCloseNavMenu({ label: "Home", route: "/" })}
           />
           {/*  
@@ -179,35 +203,31 @@ export default function Header() {
               </NavLink>
             ))}
           </Box>
-          {!isLoggedIn ? (
-            // -  -  -  -  -   LOGIN   -  -  -  -  -
-            <Box sx={{ display: { xs: "none", md: "flex", columnGap:24 } }}>
-              <NavLink
-                to={"/auth/login-progress"}
-                className={({ isActive }) =>
-                  isActive ? navLinkActive : navLink
-                }
-                onClick={() => handleLogin()}
+          <IconButton
+            sx={{ fontWeight: "bold", fontSize: 16 }}
+            onClick={handleAuth}
+          >
+            AUTH
+          </IconButton>
+          {/* // - - - - - LOGIN - - - - - */}
+
+          {UserService.isLoggedIn() === false ? (
+            <Box sx={{ display: { xs: "none", md: "flex", columnGap: 24 } }}>
+              <IconButton
+                sx={{ color: "#00838f", fontWeight: "bold", fontSize: 16 }}
+                onClick={handleLogin}
               >
                 L O G I N
-              </NavLink>
-
-              <NavLink
-                to={"/auth/logout-progress"}
-                className={({ isActive }) =>
-                  isActive ? navLinkActive : navLink
-                }
-                onClick={() => handleLogout()}
-              >
-                L O G O U T
-              </NavLink>
+              </IconButton>
             </Box>
           ) : (
-            // -  -  -  -  -   LOGGED-IN AVATAR   -  -  -  -  -
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Dhiraj" />
+                  <Avatar sx={{ bgcolor: "#1c5669" }}>
+                    {" "}
+                    {UserService.getUserAvatarName()}{" "}
+                  </Avatar>
                 </IconButton>
               </Tooltip>
               <Menu
@@ -224,12 +244,12 @@ export default function Header() {
                   horizontal: "right",
                 }}
                 open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
+                onClose={() => handleCloseUserMenu("")}
               >
                 {settings.map((setting) => (
                   <MenuItem
                     key={setting}
-                    onClick={() => handleCloseUserMenu("SETTINGS-" + setting)}
+                    onClick={() => handleCloseUserMenu(setting)}
                   >
                     <Typography sx={{ textAlign: "center" }}>
                       {setting}

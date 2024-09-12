@@ -1,0 +1,8 @@
+{
+  "realm": "master",
+  "auth-server-url": "http://localhost:8404/",
+  "ssl-required": "external",
+  "resource": "cart-ui-only",
+  "public-client": true,
+  "confidential-port": 0
+}
