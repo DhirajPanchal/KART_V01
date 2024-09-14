@@ -1,0 +1,75 @@
+server:
+  port: 8503
+
+spring:
+  application:
+    name: "crm"
+  profiles:
+    active: "default"
+  datasource:
+    url: "jdbc:mysql://localhost:3306/active_kart"
+    username: root
+    password: Test12345
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+  cloud:
+    function:
+      scan:
+        packages: io.active.kart.crm.function
+      definition: docGenerationStatus
+    stream:
+      bindings:
+        docGenerationStatus-in-0:
+          destination: doc-generation-status
+          group: ${spring.application.name}
+        docGeneration-out-0:
+          destination: doc-generation
+      kafka:
+        binder:
+          brokers:
+            - localhost:9092
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    readiness-state:
+      enabled: true
+    liveness-state:
+      enabled: true
+  endpoint:
+    health:
+      probes:
+        enabled: true
+    shutdown:
+      enabled: true
+  info:
+    env:
+      enabled: true
+
+endpoints:
+  shutdown:
+    enabled: true
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    fetchRegistry: true
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: http://localhost:8402/eureka/
+
+info:
+  app:
+    name: "crm"
+    description: "KART - Customer Relationship Mgmt"
+    version: "1.0.0"

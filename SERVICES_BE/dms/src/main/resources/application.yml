@@ -1,0 +1,20 @@
+server:
+  port: 8504
+
+spring:
+  application:
+    name: "dms"
+  cloud:
+    function:
+      definition: processDocGen
+    stream:
+      bindings:
+        processDocGen-in-0:
+          destination: doc-generation
+          group: ${spring.application.name}
+        processDocGen-out-0:
+          destination: doc-generation-status
+      kafka:
+        binder:
+          brokers:
+            - localhost:9092
