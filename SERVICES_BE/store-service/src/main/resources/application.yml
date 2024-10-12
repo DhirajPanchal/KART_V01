@@ -1,5 +1,5 @@
 server:
-  port: 8502
+  port: 8021
 
 spring:
   application:
@@ -7,7 +7,7 @@ spring:
   profiles:
     active: "default"
   config:
-    import: "optional:configserver:http://localhost:8401/"
+    import: "optional:configserver:http://localhost:8011/"
   datasource:
     url: "jdbc:mysql://localhost:3306/active_kart"
     username: root
@@ -19,9 +19,9 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
         format_sql: true
   cloud:
-    openfeign:
-      circuitbreaker:
-        enabled: true
+#    openfeign:
+#      circuitbreaker:
+#        enabled: true
 
 management:
   endpoints:
@@ -54,15 +54,15 @@ eureka:
     fetchRegistry: true
     registerWithEureka: true
     serviceUrl:
-      defaultZone: http://localhost:8402/eureka/
+      defaultZone: http://localhost:8012/eureka/
 
-resilience4j.circuitbreaker:
-  configs:
-    default:
-      slidingWindowSize: 10
-      permittedNumberOfCallsInHalfOpenState: 2
-      failureRateThreshold: 50
-      waitDurationInOpenState: 10000
+#resilience4j.circuitbreaker:
+#  configs:
+#    default:
+#      slidingWindowSize: 10
+#      permittedNumberOfCallsInHalfOpenState: 2
+#      failureRateThreshold: 50
+#      waitDurationInOpenState: 10000
 
 info:
   app:

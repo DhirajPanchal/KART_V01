@@ -1,13 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&family=Lato:wght@400;700&display=swap");
+
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  font-family: "Lato", serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
 }
 
-.main-container {
-  font-size: 3rem;
-  margin: auto;
-  max-width: 800px;
-  margin-top: 20px;
-  background-color: blanchedalmond;
+.gradient-custom {
+  background: linear-gradient(to right bottom, #aff2f8, #3ec0c5);
 }
 
 .auth-root-container {
@@ -28,10 +30,3 @@ body {
   text-decoration: none;
   border-bottom: solid 2px #006064;
 }
-
-
-.gradient-custom {
-
-  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  background: linear-gradient(to right bottom, #aff2f8, #3ec0c5)
-  }

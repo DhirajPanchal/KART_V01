@@ -19,7 +19,7 @@ services:
         condition: service_healthy
     environment:
       SPRING_PROFILES_ACTIVE: default
-      SPRING_CONFIG_IMPORT: configserver:http://config-service:8401/
+      SPRING_CONFIG_IMPORT: configserver:http://config-service:8011/
 
   microservice-gateway-base:
     extends:
@@ -32,7 +32,7 @@ services:
       store-service:
         condition: service_healthy
     environment:
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8402/eureka/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8012/eureka/
 
   microservice-application-base:
     extends:
@@ -41,7 +41,7 @@ services:
       eureka-server:
         condition: service_healthy
     environment:
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8402/eureka/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8012/eureka/
       SPRING_DATASOURCE_URL: "jdbc:mysql://host.docker.internal:3306/active_kart"
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: Test12345

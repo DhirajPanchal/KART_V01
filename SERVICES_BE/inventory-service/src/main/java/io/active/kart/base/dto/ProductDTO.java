@@ -19,6 +19,8 @@ public class ProductDTO {
 
     private SubCategoryDTO subCategory;
 
-    //private CategoryDTO category;
+   // private CategoryDTO category;
+
+    private Boolean isDeleted;
 
 }

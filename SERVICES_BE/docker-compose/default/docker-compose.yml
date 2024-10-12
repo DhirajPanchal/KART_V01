@@ -3,7 +3,7 @@ services:
     image: quay.io/keycloak/keycloak:25.0.4
     container_name: keycloak
     ports:
-      - "8404:8080"
+      - "8016:8080"
     environment:
       KEYCLOAK_ADMIN: "admin"
       KEYCLOAK_ADMIN_PASSWORD: "admin"
@@ -15,12 +15,12 @@ services:
     image: "kart/config-service:R05"
     container_name: config-service-ms
     ports:
-      - "8401:8401"
+      - "8011:8011"
     extends:
       file: common-config.yml
       service: microservice-config-base
     healthcheck:
-      test: "curl --fail --silent localhost:8401/actuator/health/readiness | grep UP || exit 1"
+      test: "curl --fail --silent localhost:8011/actuator/health/readiness | grep UP || exit 1"
       interval: 10s
       timeout: 5s
       retries: 10
@@ -30,14 +30,14 @@ services:
     image: "kart/eureka-server:R05"
     container_name: eureka-server-ms
     ports:
-      - "8402:8402"
+      - "8012:8012"
     environment:
       SPRING_APPLICATION_NAME: "eureka-server"
     extends:
       file: common-config.yml
       service: microservice-eureka-base
     healthcheck:
-      test: "curl --fail --silent localhost:8402/actuator/health/readiness | grep UP || exit 1"
+      test: "curl --fail --silent localhost:8012/actuator/health/readiness | grep UP || exit 1"
       interval: 10s
       timeout: 5s
       retries: 10
@@ -53,7 +53,7 @@ services:
       file: common-config.yml
       service: microservice-application-base
     healthcheck:
-      test: "curl --fail --silent localhost:8501/actuator/health/readiness | grep UP || exit 1"
+      test: "curl --fail --silent localhost:8024/actuator/health/readiness | grep UP || exit 1"
       interval: 10s
       timeout: 5s
       retries: 10
@@ -69,7 +69,7 @@ services:
       file: common-config.yml
       service: microservice-application-base
     healthcheck:
-      test: "curl --fail --silent localhost:8502/actuator/health/readiness | grep UP || exit 1"
+      test: "curl --fail --silent localhost:8021/actuator/health/readiness | grep UP || exit 1"
       interval: 10s
       timeout: 5s
       retries: 10
@@ -79,7 +79,7 @@ services:
     image: "kart/gateway-server:R05"
     container_name: gateway-server-ms
     ports:
-      - "8403:8403"
+      - "8010:8010"
     environment:
       SPRING_APPLICATION_NAME: "gateway-server"
       SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI: "http://keycloak:8080/realms/master/protocol/openid-connect/certs"
@@ -87,7 +87,7 @@ services:
       file: common-config.yml
       service: microservice-gateway-base
     healthcheck:
-      test: "curl --fail --silent localhost:8403/actuator/health/readiness | grep UP || exit 1"
+      test: "curl --fail --silent localhost:8010/actuator/health/readiness | grep UP || exit 1"
       interval: 10s
       timeout: 5s
       retries: 10

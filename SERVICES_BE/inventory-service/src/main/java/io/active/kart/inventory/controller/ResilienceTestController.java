@@ -1,6 +1,7 @@
 package io.active.kart.inventory.controller;
 
-import io.github.resilience4j.retry.annotation.Retry;
+//import io.github.resilience4j.retry.annotation.Retry;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +26,7 @@ public class ResilienceTestController {
     }
 
 
-    @Retry(name = "retryFB", fallbackMethod = "retryFBFallback")
+    //@Retry(name = "retryFB", fallbackMethod = "retryFBFallback")
     @GetMapping("/retry-fallback")
     public ResponseEntity<String> retryFB() {
         System.out.println("__ retryFB () ");

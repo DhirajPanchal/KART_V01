@@ -23,7 +23,7 @@ type PageType = {
 
 const PAGE_LINKS: PageType[] = [
   { label: "S T O R E", route: "/store" },
-  { label: "O R D E R", route: "/order" },
+  { label: "I N V E N T O R Y", route: "/inventory" },
 ];
 
 const settings = ["Profile", "Logout"];
@@ -119,7 +119,7 @@ export default function Header() {
         {/*  
         -  -  -  -  -   TOOLBAR   -  -  -  -  -   
         */}
-        <Toolbar disableGutters sx={{ columnGap: 4 }}>
+        <Toolbar disableGutters sx={{ columnGap: 4 }} variant="regular">
           {/*  
           -  -  -  -  -   LOGO (laptop)   -  -  -  -  -   
           */}

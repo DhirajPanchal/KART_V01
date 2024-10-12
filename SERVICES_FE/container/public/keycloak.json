@@ -1,6 +1,6 @@
 {
   "realm": "master",
-  "auth-server-url": "http://localhost:8404/",
+  "auth-server-url": "http://localhost:8016/",
   "ssl-required": "external",
   "resource": "cart-ui-only",
   "public-client": true,

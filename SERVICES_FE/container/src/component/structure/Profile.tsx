@@ -33,17 +33,16 @@ export default function Profile() {
                     <div className="row pt-1">
                       <div className="col-8 mb-3">
                         <h6>Email</h6>
-                        <p className="text-muted">{UserService.getEmail()}</p>
-                      </div>
-                      <div className="col-6 mb-3">
-                        {UserService.getEmailVerified() && (
-                          <p>
+                        <p className="text-muted">
+                          {UserService.getEmail()}
+                          <span> </span>
+                          {UserService.getEmailVerified() && (
                             <i
                               className="bi bi-patch-check-fill"
                               style={styles.s3}
                             ></i>
-                          </p>
-                        )}
+                          )}
+                        </p>
                       </div>
                     </div>
                     <hr className="mt-0 mb-4" />

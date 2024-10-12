@@ -20,4 +20,7 @@ public class SubCategoryDTO {
 
     private CategoryDTO category;
 
+    private Boolean isDeleted;
+
+
 }

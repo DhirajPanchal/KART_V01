@@ -15,6 +15,17 @@ public class KeycloakRoleConverter implements Converter<Jwt, Collection<GrantedA
 
     @Override
     public Collection<GrantedAuthority> convert(Jwt source) {
+
+
+        System.out.println("----------------------------------------------------------- KeycloakRoleConverter");
+        Map<String, Object> claims = (Map<String, Object>) source.getClaims();
+        System.out.println(claims.get("sub"));
+
+        System.out.println(claims.entrySet().stream()
+                .map(entry -> String.format("%-15s : %s", entry.getKey(), entry.getValue()))
+                .collect(Collectors.joining("\n")));
+
+
         Map<String, Object> realmAccess = (Map<String, Object>) source.getClaims().get("realm_access");
         if (realmAccess == null || realmAccess.isEmpty()) {
             return new ArrayList<>();

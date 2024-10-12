@@ -1,0 +1,58 @@
+
+.inventory-curd-nav {
+  margin-left: 16px;
+  margin-bottom: -16px;
+ 
+  width: fit-content;
+  padding: 8px;
+
+}
+
+.inventory-curd-nav-item {
+  padding: 16px;
+  text-decoration: none;
+}
+.inventory-curd-nav-item-link {
+  color: #015c64;
+  font-weight: bold;
+  text-decoration: none;
+
+}
+.inventory-curd-nav-item-link-active {
+  color: white;
+  background-color: #006064;
+  font-weight: bolder;
+  text-decoration: none;
+  padding: 8px;
+}
+
+.active-data-grid-container {
+  margin: 16px;
+  padding: 16px;
+  border: 2px solid #006064;
+}
+/* background: rgb(239, 239, 218); */
+
+.active-data-grid-wrapper {
+  border: solid 1px #006064;
+}
+
+.active-margin {
+  margin: 8px;  
+}
+/* background: rgb(239, 239, 182); */
+
+.arrange-horizontally > * {
+  display: inline-block;
+  text-align: center;
+  margin-bottom: 8px;
+}
+/* background-color: lightgray; */
+
+.section-header{
+  font-weight: bolder;
+  text-decoration: none;
+  margin-left: 16px;
+  margin-top: 32px;
+  margin-bottom: 40px;
+}

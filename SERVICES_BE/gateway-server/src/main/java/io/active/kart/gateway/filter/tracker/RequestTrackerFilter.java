@@ -11,7 +11,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 @Slf4j
-@Order(1)
+@Order(2)
 @Component
 public class RequestTrackerFilter implements GlobalFilter {
 
@@ -21,14 +21,9 @@ public class RequestTrackerFilter implements GlobalFilter {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         HttpHeaders requestHeaders = exchange.getRequest().getHeaders();
-        if (isTrackerIdPresent(requestHeaders)) {
-            log.debug("TRACKER_ID found in RequestTrackerFilter : {}",
-                    trackerUtil.getTrackerId(requestHeaders));
-        } else {
-            String trackerId = generateCorrelationId();
-            exchange = trackerUtil.setTrackerId(exchange, trackerId);
-            log.debug("TRACKER_ID generated in RequestTrackerFilter : {}", trackerId);
-        }
+        System.out.println("__ FILTER ------------------------------------------------ RequestTrackerFilter");
+
+
         return chain.filter(exchange);
     }
 

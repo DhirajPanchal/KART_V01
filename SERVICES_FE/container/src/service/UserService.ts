@@ -23,14 +23,34 @@ const initKeycloak = (onAuthenticatedCallback: any) => {
       if (!authenticated) {
         console.log("_KC . initKeycloak . then . user is not authenticated..!");
       }
+      if (authenticated) {
+        console.log("TOKEN :: ");
+        //console.log(_kc.token);
+        if (_kc.token) {
+          console.log("SET TOKEN");
+          sessionStorage.setItem("TOKEN", _kc.token);
+        }
+      }
       onAuthenticatedCallback();
     })
-    .catch(console.error);
+    .catch((error) => {
+      console.log(
+        "----------------------------------------------- Keycloak Error"
+      );
+      console.log(error);
+      // if (error.toS.includes("Timeout")) {
+      //   ("----------------------------------------------- Keycloak Error - Timeout");
+      //   onAuthenticatedCallback();
+      // }
+    });
 };
 
 const doLogin = _kc.login;
 
-const doLogout = _kc.logout;
+const doLogout = () => {
+  sessionStorage.removeItem("TOKEN");
+  _kc.logout();
+};
 
 const getToken = () => _kc.token;
 

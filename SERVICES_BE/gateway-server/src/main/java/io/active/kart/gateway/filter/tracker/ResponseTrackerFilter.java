@@ -18,6 +18,7 @@ public class ResponseTrackerFilter {
 
     @Bean
     public GlobalFilter postGlobalFilter() {
+        System.out.println("__ FILTER ------------------------------------------------ ResponseTrackerFilter");
         return (exchange, chain) -> chain.filter(exchange).then(Mono.fromRunnable(
                 () -> {
                     HttpHeaders requestHeaders = exchange.getRequest().getHeaders();
