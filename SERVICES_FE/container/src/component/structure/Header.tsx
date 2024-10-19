@@ -52,12 +52,12 @@ export default function Header() {
 
   const handleCloseNavMenu = (page: PageType) => {
     setAnchorElNav(null);
-    console.log("NAV ::::: " + page);
+    //console.log("NAV ::::: " + page);
     if (page.route === "LOGIN_MENU") {
       handleLogin();
-      console.log("A");
+      //console.log("A");
     } else if (page.route !== "") {
-      console.log("B");
+      //console.log("B");
       navigation(page.route);
     }
   };
@@ -108,7 +108,7 @@ export default function Header() {
         backgroundColor: "#E0F7FA",
         boxShadow: "0px 0px 0px 0px",
         p: 0,
-        borderBottom: 0.5,
+        borderBottom: 1,
         borderBottomColor: "#00838f",
       }}
     >

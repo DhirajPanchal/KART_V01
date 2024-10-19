@@ -1,0 +1,25 @@
+{
+  "entity": "category",
+  "fields": {
+    "id": [
+      {
+        "field": "id",
+        "label": "ID",
+        "editable": false,
+        "type": "numeric"
+      },
+      {
+        "field": "name",
+        "label": "Name",
+        "editable": true,
+        "type": "string"
+      },
+      {
+        "field": "isDeleted",
+        "label": "Is Deleted",
+        "editable": true,
+        "type": "boolen"
+      }
+    ]
+  }
+}

@@ -3,7 +3,6 @@ package io.active.kart.gateway.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
@@ -26,23 +25,26 @@ public class SecurityConfig {
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity serverHttpSecurity) {
 
-        //serverHttpSecurity.cors(corsSpec -> corsSpec.disable());
-
         serverHttpSecurity
                 .authorizeExchange(exchanges -> exchanges
+                        .pathMatchers("/active-kart/store/**").permitAll()
                         .pathMatchers("/active-kart/inventory/**").hasRole("OPERATIONS")
-                        .pathMatchers("/active-kart/store/**").hasRole("STORE"))
-                .oauth2ResourceServer(oAuth2ResourceServerSpec ->
-                        oAuth2ResourceServerSpec
-                                .jwt(jwtSpec ->
-                                        jwtSpec
-                                                .jwtAuthenticationConverter(grantedAuthoritiesExtractor())));
+                )
+                .oauth2ResourceServer(oAuth2ResourceServerSpec -> oAuth2ResourceServerSpec
+                        .jwt(jwtSpec -> jwtSpec
+                                .jwtAuthenticationConverter(grantedAuthoritiesExtractor()))
+                );
+
         serverHttpSecurity.csrf(csrfSpec -> csrfSpec.disable());
 
         return serverHttpSecurity.build();
+
     }
 
-    // .pathMatchers(HttpMethod.GET).permitAll()
+//     serverHttpSecurity.cors(corsSpec -> corsSpec.disable());
+//    .pathMatchers(HttpMethod.GET).permitAll()
+//    .pathMatchers("/active-kart/inventory/**").hasRole("OPERATIONS")
+//    .pathMatchers("/active-kart/store/**").hasRole("STORE"))
 
     private Converter<Jwt, Mono<AbstractAuthenticationToken>> grantedAuthoritiesExtractor() {
         JwtAuthenticationConverter jwtAuthenticationConverter =

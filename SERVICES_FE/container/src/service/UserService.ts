@@ -1,5 +1,4 @@
 import Keycloak from "keycloak-js";
-
 const _kc = new Keycloak("/keycloak.json");
 
 /**
@@ -38,14 +37,15 @@ const initKeycloak = (onAuthenticatedCallback: any) => {
         "----------------------------------------------- Keycloak Error"
       );
       console.log(error);
-      // if (error.toS.includes("Timeout")) {
-      //   ("----------------------------------------------- Keycloak Error - Timeout");
-      //   onAuthenticatedCallback();
-      // }
+
+      onAuthenticatedCallback();
+
     });
 };
 
-const doLogin = _kc.login;
+const doLogin = () => {
+  _kc.login();
+};
 
 const doLogout = () => {
   sessionStorage.removeItem("TOKEN");

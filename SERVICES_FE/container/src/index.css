@@ -19,7 +19,7 @@ body {
   max-height: 100%;
 }
 
-.navLink {
+/* .navLink {
   color: #00838f;
   font-weight: bold;
   text-decoration: none;
@@ -29,4 +29,19 @@ body {
   font-weight: bolder;
   text-decoration: none;
   border-bottom: solid 2px #006064;
+} */
+
+.navLink {
+  color: #015c64;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 8px;
+}
+.navLinkActive {
+  color: white;
+  background-color: #006064;
+  font-weight: bolder;
+  text-decoration: none;
+  padding: 8px;
+  border-radius: 2px;
 }

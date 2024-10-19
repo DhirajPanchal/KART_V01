@@ -1,26 +1,22 @@
 import React, { useState } from "react";
 import ActiveDataGrid from "./ActiveDataGrid";
-import { loadProductList } from "../Api";
+
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { GridColDef } from "@mui/x-data-grid";
-import { DEFAULT_LIST_PAYLOAD } from "./DataGridHelper";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
-
-const top100Films = [
-  { label: "The Shawshank Redemption", year: 1994 },
-  { label: "The Godfather", year: 1972 },
-  { label: "The Godfather: Part II", year: 1974 },
-  { label: "The Dark Knight", year: 2008 },
-  { label: "12 Angry Men", year: 1957 },
-  { label: "Schindler's List", year: 1993 },
-  { label: "Pulp Fiction", year: 1994 },
-];
+import {
+  DEFAULT_LIST_PAYLOAD,
+  DEFAULT_LIST_RESPONSE,
+  top100Films,
+} from "./DataGridHelper";
+import { Product } from "../model/Product";
+import { ListResponse } from "../model/ListResponse";
+import ApiHub from "../service/ApiHub";
 
 export default function ProductList() {
-  const [subCategoryList, setSubCategoryList] = useState([]);
+  const [listResponse, setListResponse] = useState<ListResponse<Product>>(
+    DEFAULT_LIST_RESPONSE
+  );
 
   const columns: GridColDef[] = [
     { field: "id", headerName: "ID", width: 60 },
@@ -56,25 +52,12 @@ export default function ProductList() {
   ];
 
   const loadDataHandle = (payload: any = DEFAULT_LIST_PAYLOAD) => {
-    console.log("__Product . loadDataHandle  : " + payload);
-    loadProductList(payload)
-      .then((data: any) => {
-        console.table(data.list);
-        setSubCategoryList(data.list);
+    console.log("__Sub-Category . loadDataHandle  : " + payload);
+    ApiHub.loadProductList(DEFAULT_LIST_PAYLOAD)
+      .then((data) => {
+        setListResponse(data);
       })
-      .catch((error: any) => {
-        console.log("__ERROR: Product List");
-        console.log(error);
-        if (axios.isAxiosError(error)) {
-          console.log("STATUS CODE : " + error.status);
-          console.log(error.response);
-          if (error.status === 401) {
-            toast.error("Please login.");
-          }
-        } else {
-          toast.error("Product List Error");
-        }
-      });
+      .catch(() => {});
   };
 
   const handleCategoryChange = (value: any) => {
@@ -112,14 +95,13 @@ export default function ProductList() {
         <div className="active-margin">
           <ActiveDataGrid
             columns={columns}
-            data={subCategoryList}
+            provider={listResponse}
             triggerDataLoad={(payload) => loadDataHandle(payload)}
           />
         </div>
       </div>
 
       <button onClick={() => loadDataHandle()}>LOAD</button>
-      <ToastContainer />
     </>
   );
 }
