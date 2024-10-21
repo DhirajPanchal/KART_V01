@@ -21,7 +21,7 @@ export default function EntityHeaderNav({
   const [mode, setMode] = React.useState<string>("NONE");
 
   React.useEffect(() => {
-    console.log("[EntityHeaderNav] pathname : " + pathname);
+    //console.log("[EntityHeaderNav] pathname : " + pathname);
     if (pathname) {
       let paths = pathname.split("/");
       let strPath = paths[paths.length - 1];

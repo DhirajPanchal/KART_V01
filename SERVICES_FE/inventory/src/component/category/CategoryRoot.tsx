@@ -12,7 +12,6 @@ import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
-import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { Divider, Typography } from "@mui/material";
 import {
@@ -21,14 +20,14 @@ import {
   Route,
   Routes,
   useNavigate,
-  useParams,
+
 } from "react-router-dom";
 import ActiveDataGrid from "../ActiveDataGrid";
 import CategoryView from "./CategoryView";
 import CategoryForm from "./CategoryForm";
 
 export default function CategoryRoot() {
-  console.log("CATEGORY-ROOT");
+  //console.log("CATEGORY-ROOT");
 
   const pathname = window.location.pathname;
 

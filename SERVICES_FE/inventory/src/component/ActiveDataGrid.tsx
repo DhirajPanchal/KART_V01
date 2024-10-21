@@ -1,7 +1,8 @@
-import React from "react";
+import React, { ChangeEvent, useState } from "react";
+import ClearIcon from "@mui/icons-material/Clear";
+import Fab from "@mui/material/Fab";
 import {
   DataGrid,
-  GridCallbackDetails,
   GridColDef,
   GridFilterModel,
   GridRowSelectionModel,
@@ -11,9 +12,12 @@ import {
 import { ListResponse } from "../model/ListResponse";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import { DEFAULT_LIST_PAYLOAD } from "./DataGridHelper";
+import {
+  DEFAULT_LIST_PAYLOAD,
+  ListPayload,
+  SortObject,
+} from "./DataGridHelper";
 
-const label = { inputProps: { "aria-label": "Checkbox demo" } };
 type ActiveDataGridProps = {
   columns: GridColDef[];
   provider: ListResponse<any>;
@@ -25,42 +29,91 @@ export default function ActiveDataGrid({
   provider,
   ...props
 }: ActiveDataGridProps) {
-  const loadDataHandle = () => {
+  console.log("<ActiveDataGrid>");
+
+  const [payload, setPayload] = useState<ListPayload>(DEFAULT_LIST_PAYLOAD);
+
+  const triggerDataRefresh = (localPayload: ListPayload) => {
+    console.log("=====================================");
+    console.log(payload);
+    console.log(localPayload);
+
     if (props.triggerDataLoad) {
-      props.triggerDataLoad(DEFAULT_LIST_PAYLOAD);
+      props.triggerDataLoad(localPayload);
     }
+    setPayload(localPayload);
   };
 
   function handleFilter(model: GridFilterModel) {
-    console.log(
-      "FILTER :: " +
-        model.items[0].field +
-        " ( " +
-        model.items[0].operator +
-        " ) : " +
-        model.items[0].value
-    );
+    if (model && model.items[0] && model.items[0].value) {
+      console.log(
+        "FILTER :: " +
+          model.items[0].field +
+          " ( " +
+          model.items[0].operator +
+          " ) : " +
+          model.items[0].value
+      );
+
+      const localPayload: ListPayload = {
+        ...payload,
+        search: model.items[0].value,
+      };
+      triggerDataRefresh(localPayload);
+    }
   }
 
   function handleSort(model: GridSortModel) {
-    console.table("SORT :: " + model[0].field + " ( " + model[0].sort + " )");
+    console.log("handleSort");
+    console.log(model);
+    console.log(model[0]);
+    if (model && model[0]) {
+      console.table("SORT :: " + model[0].field + " ( " + model[0].sort + " )");
+      const sortfield = "" + model[0].field;
+      const sortOrder = "" + model[0].sort;
+
+      const sortObj: SortObject = { [sortfield]: sortOrder };
+
+      const localPayload: ListPayload = {
+        ...payload,
+        sort: sortObj,
+      };
+      triggerDataRefresh(localPayload);
+    }
   }
 
-  function handlePagination(model: any) {
+  function handleModelPagination(model: any) {
+    console.log("__handleModelPagination ");
     console.log(model);
+
+    const localPayload: ListPayload = {
+      ...payload,
+      index: model.page,
+      size: model.pageSize,
+    };
+    triggerDataRefresh(localPayload);
   }
 
   const handleIncludeDeleted = (checked: boolean) => {
     console.log("__handleIncludeDeleted ( " + checked + " )");
+    const localPayload: ListPayload = {
+      ...payload,
+      includeDeleted: checked,
+    };
+    triggerDataRefresh(localPayload);
   };
-  const handleRowClick = (
-    model: GridRowSelectionModel,
-    details: GridCallbackDetails
-  ) => {
-    const id = (model[0] as number) - 1;
-    const entityId = provider.list[id]["id"];
-    // console.log("__handleRowClick : " + entityId);
-    if (props.onRowSelection) props.onRowSelection(entityId);
+
+  const handleClear = () => {
+    console.log("__handleClear");
+    const localPayload: ListPayload = { ...payload, ...DEFAULT_LIST_PAYLOAD };
+    triggerDataRefresh(localPayload);
+  };
+
+  const handleRowClick = (model: GridRowSelectionModel) => {
+    console.log("-------------------------------------");
+    if (model && model[0]) {
+      if (props.onRowSelection) props.onRowSelection(+model[0]);
+    }
   };
 
   return (
@@ -70,12 +123,12 @@ export default function ActiveDataGrid({
           columns={props.columns}
           rows={provider.list}
           initialState={{
-            pagination: { paginationModel: { pageSize: 10 } },
+            pagination: { paginationModel: { pageSize: 10, page: 0 } },
           }}
-          slots={{
-              toolbar: GridToolbar,
-            }}
-          // density="compact"
+          // slots={{
+          //   toolbar: GridToolbar,
+          // }}
+          density="compact"
           columnHeaderHeight={80}
           showColumnVerticalBorder={true}
           showCellVerticalBorder={false}
@@ -83,14 +136,14 @@ export default function ActiveDataGrid({
           onSortModelChange={(model) => handleSort(model)}
           filterMode="server"
           onFilterModelChange={(model) => handleFilter(model)}
-          pageSizeOptions={[10, 25]}
-          rowCount={10}
+          rowCount={provider.totalElements}
+          pagination={true}
+          paginationModel={{ page: payload.index, pageSize: payload.size }}
+          pageSizeOptions={[10, 20, 50]}
           paginationMode="server"
-          onPaginationMetaChange={(model) => handlePagination(model)}
+          onPaginationModelChange={(model) => handleModelPagination(model)}
           rowSelection
-          onRowSelectionModelChange={(model, details) =>
-            handleRowClick(model, details)
-          }
+          onRowSelectionModelChange={(model) => handleRowClick(model)}
         />
       </div>
       <div className="active-data-grid-footer">
@@ -98,6 +151,7 @@ export default function ActiveDataGrid({
           value="end"
           control={
             <Checkbox
+              checked={payload.includeDeleted}
               sx={{
                 color: "#006064",
                 "&.Mui-checked": {
@@ -109,6 +163,17 @@ export default function ActiveDataGrid({
           label="Include deleted"
           onChange={(event, checked) => handleIncludeDeleted(checked)}
         />
+
+        <Fab
+          color="default"
+          variant="extended"
+          aria-label="clear"
+          onClick={handleClear}
+          size="small"
+        >
+          <ClearIcon />
+          Clear
+        </Fab>
       </div>
     </>
   );

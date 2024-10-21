@@ -39,11 +39,11 @@ import UserService from "./service/UserService";
 
 const renderApp = () =>
   ReactDOM.createRoot(document.getElementById("app")!).render(
-    <React.StrictMode>
+    // <React.StrictMode>
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </React.StrictMode>
+    // </React.StrictMode>
   );
 
 UserService.initKeycloak(renderApp);

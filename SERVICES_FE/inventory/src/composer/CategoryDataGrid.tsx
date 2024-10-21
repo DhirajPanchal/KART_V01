@@ -7,16 +7,30 @@ import {
 import { Category } from "../model/Category";
 import { ListResponse } from "../model/ListResponse";
 import ApiHub from "../service/ApiHub";
-import { GridColDef } from "@mui/x-data-grid";
+import {
+  getGridNumericOperators,
+  getGridStringOperators,
+  GridColDef,
+} from "@mui/x-data-grid";
+
+const stringOperators = getGridStringOperators().filter((op) =>
+  ["contains"].includes(op.value)
+);
 
 const CATEGORY_COLUMNS: GridColDef[] = [
-  { field: "id", headerName: "ID", width: 60 },
-  { field: "name", headerName: "CATEGORY", width: 480 },
+  { field: "id", headerName: "ID", width: 60, filterable: false },
+  {
+    field: "name",
+    headerName: "CATEGORY",
+    width: 360,
+    filterOperators: stringOperators,
+  },
   {
     field: "isDeleted",
     headerName: "IS DELETED",
     width: 120,
     type: "boolean",
+    filterable: false,
   },
 ];
 
@@ -34,18 +48,18 @@ export default function CategoryDataGrid({
 
   useEffect(() => {
     console.log("[EntityDataGrid] EFFECT");
-    loadDataHandle();
+    handleDataLoadTrigger();
   }, []);
 
-  const loadDataHandle = (payload: any = DEFAULT_LIST_PAYLOAD) => {
-    console.log("[EntityDataGrid] LOAD");
-    ApiHub.loadCategoryList(DEFAULT_LIST_PAYLOAD)
+  const handleDataLoadTrigger = (payload: any = DEFAULT_LIST_PAYLOAD) => {
+    console.log("[EntityDataGrid] LOAD  *  *  *  *  *  *  *  *  *  *  ");
+    console.log(payload);
+    ApiHub.loadCategoryList(payload)
       .then((data) => {
         setListResponse(data);
       })
       .catch(() => {});
   };
-  
 
   const handleRowSelection = (entityId: number) => {
     console.log("[EntityDataGrid] RowSelection : " + entityId);
@@ -57,6 +71,7 @@ export default function CategoryDataGrid({
       columns={CATEGORY_COLUMNS}
       provider={listResponse}
       onRowSelection={(entityId) => handleRowSelection(entityId)}
+      triggerDataLoad={(payload) => handleDataLoadTrigger(payload)}
     />
   );
 }

@@ -12,7 +12,7 @@ export default function App() {
   return (
     <div className="application-contianer">
       <div className="section-header">
-        <span>M A N A G E - I N V E N T O R Y </span>
+        <span>MANAGE - INVENTORY </span>
       </div>
       <div className="inventory-curd-nav">
         <NavLink to="category" className="inventory-curd-nav-item">

@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { ListResponse } from "../model/ListResponse";
 import { Category } from "../model/Category";
-import { DEFAULT_LIST_PAYLOAD } from "../component/DataGridHelper";
+import { DEFAULT_LIST_PAYLOAD, ListPayload } from "../component/DataGridHelper";
 import { toast } from "react-toastify";
 import { SubCategory } from "../model/SubCategory";
 import { Product } from "../model/Product";
@@ -32,8 +32,8 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
   async (response) => {
-    //console.log("[INBOUND] __API (INV) RESPONSE");
-    //console.log(response);
+    console.log("[INBOUND] __API (INV) RESPONSE");
+    console.log(response);
     toast("Success");
     return response;
   },
@@ -75,8 +75,19 @@ const request = {
     axios.post<T>(url, body).then(responseBody),
 };
 
-const loadCategoryList = (payload: any = DEFAULT_LIST_PAYLOAD) =>
-  request.post<ListResponse<Category>>("inventory/category/list", payload);
+const loadCategoryList = (payload: ListPayload = DEFAULT_LIST_PAYLOAD) =>
+  request.post<ListResponse<Category>>(
+    `inventory/category/list?index=${payload.index}&size=${payload.size}`,
+    payload
+  );
+
+const loadCategoryById = (id: number) => {
+  return request.get<Category>(`inventory/category/${id}`);
+};
+
+const addCategory = (payload: any) => {
+  return request.post<Category>(`inventory/category`, payload);
+};
 
 const loadSubCategoryList = (payload: any = DEFAULT_LIST_PAYLOAD) =>
   request.post<ListResponse<SubCategory>>(
@@ -90,13 +101,10 @@ const loadProductList = (payload: any = DEFAULT_LIST_PAYLOAD) =>
     payload
   );
 
-const loadCategoryById = (id: number) => {
-  return request.get<Category>(`inventory/category/${id}`);
-};
-
 const ApiHub = {
   loadCategoryList,
   loadCategoryById,
+  addCategory,
 
   loadSubCategoryList,
   loadProductList,

@@ -1,12 +1,22 @@
 import { GridColDef } from "@mui/x-data-grid";
 import { ListResponse } from "../model/ListResponse";
 
-export const DEFAULT_LIST_PAYLOAD = {
+export type SortObject = {[key: string] : string}
+
+export interface ListPayload {
+  search: string;
+  sort: SortObject;
+  includeDeleted: boolean;
+  index: number;
+  size: number;
+}
+
+export const DEFAULT_LIST_PAYLOAD: ListPayload = {
   search: "",
-  sort: {
-    id: "asc",
-  },
-  includeDeleted: true,
+  sort: { name: "asc" },
+  includeDeleted: false,
+  index: 0,
+  size: 10,
 };
 
 export const DEFAULT_LIST_RESPONSE: ListResponse<any> = {

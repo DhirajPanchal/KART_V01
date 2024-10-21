@@ -53,6 +53,8 @@
   padding-right: 48px;
   padding-top: 16px;
   color: #006064;
+  /* word-spacing: 4px; */
+  letter-spacing: 4px;
   /* background-color: lightgreen; */
 }
 
@@ -64,11 +66,10 @@
 }
 
 .active-data-grid-footer {
-  /* background-color: cadetblue; */
   float: right;
   height: 8%;
   align-content: center;
-  padding-right: 4px;
+  padding-right: 16px;
 }
 
 /* ------------------------------------------------------------- CATEGORY Section */

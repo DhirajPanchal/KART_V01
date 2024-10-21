@@ -5,10 +5,11 @@ import CategoryDataGrid from "./CategoryDataGrid";
 import EntityHeaderNav from "./EntityHeaderNav";
 import EntityView from "./EntityView";
 import EntityViewNone from "./EntityViewNone";
+import EntityNew from "./EntityNew";
+
 type EntityRootProps = {
   entityType: string;
 };
-
 
 export default function EntityRoot({
   entityType = "category",
@@ -18,7 +19,7 @@ export default function EntityRoot({
   const [entityId, setEntityId] = useState<number>(0);
 
   const handleRowSelection = (entityId: number) => {
-    console.log("__handleRowSelection : " + entityId);
+    // console.log("__handleRowSelection : " + entityId);
     setEntityId(entityId);
     navigation("" + entityId);
   };
@@ -33,6 +34,7 @@ export default function EntityRoot({
         </div>
 
         <div className="entity-body">
+
           <div className="entity-nav">
             <EntityHeaderNav
               entityId={entityId}
@@ -52,7 +54,7 @@ export default function EntityRoot({
                 element={<EntityView entityType={entityType} />}
               />
               <Route path=":id/edit" element={<h1>EDIT</h1>} />
-              <Route path="new" element={<h1>NEW</h1>} />
+              <Route path="new" element={<EntityNew  entityType={entityType} />} />
             </Routes>
             <Outlet />
           </div>
