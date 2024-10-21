@@ -1,8 +1,11 @@
+
+import { alpha, styled } from '@mui/material/styles';
 import React, { ChangeEvent, useState } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
 import Fab from "@mui/material/Fab";
 import {
   DataGrid,
+  gridClasses,
   GridColDef,
   GridFilterModel,
   GridRowSelectionModel,
@@ -29,14 +32,14 @@ export default function ActiveDataGrid({
   provider,
   ...props
 }: ActiveDataGridProps) {
-  console.log("<ActiveDataGrid>");
-
+  console.log("  < ActiveDataGrid >");
+  const ODD_OPACITY = 0.2;
   const [payload, setPayload] = useState<ListPayload>(DEFAULT_LIST_PAYLOAD);
 
   const triggerDataRefresh = (localPayload: ListPayload) => {
-    console.log("=====================================");
-    console.log(payload);
-    console.log(localPayload);
+    console.log("  < ActiveDataGrid > PAYLOAD");
+    console.log("      existing ::", payload);
+    console.log("      new      ::", localPayload);
 
     if (props.triggerDataLoad) {
       props.triggerDataLoad(localPayload);
@@ -116,10 +119,46 @@ export default function ActiveDataGrid({
     }
   };
 
+
+  const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
+    [`& .${gridClasses.row}.even`]: {
+      backgroundColor: theme.palette.grey[200],
+      '&:hover': {
+        backgroundColor: alpha(theme.palette.primary.main, ODD_OPACITY),
+        '@media (hover: none)': {
+          backgroundColor: 'transparent',
+        },
+      },
+      '&.Mui-selected': {
+        backgroundColor: alpha(
+          theme.palette.primary.main,
+          ODD_OPACITY + theme.palette.action.selectedOpacity,
+        ),
+        '&:hover': {
+          backgroundColor: alpha(
+            theme.palette.primary.main,
+            ODD_OPACITY +
+              theme.palette.action.selectedOpacity +
+              theme.palette.action.hoverOpacity,
+          ),
+          // Reset on touch devices, it doesn't add specificity
+          '@media (hover: none)': {
+            backgroundColor: alpha(
+              theme.palette.primary.main,
+              ODD_OPACITY + theme.palette.action.selectedOpacity,
+            ),
+          },
+        },
+      },
+    },
+  }));
+
+
+
   return (
     <>
-      <div className="active-data-grid-main">
-        <DataGrid
+      <div className="entity-active-data-grid">
+        <StripedDataGrid
           columns={props.columns}
           rows={provider.list}
           initialState={{
@@ -129,7 +168,8 @@ export default function ActiveDataGrid({
           //   toolbar: GridToolbar,
           // }}
           density="compact"
-          columnHeaderHeight={80}
+          columnHeaderHeight={64}
+        
           showColumnVerticalBorder={true}
           showCellVerticalBorder={false}
           sortingMode="server"
@@ -144,9 +184,12 @@ export default function ActiveDataGrid({
           onPaginationModelChange={(model) => handleModelPagination(model)}
           rowSelection
           onRowSelectionModelChange={(model) => handleRowClick(model)}
-        />
+          getRowClassName={(params) =>
+            params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'
+          }
+         />
       </div>
-      <div className="active-data-grid-footer">
+      <div className="entity-data-grid-footer">
         <FormControlLabel
           value="end"
           control={

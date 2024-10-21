@@ -16,7 +16,8 @@
   height: 100%;
   border: 1px solid black;
   border-radius: 4px;
-  /* background-color: lightskyblue; */
+  display: flex;
+  flex-direction: column;
 }
 
 .entity-body {
@@ -26,19 +27,35 @@
   height: auto;
   border: 1px solid black;
   border-radius: 4px;
-  /* background-color: lightskyblue; */
   padding: 8px;
 }
 
+/* -----------------------------------------------------------------   LISTING   -------------- */
+
+.cb-arrange-horizontally > * {
+  display: inline-block;
+  padding: 8px 8px 8px 8px ;
+}
+
+.entity-active-data-grid {
+  flex-grow: 1;
+}
+
+.entity-data-grid-footer {
+  text-align: right;
+  padding: 4px;
+  padding-right: 16px;
+}
+
+/* -----------------------------------------------------------------   FORM   -------------- */
+
 .entity-nav {
   height: 80px;
-  /* background-color: lightyellow; */
   display: flex;
   align-items: center;
   justify-content: end;
   padding: 0 16px 0 16px;
   gap: 16px;
-  border: 1px solid lightgray;
 }
 
 .entity-nav button {
@@ -47,10 +64,8 @@
 }
 
 .entity-curd {
-  /* background-color: rgb(177, 177, 25); */
   flex-grow: 1;
   display: flex;
-  border: 1px solid lightgray;
 }
 
 .entity-view-none {
@@ -63,24 +78,17 @@
 }
 
 .entity-view {
-  /* background-color: white; */
-  /* margin-top: 16px; */
   padding: 16px;
-  /* padding-top: 16px; */
   height: auto;
   flex-grow: 1;
 }
 
 .entity-new {
-  /* background-color: white; */
-  /* margin-top: 16px; */
   padding: 16px;
-  /* padding-top: 16px; */
   height: auto;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  /* border: 1px solid black; */
 }
 
 .entity-view-type {
@@ -90,6 +98,7 @@
   padding-bottom: 12px;
   height: 40px;
 }
+
 .entity-view-name {
   margin-left: 12px;
 }

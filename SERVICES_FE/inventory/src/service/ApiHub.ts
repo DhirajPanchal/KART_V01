@@ -32,8 +32,8 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
   async (response) => {
-    console.log("[INBOUND] __API (INV) RESPONSE");
-    console.log(response);
+    console.log("[INBOUND] __API (INV) RESPONSE", response.data);
+    // console.log(response);
     toast("Success");
     return response;
   },

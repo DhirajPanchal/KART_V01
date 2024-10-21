@@ -7,6 +7,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CategoryRoot from "./component/category/CategoryRoot";
 import EntityRoot from "./composer/EntityRoot";
+import CategoryEntity from "./component/CategoryEntity";
 
 export default function App() {
   return (
@@ -29,7 +30,7 @@ export default function App() {
           )}
         </NavLink>
 
-        <span className={"inventory-curd-nav-item-link"}>|</span>
+        {/* <span className={"inventory-curd-nav-item-link"}>|</span>
         <NavLink to="entity" className="inventory-curd-nav-item">
           {({ isActive, isPending, isTransitioning }) => (
             <span
@@ -42,7 +43,7 @@ export default function App() {
               E N T I T Y
             </span>
           )}
-        </NavLink>
+        </NavLink> */}
 
         <span className={"inventory-curd-nav-item-link"}>|</span>
         <NavLink to="subcategory" className="inventory-curd-nav-item">
@@ -72,6 +73,25 @@ export default function App() {
             </span>
           )}
         </NavLink>
+
+        <span className={"inventory-curd-nav-item-link"}>|</span>
+        <NavLink to="category-entity" className="inventory-curd-nav-item">
+          {({ isActive, isPending, isTransitioning }) => (
+            <span
+              className={
+                isActive
+                  ? "inventory-curd-nav-item-link-active"
+                  : "inventory-curd-nav-item-link"
+              }
+            >
+              C A T E G O R Y - E N T I T Y
+            </span>
+          )}
+        </NavLink>
+
+
+
+
       </div>
 
       <Routes>
@@ -84,7 +104,8 @@ export default function App() {
         </Route>
         <Route path="subcategory" element={<SubCategoryList />} />
         <Route path="product" element={<ProductList />} />
-        <Route path="entity/*" element={<EntityRoot entityType="category"/>} />
+        {/* <Route path="entity/*" element={<EntityRoot entityType="category"/>} /> */}
+        <Route path="category-entity/*" element={<CategoryEntity/>} />
       </Routes>
 
       <ToastContainer autoClose={400} pauseOnFocusLoss={false} />
