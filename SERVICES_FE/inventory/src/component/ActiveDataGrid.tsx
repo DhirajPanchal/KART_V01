@@ -1,6 +1,5 @@
-
-import { alpha, styled } from '@mui/material/styles';
-import React, { ChangeEvent, useState } from "react";
+import { alpha, styled } from "@mui/material/styles";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
 import Fab from "@mui/material/Fab";
 import {
@@ -26,20 +25,45 @@ type ActiveDataGridProps = {
   provider: ListResponse<any>;
   triggerDataLoad?: (payload: any) => void;
   onRowSelection?: (entityId: number) => void | undefined;
+  onClear?: ()=>void;
+  categoryId?: number;
+  subCategoryId?: number;
 };
 
 export default function ActiveDataGrid({
   provider,
+  categoryId,
+  subCategoryId,
   ...props
 }: ActiveDataGridProps) {
-  console.log("  < ActiveDataGrid >");
+  // console.log("  < ActiveDataGrid >");
+
   const ODD_OPACITY = 0.2;
+
   const [payload, setPayload] = useState<ListPayload>(DEFAULT_LIST_PAYLOAD);
 
+  useEffect(() => {
+    // console.log(">>>>>>>>>>>>>>>>>>> " + categoryId + " - " + subCategoryId);
+    if (categoryId !== undefined || subCategoryId !== undefined) {
+      const _categoryId = categoryId !== undefined ? categoryId : 0;
+      const _subCategoryId = subCategoryId !== undefined ? subCategoryId : 0;
+      console.log(">>>>> __Category OR SubCategory Change ");
+      const localPayload: ListPayload = {
+        ...payload,
+        ui_only: {
+          ...payload.ui_only,
+          categoryId: _categoryId,
+          subCategoryId: _subCategoryId,
+        },
+      };
+      triggerDataRefresh(localPayload);
+    }
+  }, [categoryId, subCategoryId]);
+
   const triggerDataRefresh = (localPayload: ListPayload) => {
-    console.log("  < ActiveDataGrid > PAYLOAD");
-    console.log("      existing ::", payload);
-    console.log("      new      ::", localPayload);
+    // console.log(" < ActiveDataGrid > PAYLOAD ****************************");
+    // console.log("      existing ::", payload);
+    // console.log("      new      ::", localPayload);
 
     if (props.triggerDataLoad) {
       props.triggerDataLoad(localPayload);
@@ -91,8 +115,7 @@ export default function ActiveDataGrid({
 
     const localPayload: ListPayload = {
       ...payload,
-      index: model.page,
-      size: model.pageSize,
+      ui_only: { ...payload.ui_only, index: model.page, size: model.pageSize },
     };
     triggerDataRefresh(localPayload);
   }
@@ -110,42 +133,44 @@ export default function ActiveDataGrid({
     console.log("__handleClear");
     const localPayload: ListPayload = { ...payload, ...DEFAULT_LIST_PAYLOAD };
     triggerDataRefresh(localPayload);
+    if(props.onClear){
+      props.onClear();
+    }
   };
 
   const handleRowClick = (model: GridRowSelectionModel) => {
-    console.log("-------------------------------------");
+    // console.log("-------------------------------------");
     if (model && model[0]) {
       if (props.onRowSelection) props.onRowSelection(+model[0]);
     }
   };
 
-
   const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
     [`& .${gridClasses.row}.even`]: {
       backgroundColor: theme.palette.grey[200],
-      '&:hover': {
+      "&:hover": {
         backgroundColor: alpha(theme.palette.primary.main, ODD_OPACITY),
-        '@media (hover: none)': {
-          backgroundColor: 'transparent',
+        "@media (hover: none)": {
+          backgroundColor: "transparent",
         },
       },
-      '&.Mui-selected': {
+      "&.Mui-selected": {
         backgroundColor: alpha(
           theme.palette.primary.main,
-          ODD_OPACITY + theme.palette.action.selectedOpacity,
+          ODD_OPACITY + theme.palette.action.selectedOpacity
         ),
-        '&:hover': {
+        "&:hover": {
           backgroundColor: alpha(
             theme.palette.primary.main,
             ODD_OPACITY +
               theme.palette.action.selectedOpacity +
-              theme.palette.action.hoverOpacity,
+              theme.palette.action.hoverOpacity
           ),
           // Reset on touch devices, it doesn't add specificity
-          '@media (hover: none)': {
+          "@media (hover: none)": {
             backgroundColor: alpha(
               theme.palette.primary.main,
-              ODD_OPACITY + theme.palette.action.selectedOpacity,
+              ODD_OPACITY + theme.palette.action.selectedOpacity
             ),
           },
         },
@@ -153,14 +178,12 @@ export default function ActiveDataGrid({
     },
   }));
 
-
-
   return (
     <>
       <div className="entity-active-data-grid">
         <StripedDataGrid
           columns={props.columns}
-          rows={provider.list}
+          rows={provider.list ? provider.list : []}
           initialState={{
             pagination: { paginationModel: { pageSize: 10, page: 0 } },
           }}
@@ -169,25 +192,27 @@ export default function ActiveDataGrid({
           // }}
           density="compact"
           columnHeaderHeight={64}
-        
           showColumnVerticalBorder={true}
           showCellVerticalBorder={false}
           sortingMode="server"
           onSortModelChange={(model) => handleSort(model)}
           filterMode="server"
           onFilterModelChange={(model) => handleFilter(model)}
-          rowCount={provider.totalElements}
+          rowCount={provider.totalElements ? provider.totalElements : 0}
           pagination={true}
-          paginationModel={{ page: payload.index, pageSize: payload.size }}
+          paginationModel={{
+            page: payload.ui_only.index,
+            pageSize: payload.ui_only.size,
+          }}
           pageSizeOptions={[10, 20, 50]}
           paginationMode="server"
           onPaginationModelChange={(model) => handleModelPagination(model)}
           rowSelection
           onRowSelectionModelChange={(model) => handleRowClick(model)}
           getRowClassName={(params) =>
-            params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'
+            params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
           }
-         />
+        />
       </div>
       <div className="entity-data-grid-footer">
         <FormControlLabel

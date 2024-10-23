@@ -9,3 +9,11 @@ export interface SubCategory {
 
   category: Category;
 }
+
+
+export interface SubCategoryLabel {
+  id: number;
+
+  name: string;
+
+}

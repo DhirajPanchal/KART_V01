@@ -10,8 +10,7 @@ export default function EntityViewNone({
   return (
     <div className="entity-view-none">
       {`Select ${entityType} from the list for more details/options or click '`}{" "}
-      <b>+ NEW</b> {`'to add new ${entityType}.`}
+      <b> + </b> {`' to add new ${entityType}.`}
     </div>
   );
 }
-

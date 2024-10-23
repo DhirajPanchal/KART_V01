@@ -5,3 +5,9 @@ export interface Category {
 
   isDeleted: boolean;
 }
+
+export interface CategoryLabel {
+  id: number;
+
+  name: string;
+}

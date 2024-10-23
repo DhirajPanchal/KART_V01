@@ -1,13 +1,11 @@
 import React from "react";
 import "./index.css";
 import { Routes, Route, NavLink, Navigate } from "react-router-dom";
-import SubCategoryList from "./component/SubCategoryListing";
-import ProductList from "./component/ProductListing";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import CategoryRoot from "./component/category/CategoryRoot";
-import EntityRoot from "./composer/EntityRoot";
 import CategoryEntity from "./component/CategoryEntity";
+import ProductEntity from "./component/ProductEntity";
+import SubCategoryEntity from "./component/SubCategoryEntity";
 
 export default function App() {
   return (
@@ -30,22 +28,8 @@ export default function App() {
           )}
         </NavLink>
 
-        {/* <span className={"inventory-curd-nav-item-link"}>|</span>
-        <NavLink to="entity" className="inventory-curd-nav-item">
-          {({ isActive, isPending, isTransitioning }) => (
-            <span
-              className={
-                isActive
-                  ? "inventory-curd-nav-item-link-active"
-                  : "inventory-curd-nav-item-link"
-              }
-            >
-              E N T I T Y
-            </span>
-          )}
-        </NavLink> */}
-
         <span className={"inventory-curd-nav-item-link"}>|</span>
+
         <NavLink to="subcategory" className="inventory-curd-nav-item">
           {({ isActive, isPending, isTransitioning }) => (
             <span
@@ -59,7 +43,9 @@ export default function App() {
             </span>
           )}
         </NavLink>
+
         <span className={"inventory-curd-nav-item-link"}>|</span>
+
         <NavLink to="product" className="inventory-curd-nav-item">
           {({ isActive, isPending, isTransitioning }) => (
             <span
@@ -73,39 +59,13 @@ export default function App() {
             </span>
           )}
         </NavLink>
-
-        <span className={"inventory-curd-nav-item-link"}>|</span>
-        <NavLink to="category-entity" className="inventory-curd-nav-item">
-          {({ isActive, isPending, isTransitioning }) => (
-            <span
-              className={
-                isActive
-                  ? "inventory-curd-nav-item-link-active"
-                  : "inventory-curd-nav-item-link"
-              }
-            >
-              C A T E G O R Y - E N T I T Y
-            </span>
-          )}
-        </NavLink>
-
-
-
-
       </div>
 
       <Routes>
         <Route index element={<Navigate replace to="category" />} />
-        <Route path="category/*" element={<CategoryRoot />}>
-          {/* <Route index element={<Navigate replace to="0" />} />
-          <Route path=":id" element={<CategoryView />} />
-          <Route path=":id/edit" element={<h5> E D I T</h5>} />
-          <Route path="new" element={<CategoryForm />} /> */}
-        </Route>
-        <Route path="subcategory" element={<SubCategoryList />} />
-        <Route path="product" element={<ProductList />} />
-        {/* <Route path="entity/*" element={<EntityRoot entityType="category"/>} /> */}
-        <Route path="category-entity/*" element={<CategoryEntity/>} />
+        <Route path="category/*" element={<CategoryEntity />} />
+        <Route path="subcategory/*" element={<SubCategoryEntity />} />
+        <Route path="product/*" element={<ProductEntity />} />
       </Routes>
 
       <ToastContainer autoClose={400} pauseOnFocusLoss={false} />

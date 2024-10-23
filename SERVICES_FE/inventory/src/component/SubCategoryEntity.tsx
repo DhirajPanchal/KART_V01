@@ -7,63 +7,84 @@ import EntityView from "../composer/EntityView";
 import EntityViewNone from "../composer/EntityViewNone";
 import ActiveDataGrid from "./ActiveDataGrid";
 import {
-  CATEGORY_COLUMNS,
   DEFAULT_LIST_PAYLOAD,
   DEFAULT_LIST_RESPONSE,
+  ListPayload,
+  SUB_CATEGORY_COLUMNS,
 } from "./DataGridHelper";
 import ApiHub from "../service/ApiHub";
 import { ListResponse } from "../model/ListResponse";
-import { Category } from "../model/Category";
+import { SubCategory, SubCategoryLabel } from "../model/SubCategory";
+import { CategoryDropdown } from "./EntityDropdown";
 
 //  - - - - - - - - - - -
 //
-//  Entity : Category
+//  Entity : SubCategory
 //
 //  - - - - - - - - - - -
 
-export default function CategoryEntity() {
-  console.log("< CATEGORT >");
+export default function SubCategoryEntity() {
+  console.log("< SUB-CATEGORT >");
 
-  const entityType = "category";
+  const entityType = "sub-category";
 
   const navigation = useNavigate();
 
-  const [listResponse, setListResponse] = useState<ListResponse<Category>>(
+  const [entityId, setEntityId] = useState<number>(0);
+
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number>();
+
+  const [listResponse, setListResponse] = useState<ListResponse<SubCategory>>(
     DEFAULT_LIST_RESPONSE
   );
 
-  const [entityId, setEntityId] = useState<number>(0);
-
   useEffect(() => {
-    console.log("*** < CATEGORT > EFFECT - LIST");
+    console.log("< SUB-CATEGORT > EFFECT - LIST");
     handleDataLoadTrigger();
   }, []);
 
-  const handleDataLoadTrigger = (payload: any = DEFAULT_LIST_PAYLOAD) => {
-    console.log("### < CATEGORT > API - LIST : ", payload);
-    ApiHub.loadCategoryList(payload)
+  const handleDataLoadTrigger = (
+    payload: ListPayload = DEFAULT_LIST_PAYLOAD
+  ) => {
+    // console.log("< SUB-CATEGORT > API - LIST : ", payload);
+    // console.log(_payload);
+    ApiHub.loadSubCategoryList(payload)
       .then((data) => {
         setListResponse(data);
       })
       .catch(() => {});
   };
 
-  const handleRowSelection = (id: number) => {
-    console.log("__handleRowSelection : " + id);
-    // setEntityId(id);
-    navigation("" + id);
+  const handleRowSelection = (entityId: number) => {
+    // console.log("__handleRowSelection : " + entityId);
+    setEntityId(entityId);
+    navigation("" + entityId);
   };
 
+  const onCategoryChange = (id: number) => {
+    // console.log("__onCategoryChange : " + id);
+    setSelectedCategoryId(id);
+  };
+  const handleOnClear = () => {
+    // console.log("< SUB-CATEGORY > __handleOnClear");
+    setSelectedCategoryId(undefined);
+  };
   return (
     <>
       <div className="entity-root">
         <div className="entity-listing">
-          {entityId}
+          <div className="cb-arrange-horizontally">
+            <CategoryDropdown onChange={(id) => onCategoryChange(id)} />
+            {selectedCategoryId}
+          </div>
+
           <ActiveDataGrid
-            columns={CATEGORY_COLUMNS}
+            columns={SUB_CATEGORY_COLUMNS}
             provider={listResponse}
-            onRowSelection={(id) => handleRowSelection(id)}
+            onRowSelection={(entityId) => handleRowSelection(entityId)}
             triggerDataLoad={(payload) => handleDataLoadTrigger(payload)}
+            categoryId={selectedCategoryId}
+            onClear={handleOnClear}
           />
         </div>
 
@@ -84,7 +105,7 @@ export default function CategoryEntity() {
               />
               <Route
                 path=":id"
-                element={<EntityView entityType={entityType} apiMethod={ApiHub.loadCategoryById} />}
+                element={<EntityView entityType={entityType} apiMethod={ApiHub.loadSubCategoryById} />}
               />
               <Route path=":id/edit" element={<h1>EDIT</h1>} />
               <Route

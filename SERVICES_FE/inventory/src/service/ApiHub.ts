@@ -1,9 +1,13 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { ListResponse } from "../model/ListResponse";
-import { Category } from "../model/Category";
-import { DEFAULT_LIST_PAYLOAD, ListPayload } from "../component/DataGridHelper";
+import { Category, CategoryLabel } from "../model/Category";
+import {
+  DEFAULT_LABEL_LIST_PAYLOAD,
+  DEFAULT_LIST_PAYLOAD,
+  ListPayload,
+} from "../component/DataGridHelper";
 import { toast } from "react-toastify";
-import { SubCategory } from "../model/SubCategory";
+import { SubCategory, SubCategoryLabel } from "../model/SubCategory";
 import { Product } from "../model/Product";
 
 const GATEWAY = "http://localhost:8010";
@@ -75,39 +79,76 @@ const request = {
     axios.post<T>(url, body).then(responseBody),
 };
 
+//  * * *  C A T E G O R Y  * * *
+
 const loadCategoryList = (payload: ListPayload = DEFAULT_LIST_PAYLOAD) =>
   request.post<ListResponse<Category>>(
-    `inventory/category/list?index=${payload.index}&size=${payload.size}`,
+    `inventory/category/list?index=${payload.ui_only.index}&size=${payload.ui_only.size}`,
+    payload
+  );
+
+const loadCategoryLabelList = (
+  payload: ListPayload = DEFAULT_LABEL_LIST_PAYLOAD
+) =>
+  request.post<ListResponse<CategoryLabel>>(
+    `inventory/category/list?index=${payload.ui_only.index}&size=${payload.ui_only.size}`,
     payload
   );
 
 const loadCategoryById = (id: number) => {
-  return request.get<Category>(`inventory/category/${id}`);
+  return request.get<any>(`inventory/category/${id}`);
 };
 
 const addCategory = (payload: any) => {
   return request.post<Category>(`inventory/category`, payload);
 };
 
-const loadSubCategoryList = (payload: any = DEFAULT_LIST_PAYLOAD) =>
+//  * * *  S U B - C A T E G O R Y  * * *
+
+const loadSubCategoryList = (payload: ListPayload = DEFAULT_LIST_PAYLOAD) =>
   request.post<ListResponse<SubCategory>>(
-    "inventory/category/0/subcategory/list",
+    `inventory/category/${payload.ui_only.categoryId}/subcategory/list?index=${payload.ui_only.index}&size=${payload.ui_only.size}`,
     payload
   );
+
+const loadSubCategoryLabelList = (
+  payload: ListPayload = DEFAULT_LABEL_LIST_PAYLOAD
+) =>
+  request.post<ListResponse<SubCategoryLabel>>(
+    `inventory/category/${payload.ui_only.categoryId}/subcategory/list?index=${payload.ui_only.index}&size=${payload.ui_only.size}`,
+    payload
+  );
+
+const loadSubCategoryById = (id: number) => {
+  return request.get<SubCategory>(`inventory/category/0/subcategory/${id}`);
+};
+
+//  * * *  P R O D U C T  * * *
 
 const loadProductList = (payload: any = DEFAULT_LIST_PAYLOAD) =>
   request.post<ListResponse<Product>>(
-    "inventory/category/0/subcategory/8/product/list",
+    `inventory/category/${payload.ui_only.categoryId}/subcategory/${payload.ui_only.subCategoryId}/product/list?index=${payload.ui_only.index}&size=${payload.ui_only.size}`,
     payload
   );
 
+const loadProductById = (id: number) => {
+  return request.get<Product>(
+    `inventory/category/0/subcategory/0/product/${id}`
+  );
+};
+
 const ApiHub = {
   loadCategoryList,
+  loadCategoryLabelList,
   loadCategoryById,
   addCategory,
 
   loadSubCategoryList,
+  loadSubCategoryLabelList,
+  loadSubCategoryById,
+
   loadProductList,
+  loadProductById
 };
 
 export default ApiHub;

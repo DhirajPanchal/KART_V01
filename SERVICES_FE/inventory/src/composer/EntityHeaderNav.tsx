@@ -9,7 +9,6 @@ type EntityHeaderNavProp = {
   onNewNaviation?: () => void;
 };
 
-
 export default function EntityHeaderNav({
   entityId = 0,
   onNewNaviation,
@@ -60,7 +59,8 @@ export default function EntityHeaderNav({
 
   return (
     <>
-      {` - ${mode} / ${entityId} -  `}
+      {/* {` - ${mode} / ${entityId} -  `} */}
+
       {mode === "VIEW" && (
         <button onClick={handleEdit}>
           {" "}
@@ -74,6 +74,7 @@ export default function EntityHeaderNav({
           <AddIcon />{" "}
         </button>
       )}
+
       {(mode === "NEW" || mode === "EDIT" || mode === "VIEW") && (
         <button onClick={handleCancel}>
           <CancelIcon />
