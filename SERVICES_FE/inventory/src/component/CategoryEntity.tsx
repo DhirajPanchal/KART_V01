@@ -24,7 +24,7 @@ import { Category } from "../model/Category";
 export default function CategoryEntity() {
   console.log("< CATEGORT >");
 
-  const entityType = "category";
+  const entityType = "Category";
 
   const navigation = useNavigate();
 

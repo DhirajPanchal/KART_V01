@@ -3,21 +3,23 @@
   display: flex;
   align-content: center;
   width: 98%;
-  height: 86%;
-  margin: 16px auto auto auto;
+  height: 84%;
+  margin: 16px 4px auto 4px;
   padding: 16px;
-  border: 1px solid black;
+  border: 1px solid #00838f;
   border-radius: 4px;
   gap: 16px;
+  /* background-color: black; */
 }
 
 .entity-listing {
   width: 50%;
   height: 100%;
-  border: 1px solid black;
+  border: 1px solid #00838f;
   border-radius: 4px;
   display: flex;
   flex-direction: column;
+  /* background-color: lightblue; */
 }
 
 .entity-body {
@@ -25,9 +27,10 @@
   flex-flow: column;
   width: 50%;
   height: auto;
-  border: 1px solid black;
+  border: 1px solid #00838f;
   border-radius: 4px;
   padding: 8px;
+  /* background-color: lightblue; */
 }
 
 /* -----------------------------------------------------------------   LISTING   -------------- */
@@ -56,6 +59,7 @@
   justify-content: end;
   padding: 0 16px 0 16px;
   gap: 16px;
+  /* background-color: antiquewhite; */
 }
 
 .entity-nav button {
@@ -77,6 +81,7 @@
   padding-top: 80px;
 }
 
+/* -----------------------------------------------------------------   ENTITY - NEW  -------------- */
 .entity-new {
   padding: 16px;
   height: auto;
@@ -85,51 +90,37 @@
   flex-grow: 1;
 }
 
-/* -----------------------------------------------------------------   ENTITY - NEW  -------------- */
+/* -----------------------------------------------------------------   ENTITY - VIEW  -------------- */
 
 .entity-view {
-  padding: 16px;
+  padding: 8px 8px 8px 8px;
   height: auto;
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  /* background-color: aqua; */
 }
 
-.entity-view-type {
+.entity-view-header {
+  display: flex;
   font-size: larger;
   font-weight: bold;
-  padding-top: 12px;
-  padding-bottom: 12px;
-  height: 40px;
+  align-items: center;
+  /* background-color: #00838f; */
+  padding: 2px;
+  margin-top: 0px;
+  margin-bottom: 8px;
 }
-
 .entity-view-name {
-  margin-left: 12px;
-}
-
-.entity-view table {
-  border-collapse: collapse;
+  /* background-color: aqua; */
+  padding: 0 16px 0 16px;
   letter-spacing: 1px;
-  width: 100%;
 }
-
-.entity-view th {
-  padding: 8px 10px;
-  text-align: left;
-}
-
-.entity-view td {
-  padding: 8px 10px;
-  text-align: left;
-  width: 24%;
-}
-
-.entity-view tbody > tr:nth-of-type(odd) {
-  background-color: rgb(240, 240, 240);
-}
-
-.entity-view tfoot td {
-  font-style: italic;
+.entity-view-cb {
+  flex-grow: 1;
   text-align: right;
-  font-size: 0.8rem;
+  padding-right: 0px;
+  /* background-color: yellow; */
 }
 
 .entity-not-load {
@@ -147,4 +138,67 @@
   font-style: italic;
   padding: 16px;
   border: 1px solid;
+}
+
+/* -----------------------------------------------------------------   ENTITY - VIEW - TABLE -------------- */
+
+.entity-table-wrapper {
+  flex-grow: 1;
+  overflow: auto;
+  height: 540px;
+  scrollbar-color: #006064 rgb(240, 240, 240);
+  scrollbar-width: thin;
+  /* max-height: 100%; */
+  /* background-color: blueviolet; */
+}
+
+.entity-view table {
+  /* border-collapse: collapse; */
+  letter-spacing: 1px;
+  /* min-width: 80%; */
+  /* max-width: 90%;
+  overflow: auto; */
+  width: 100%;
+}
+
+.entity-view td {
+  padding: 8px 10px;
+  text-align: left;
+  width: 40%;
+}
+
+.entity-view th {
+  padding: 8px 10px;
+  text-align: left;
+  min-width: 60%;
+}
+
+.entity-view tbody {
+  /* overflow: auto; */
+}
+
+/* .entity-view tbody > tr:nth-of-type(odd) {
+  background-color: rgb(240, 240, 240);
+} */
+.entity-view tbody > tr:nth-of-type(odd) {
+  td {
+    background-color: rgb(240, 240, 240);
+  }
+  th {
+    background-color: #e0f7fa;
+  }
+}
+
+.entity-view tfoot td {
+  font-style: italic;
+  text-align: right;
+  font-size: 0.8rem;
+}
+
+.entity-field > * {
+  display: inline-block;
+}
+
+.entity-field-space {
+  width: 24px;
 }

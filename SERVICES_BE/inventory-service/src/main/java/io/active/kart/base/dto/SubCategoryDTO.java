@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 
 @Data
 @NoArgsConstructor
@@ -15,12 +17,17 @@ public class SubCategoryDTO {
     private long id;
 
     @NotBlank
-    @Size(min = 3, message = "SubCategory name must contain at least 3 characters")
+    @Size(min = 3, message = "Category name must contain at least 3 characters")
     private String name;
 
-    private CategoryDTO category;
+    private Boolean active;
 
     private Boolean isDeleted;
 
+    private Date createOn;
+
+    private Date updatedOn;
+
+    private CategoryDTO category;
 
 }

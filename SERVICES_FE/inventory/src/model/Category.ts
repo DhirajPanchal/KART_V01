@@ -3,7 +3,13 @@ export interface Category {
 
   name: string;
 
+  active: boolean;
+
   isDeleted: boolean;
+
+  createOn: String;
+
+  updatedOn: String;
 }
 
 export interface CategoryLabel {

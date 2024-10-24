@@ -26,6 +26,5 @@ public class SubCategory extends BaseEntity {
         return " SubCategory < " + super.toString() + category + " > ";
     }
 
-
 }
 

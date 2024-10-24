@@ -26,7 +26,7 @@ import { CategoryDropdown } from "./EntityDropdown";
 export default function SubCategoryEntity() {
   console.log("< SUB-CATEGORT >");
 
-  const entityType = "sub-category";
+  const entityType = "SubCategory";
 
   const navigation = useNavigate();
 

@@ -6,9 +6,16 @@ export interface Product {
 
   name: string;
 
+  active: boolean;
+
   isDeleted: boolean;
+
+  createOn: String;
+
+  updatedOn: String;
 
   category: Category;
 
   subCategory: SubCategory;
+
 }

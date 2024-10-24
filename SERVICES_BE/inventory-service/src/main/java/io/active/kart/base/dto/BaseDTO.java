@@ -1,17 +1,12 @@
 package io.active.kart.base.dto;
 
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class CategoryDTO {
+public class BaseDTO {
 
     private long id;
 

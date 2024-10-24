@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -21,12 +22,16 @@ public abstract class BaseEntity implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "isDeleted")
-    private Boolean isDeleted = false;
+    @Column(name = "active")
+    private Boolean active;
 
-    @Override
-    public String toString() {
-        return " id=" + id + ", name=" + name + " ";
+    @Column(name = "is_deleted")
+    private Boolean isDeleted;
 
-    }
+    @Column(name = "created_on")
+    private Date createOn;
+
+    @Column(name = "updated_on")
+    private Date updatedOn;
+
 }

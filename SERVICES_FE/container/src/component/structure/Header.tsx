@@ -108,7 +108,7 @@ export default function Header() {
         backgroundColor: "#E0F7FA",
         boxShadow: "0px 0px 0px 0px",
         p: 0,
-        borderBottom: 1,
+        // borderBottom: 0.1,
         borderBottomColor: "#00838f",
       }}
     >
@@ -203,12 +203,12 @@ export default function Header() {
               </NavLink>
             ))}
           </Box>
-          <IconButton
+          {/* <IconButton
             sx={{ fontWeight: "bold", fontSize: 16 }}
             onClick={handleAuth}
           >
             AUTH
-          </IconButton>
+          </IconButton> */}
           {/* // - - - - - LOGIN - - - - - */}
 
           {UserService.isLoggedIn() === false ? (

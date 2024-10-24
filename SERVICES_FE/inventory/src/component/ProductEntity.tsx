@@ -27,7 +27,7 @@ import { CategoryDropdown, SubCategoryDropdown } from "./EntityDropdown";
 export default function ProductEntity() {
   console.log("< PRODUCT >");
 
-  const entityType = "product";
+  const entityType = "Product";
 
   const navigation = useNavigate();
 

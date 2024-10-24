@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,13 +16,17 @@ public class ProductDTO {
     private long id;
 
     @NotBlank
-    @Size(min = 3, message = "Product name must contain at least 3 characters")
+    @Size(min = 3, message = "Category name must contain at least 3 characters")
     private String name;
 
-    private SubCategoryDTO subCategory;
-
-   // private CategoryDTO category;
+    private Boolean active;
 
     private Boolean isDeleted;
+
+    private Date createOn;
+
+    private Date updatedOn;
+
+    private SubCategoryDTO subCategory;
 
 }

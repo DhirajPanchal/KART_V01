@@ -5,15 +5,19 @@ export interface SubCategory {
 
   name: string;
 
+  active: boolean;
+
   isDeleted: boolean;
+
+  createOn: String;
+
+  updatedOn: String;
 
   category: Category;
 }
-
 
 export interface SubCategoryLabel {
   id: number;
 
   name: string;
-
 }
