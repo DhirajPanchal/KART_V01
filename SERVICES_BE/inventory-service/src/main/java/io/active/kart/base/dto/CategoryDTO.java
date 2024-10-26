@@ -19,9 +19,9 @@ public class CategoryDTO {
     @Size(min = 3, message = "Category name must contain at least 3 characters")
     private String name;
 
-    private Boolean active;
+    private Boolean active = true;
 
-    private Boolean isDeleted;
+    private Boolean deleted = false;
 
     private Date createdOn;
 

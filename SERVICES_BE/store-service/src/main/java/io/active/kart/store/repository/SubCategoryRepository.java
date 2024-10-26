@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SubCategoryRepository extends BaseRepository<SubCategory> {
 
-    Page<SubCategory> findByCategoryAndNameLikeIgnoreCaseAndIsDeleted(Category category, String name, boolean isDeleted, Pageable pageable);
+    Page<SubCategory> findByCategoryAndNameLikeIgnoreCaseAndDeleted(Category category, String name, boolean deleted, Pageable pageable);
 
 }

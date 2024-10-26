@@ -24,9 +24,9 @@ const categoryConfig: ActiveEntity = {
       optional: false,
     },
     {
-      key: "isDeleted",
+      key: "deleted",
       type: "boolean",
-      label: "Is Deleted",
+      label: "Deleted",
       optional: true,
     },
     {
@@ -68,9 +68,9 @@ const subCategoryConfig: ActiveEntity = {
       optional: false,
     },
     {
-      key: "isDeleted",
+      key: "deleted",
       type: "boolean",
-      label: "Is Deleted",
+      label: "Deleted",
       optional: true,
     },
     {
@@ -119,9 +119,9 @@ const productConfig: ActiveEntity = {
       optional: false,
     },
     {
-      key: "isDeleted",
+      key: "deleted",
       type: "boolean",
-      label: "Is Deleted",
+      label: "Deleted",
       optional: true,
     },
     {

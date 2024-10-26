@@ -22,7 +22,7 @@ public class SubCategoryDTO {
 
     private Boolean active;
 
-    private Boolean isDeleted;
+    private Boolean deleted;
 
     private Date createdOn;
 

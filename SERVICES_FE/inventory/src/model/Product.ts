@@ -8,7 +8,7 @@ export interface Product {
 
   active: boolean;
 
-  isDeleted: boolean;
+  deleted: boolean;
 
   createdOn: String;
 

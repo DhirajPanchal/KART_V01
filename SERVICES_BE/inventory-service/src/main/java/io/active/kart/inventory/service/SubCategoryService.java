@@ -87,7 +87,7 @@ public class SubCategoryService
             if (Boolean.TRUE.equals(requestBody.isIncludeDeleted())) {
                 page = this.repository.findByCategoryAndNameLikeIgnoreCase(category, getSearchValue(requestBody), pageable);
             } else {
-                page = this.repository.findByCategoryAndNameLikeIgnoreCaseAndIsDeleted(category, getSearchValue(requestBody), false, pageable);
+                page = this.repository.findByCategoryAndNameLikeIgnoreCaseAndDeleted(category, getSearchValue(requestBody), false, pageable);
             }
         } else if (categoryId == 0) {
 
@@ -95,7 +95,7 @@ public class SubCategoryService
             if (Boolean.TRUE.equals(requestBody.isIncludeDeleted())) {
                 page = this.repository.findByNameLikeIgnoreCase(getSearchValue(requestBody), pageable);
             } else {
-                page = this.repository.findByNameLikeIgnoreCaseAndIsDeleted(getSearchValue(requestBody), false, pageable);
+                page = this.repository.findByNameLikeIgnoreCaseAndDeleted(getSearchValue(requestBody), false, pageable);
             }
         }
 

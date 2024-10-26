@@ -95,7 +95,7 @@ export const CATEGORY_COLUMNS: GridColDef[] = [
     valueGetter: dateValueGetter,
   },
   {
-    field: "isDeleted",
+    field: "deleted",
     headerName: "Deleted",
     width: 60,
     type: "boolean",
@@ -147,7 +147,7 @@ export const SUB_CATEGORY_COLUMNS: GridColDef[] = [
     valueGetter: dateValueGetter,
   },
   {
-    field: "isDeleted",
+    field: "deleted",
     headerName: "Deleted",
     width: 60,
     type: "boolean",
@@ -213,7 +213,7 @@ export const PRODUCT_COLUMNS: GridColDef[] = [
     valueGetter: dateValueGetter,
   },
   {
-    field: "isDeleted",
+    field: "deleted",
     headerName: "Deleted",
     width: 60,
     type: "boolean",

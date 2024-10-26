@@ -110,7 +110,7 @@ function EntityViewRenderer({
                 }
 
                 rowList.push({
-                  label: fieldLabel + (isOptional ? "*" : ""),
+                  label: fieldLabel ,
                   value: fieldValue,
                   key: fieldLabel + "_" + depth,
                   depth: depth,

@@ -92,7 +92,7 @@ public class BaseService<E extends BaseEntity, D, R extends BaseRepository<E>> {
         E entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(typeEntityClass.getSimpleName(), "id", id));
 
-        entity.setIsDeleted(true);
+        entity.setDeleted(true);
         E savedEntity = repository.save(entity);
 
         return mapper.map(savedEntity, typeDtoClass);
@@ -102,7 +102,7 @@ public class BaseService<E extends BaseEntity, D, R extends BaseRepository<E>> {
 
     protected E update(E newEntity, E existingEntity) {
         System.out.println("__ BaseService . PUT . UPDATE : ");
-        newEntity.setIsDeleted(existingEntity.getIsDeleted());
+        newEntity.setDeleted(existingEntity.getDeleted());
         return newEntity;
     }
 
@@ -122,7 +122,7 @@ public class BaseService<E extends BaseEntity, D, R extends BaseRepository<E>> {
                     getSearchValue(requestBody),
                     pageable);
         } else {
-            page = this.repository.findByNameLikeIgnoreCaseAndIsDeleted(
+            page = this.repository.findByNameLikeIgnoreCaseAndDeleted(
                     getSearchValue(requestBody),
                     false,
                     pageable);

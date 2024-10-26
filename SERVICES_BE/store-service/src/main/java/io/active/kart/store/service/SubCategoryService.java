@@ -70,12 +70,12 @@ public class SubCategoryService
             Category category = categoryRepository.findById(categoryId)
                     .orElseThrow(() -> new ResourceNotFoundException("SubCategory", "id", categoryId));
 
-            page = this.repository.findByCategoryAndNameLikeIgnoreCaseAndIsDeleted(category, getSearchValue(requestBody), false, pageable);
+            page = this.repository.findByCategoryAndNameLikeIgnoreCaseAndDeleted(category, getSearchValue(requestBody), false, pageable);
 
         } else if (categoryId == 0) {
 
             System.out.println("SubCategories By ALL");
-            page = this.repository.findByNameLikeIgnoreCaseAndIsDeleted(getSearchValue(requestBody), false, pageable);
+            page = this.repository.findByNameLikeIgnoreCaseAndDeleted(getSearchValue(requestBody), false, pageable);
 
         }
 

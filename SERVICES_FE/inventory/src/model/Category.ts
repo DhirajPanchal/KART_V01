@@ -5,7 +5,7 @@ export interface Category {
 
   active: boolean;
 
-  isDeleted: boolean;
+  deleted: boolean;
 
   createdOn: String;
 

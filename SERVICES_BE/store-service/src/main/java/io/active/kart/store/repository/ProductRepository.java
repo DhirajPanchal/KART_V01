@@ -14,10 +14,10 @@ import java.util.Optional;
 public interface ProductRepository extends BaseRepository<Product> {
 
 
-    Optional<Product> findByIdAndIsDeleted(Long id, boolean isDeleted);
+    Optional<Product> findByIdAndDeleted(Long id, boolean deleted);
 
-    Page<Product> findBySubCategoryAndNameLikeIgnoreCaseAndIsDeleted(SubCategory subCategory, String name, boolean isDeleted, Pageable pageable);
+    Page<Product> findBySubCategoryAndNameLikeIgnoreCaseAndDeleted(SubCategory subCategory, String name, boolean deleted, Pageable pageable);
 
-    Page<Product> findByCategoryAndNameLikeIgnoreCaseAndIsDeleted(Category category, String name, boolean isDeleted, Pageable pageable);
+    Page<Product> findByCategoryAndNameLikeIgnoreCaseAndDeleted(Category category, String name, boolean deleted, Pageable pageable);
 
 }

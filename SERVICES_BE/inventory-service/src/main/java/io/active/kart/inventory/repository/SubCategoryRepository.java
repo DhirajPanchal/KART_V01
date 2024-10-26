@@ -13,5 +13,5 @@ public interface SubCategoryRepository extends BaseRepository<SubCategory> {
 
     Page<SubCategory> findByCategoryAndNameLikeIgnoreCase(Category category, String name, Pageable pageable);
 
-    Page<SubCategory> findByCategoryAndNameLikeIgnoreCaseAndIsDeleted(Category category, String name, boolean isDeleted, Pageable pageable);
+    Page<SubCategory> findByCategoryAndNameLikeIgnoreCaseAndDeleted(Category category, String name, boolean deleted, Pageable pageable);
 }

@@ -4,8 +4,10 @@ package io.active.kart.base.core;
 import io.active.kart.base.dto.ListRequest;
 import io.active.kart.base.dto.ListResponse;
 import io.active.kart.base.entity.BaseEntity;
+import io.active.kart.base.entity.Category;
 import io.active.kart.base.exception.APIException;
 import io.active.kart.base.exception.ResourceNotFoundException;
+import io.active.kart.inventory.repository.CategoryRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,6 +30,8 @@ public class BaseService<E extends BaseEntity, D, R extends BaseRepository<E>> {
 
     protected final Class<D> typeDtoClass;
 
+    @Autowired
+    protected CategoryRepository cr;
 
     public BaseService(R repository, Class<E> typeEntityClass, Class<D> typeDtoClass) {
         this.repository = repository;
@@ -41,6 +45,13 @@ public class BaseService<E extends BaseEntity, D, R extends BaseRepository<E>> {
         System.out.println("__ BaseService . POST : " + dto);
 
         E entity = mapper.map(dto, typeEntityClass);
+        System.out.println("entity ---------------------------------------- ");
+        System.out.println(entity.toString());
+        Category e2 = new Category();
+        e2.setName("X1");
+        System.out.println(e2.toString());
+
+        cr.save(e2);
 
         E entityFromDb = repository.findByNameLikeIgnoreCase(entity.getName());
         if (entityFromDb != null)
@@ -92,7 +103,7 @@ public class BaseService<E extends BaseEntity, D, R extends BaseRepository<E>> {
         E entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(typeEntityClass.getSimpleName(), "id", id));
 
-        entity.setIsDeleted(true);
+        entity.setDeleted(true);
         E savedEntity = repository.save(entity);
 
         return mapper.map(savedEntity, typeDtoClass);
@@ -102,7 +113,7 @@ public class BaseService<E extends BaseEntity, D, R extends BaseRepository<E>> {
 
     protected E update(E newEntity, E existingEntity) {
         System.out.println("__ BaseService . PUT . UPDATE : ");
-        newEntity.setIsDeleted(existingEntity.getIsDeleted());
+        newEntity.setDeleted(existingEntity.getDeleted());
         return newEntity;
     }
 
@@ -122,7 +133,7 @@ public class BaseService<E extends BaseEntity, D, R extends BaseRepository<E>> {
                     getSearchValue(requestBody),
                     pageable);
         } else {
-            page = this.repository.findByNameLikeIgnoreCaseAndIsDeleted(
+            page = this.repository.findByNameLikeIgnoreCaseAndDeleted(
                     getSearchValue(requestBody),
                     false,
                     pageable);

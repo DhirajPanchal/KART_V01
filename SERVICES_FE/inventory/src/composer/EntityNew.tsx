@@ -24,13 +24,13 @@ export default function EntityNew({ entityType }: EntityNewProps) {
     // } else if (input.active === "on") {
     //   input.active = "true";
     // }
-    // if (input.isDeleted === undefined) {
-    //   input.isDeleted = "false";
-    // } else if (input.isDeleted === "on") {
-    //   input.isDeleted = "true";
+    // if (input.deleted === undefined) {
+    //   input.deleted = "false";
+    // } else if (input.deleted === "on") {
+    //   input.deleted = "true";
     // }
     input.active = "true";
-    input.isDeleted = "false";
+    input.deleted = "false";
     console.log(input);
 
     ApiHub.addCategory(input)
@@ -89,7 +89,7 @@ export default function EntityNew({ entityType }: EntityNewProps) {
               <input
                 type="checkbox"
                 id="terms-and-conditions"
-                name="isDeleted"
+                name="deleted"
               />
               Deleted
             </label>

@@ -21,8 +21,8 @@ public abstract class BaseEntity implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "is_deleted", columnDefinition = "tinyint(1) default 0")
-    private Boolean isDeleted = false;
+    @Column(name = "deleted", columnDefinition = "tinyint(1) default 0")
+    private Boolean deleted = false;
 
     @Override
     public String toString() {

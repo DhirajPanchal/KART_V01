@@ -15,8 +15,8 @@ public interface ProductRepository extends BaseRepository<Product> {
 
     Page<Product> findByCategoryAndNameLikeIgnoreCase(Category category, String name, Pageable pageable);
 
-    Page<Product> findBySubCategoryAndNameLikeIgnoreCaseAndIsDeleted(SubCategory subCategory, String name, boolean isDeleted, Pageable pageable);
+    Page<Product> findBySubCategoryAndNameLikeIgnoreCaseAndDeleted(SubCategory subCategory, String name, boolean deleted, Pageable pageable);
 
-    Page<Product> findByCategoryAndNameLikeIgnoreCaseAndIsDeleted(Category category, String name, boolean isDeleted, Pageable pageable);
+    Page<Product> findByCategoryAndNameLikeIgnoreCaseAndDeleted(Category category, String name, boolean deleted, Pageable pageable);
 
 }

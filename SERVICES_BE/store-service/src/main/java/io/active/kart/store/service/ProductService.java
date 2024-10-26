@@ -50,7 +50,7 @@ public class ProductService extends BaseService<Product, ProductDTO, ProductRepo
             SubCategory subCategory = subCategoryRepository.findById(subCategoryId)
                     .orElseThrow(() -> new ResourceNotFoundException("SubCategory", "id", subCategoryId));
 
-            page = this.repository.findBySubCategoryAndNameLikeIgnoreCaseAndIsDeleted(subCategory, getSearchValue(requestBody), false, pageable);
+            page = this.repository.findBySubCategoryAndNameLikeIgnoreCaseAndDeleted(subCategory, getSearchValue(requestBody), false, pageable);
 
 
         } else if (categoryId > 0 && subCategoryId == 0) {
@@ -59,13 +59,13 @@ public class ProductService extends BaseService<Product, ProductDTO, ProductRepo
             Category category = categoryRepository.findById(categoryId)
                     .orElseThrow(() -> new ResourceNotFoundException("Category", "id", categoryId));
 
-            page = this.repository.findByCategoryAndNameLikeIgnoreCaseAndIsDeleted(category, getSearchValue(requestBody), false, pageable);
+            page = this.repository.findByCategoryAndNameLikeIgnoreCaseAndDeleted(category, getSearchValue(requestBody), false, pageable);
 
 
         } else if (categoryId == 0 ) {
             System.out.println("Products By ALL");
 
-            page = this.repository.findByNameLikeIgnoreCaseAndIsDeleted(getSearchValue(requestBody), false, pageable);
+            page = this.repository.findByNameLikeIgnoreCaseAndDeleted(getSearchValue(requestBody), false, pageable);
 
         }
 
@@ -97,7 +97,7 @@ public class ProductService extends BaseService<Product, ProductDTO, ProductRepo
 
         System.out.println("__ subCategoryId . GET : " + id);
 
-        Product entity = repository.findByIdAndIsDeleted(id, Boolean.FALSE)
+        Product entity = repository.findByIdAndDeleted(id, Boolean.FALSE)
                 .orElseThrow(() -> new ResourceNotFoundException(typeEntityClass.getSimpleName(), "id", id));
 
         return mapper.map(entity, typeDtoClass);
