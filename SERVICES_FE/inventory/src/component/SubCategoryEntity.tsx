@@ -3,7 +3,6 @@ import "../composer/composer.css";
 import { Routes, Route, Navigate, Outlet, useNavigate } from "react-router-dom";
 import EntityHeaderNav from "../composer/EntityHeaderNav";
 import EntityNew from "../composer/EntityNew";
-import EntityView from "../composer/EntityView";
 import EntityViewNone from "../composer/EntityViewNone";
 import ActiveDataGrid from "./ActiveDataGrid";
 import {
@@ -16,6 +15,7 @@ import ApiHub from "../service/ApiHub";
 import { ListResponse } from "../model/ListResponse";
 import { SubCategory, SubCategoryLabel } from "../model/SubCategory";
 import { CategoryDropdown } from "./EntityDropdown";
+import EntityViewRenderer from "../composer/EntityViewRenderer";
 
 //  - - - - - - - - - - -
 //
@@ -26,7 +26,7 @@ import { CategoryDropdown } from "./EntityDropdown";
 export default function SubCategoryEntity() {
   console.log("< SUB-CATEGORT >");
 
-  const entityType = "SubCategory";
+  const entityType = "subCategory";
 
   const navigation = useNavigate();
 
@@ -103,10 +103,21 @@ export default function SubCategoryEntity() {
                 path="0"
                 element={<EntityViewNone entityType={entityType} />}
               />
-              <Route
+              {/* <Route
                 path=":id"
                 element={<EntityView entityType={entityType} apiMethod={ApiHub.loadSubCategoryById} />}
+              /> */}
+
+              <Route
+                path=":id"
+                element={
+                  <EntityViewRenderer
+                    entityType={entityType}
+                    apiMethod={ApiHub.loadSubCategoryById}
+                  />
+                }
               />
+
               <Route path=":id/edit" element={<h1>EDIT</h1>} />
               <Route
                 path="new"

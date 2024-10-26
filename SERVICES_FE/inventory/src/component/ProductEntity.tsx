@@ -3,20 +3,18 @@ import "../composer/composer.css";
 import { Routes, Route, Navigate, Outlet, useNavigate } from "react-router-dom";
 import EntityHeaderNav from "../composer/EntityHeaderNav";
 import EntityNew from "../composer/EntityNew";
-import EntityView from "../composer/EntityView";
 import EntityViewNone from "../composer/EntityViewNone";
 import ActiveDataGrid from "./ActiveDataGrid";
 import {
   DEFAULT_LIST_PAYLOAD,
   DEFAULT_LIST_RESPONSE,
   PRODUCT_COLUMNS,
-  top100Films,
 } from "./DataGridHelper";
 import ApiHub from "../service/ApiHub";
 import { ListResponse } from "../model/ListResponse";
-import { Autocomplete, TextField } from "@mui/material";
 import { Product } from "../model/Product";
 import { CategoryDropdown, SubCategoryDropdown } from "./EntityDropdown";
+import EntityViewRenderer from "../composer/EntityViewRenderer";
 
 //  - - - - - - - - - - -
 //
@@ -27,7 +25,7 @@ import { CategoryDropdown, SubCategoryDropdown } from "./EntityDropdown";
 export default function ProductEntity() {
   console.log("< PRODUCT >");
 
-  const entityType = "Product";
+  const entityType = "product";
 
   const navigation = useNavigate();
 
@@ -86,7 +84,7 @@ export default function ProductEntity() {
         <div className="entity-listing">
           <div className="cb-arrange-horizontally">
             <div className="cb-arrange-horizontally">
-              {entityId}
+              {/* {entityId} */}
               <CategoryDropdown onChange={(id) => onCategoryChange(id)} />
               {selectedCategoryId}
 
@@ -129,7 +127,7 @@ export default function ProductEntity() {
               />
               <Route
                 path=":id"
-                element={<EntityView entityType={entityType} apiMethod={ApiHub.loadProductById}/>}
+                element={<EntityViewRenderer entityType={entityType} apiMethod={ApiHub.loadProductById}/>}
               />
               <Route path=":id/edit" element={<h1>EDIT</h1>} />
               <Route

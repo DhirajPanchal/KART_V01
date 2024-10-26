@@ -1,13 +1,23 @@
 import React from "react";
-import "./index.css";
 import { Routes, Route, NavLink, Navigate } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+import "./index.css";
 import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+
 import CategoryEntity from "./component/CategoryEntity";
 import ProductEntity from "./component/ProductEntity";
 import SubCategoryEntity from "./component/SubCategoryEntity";
 
 export default function App() {
+  console.log("<APP> *** ");
+
+  const loadConfig = (): void => {
+    console.log("[CONFIG]");
+    
+  };
+  
+  loadConfig();
+
   return (
     <div className="application-contianer">
       <div className="section-header">

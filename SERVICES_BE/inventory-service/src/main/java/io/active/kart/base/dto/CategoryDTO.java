@@ -23,7 +23,7 @@ public class CategoryDTO {
 
     private Boolean isDeleted;
 
-    private Date createOn;
+    private Date createdOn;
 
     private Date updatedOn;
 

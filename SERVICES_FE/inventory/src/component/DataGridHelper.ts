@@ -21,7 +21,7 @@ export const DEFAULT_LIST_PAYLOAD: ListPayload = {
   includeDeleted: false,
   ui_only: {
     index: 0,
-    size: 10,
+    size: 20,
     categoryId: 0,
     subCategoryId: 0,
   },
@@ -46,33 +46,69 @@ export const top100Films = [
   { label: "Pulp Fiction", year: 1994 },
 ];
 
+const dateValueGetter = (params: any): string => {
+  // console.log(params);
+  let dateStr = "";
+  if (params) {
+    const arr1: string[] = params.split("T");
+    if (arr1.length == 2) {
+      dateStr += arr1[0];
+      dateStr += " " + arr1[1].split(".")[0];
+    }
+  }
+  return dateStr;
+};
+
 const stringOperators = getGridStringOperators().filter((op) =>
   ["contains"].includes(op.value)
 );
 
 export const CATEGORY_COLUMNS: GridColDef[] = [
-  { field: "id", headerName: "ID", width: 60, filterable: false },
+  { field: "id", headerName: "ID", width: 40, filterable: false },
   {
     field: "name",
     headerName: "Category Name",
-    width: 240,
+    width: 160,
     filterOperators: stringOperators,
   },
   {
+    field: "active",
+    headerName: "Active",
+    width: 60,
+    type: "boolean",
+    filterable: false,
+  },
+  {
+    field: "updatedOn",
+    headerName: "Updated On",
+    width: 160,
+    type: "string",
+    filterable: false,
+    valueGetter: dateValueGetter,
+  },
+  {
+    field: "createdOn",
+    headerName: "Created On",
+    width: 160,
+    type: "string",
+    filterable: false,
+    valueGetter: dateValueGetter,
+  },
+  {
     field: "isDeleted",
-    headerName: "Is Deleted",
-    width: 100,
+    headerName: "Deleted",
+    width: 60,
     type: "boolean",
     filterable: false,
   },
 ];
 
 export const SUB_CATEGORY_COLUMNS: GridColDef[] = [
-  { field: "id", headerName: "ID", width: 60, filterable: false },
+  { field: "id", headerName: "ID", width: 40, filterable: false },
   {
     field: "name",
     headerName: "Sub-Category Name",
-    width: 240,
+    width: 160,
     filterOperators: stringOperators,
   },
   {
@@ -88,20 +124,43 @@ export const SUB_CATEGORY_COLUMNS: GridColDef[] = [
   },
 
   {
+    field: "active",
+    headerName: "Active",
+    width: 60,
+    type: "boolean",
+    filterable: false,
+  },
+  {
+    field: "updatedOn",
+    headerName: "Updated On",
+    width: 160,
+    type: "string",
+    filterable: false,
+    valueGetter: dateValueGetter,
+  },
+  {
+    field: "createdOn",
+    headerName: "Created On",
+    width: 160,
+    type: "string",
+    filterable: false,
+    valueGetter: dateValueGetter,
+  },
+  {
     field: "isDeleted",
-    headerName: "Is Deleted",
-    width: 100,
+    headerName: "Deleted",
+    width: 60,
     type: "boolean",
     filterable: false,
   },
 ];
 
 export const PRODUCT_COLUMNS: GridColDef[] = [
-  { field: "id", headerName: "ID", width: 60, filterable: false },
+  { field: "id", headerName: "ID", width: 40, filterable: false },
   {
     field: "name",
     headerName: "Product Name",
-    width: 240,
+    width: 160,
     filterOperators: stringOperators,
   },
 
@@ -122,7 +181,7 @@ export const PRODUCT_COLUMNS: GridColDef[] = [
   {
     field: "subCategory",
     headerName: "SUB-CATEGORY",
-    width: 140,
+    width: 120,
     valueGetter: (value: any) => {
       return `${value.name || ""} ( ${value.id || ""} )`;
     },
@@ -131,9 +190,32 @@ export const PRODUCT_COLUMNS: GridColDef[] = [
     filterable: false,
   },
   {
+    field: "active",
+    headerName: "Active",
+    width: 60,
+    type: "boolean",
+    filterable: false,
+  },
+  {
+    field: "updatedOn",
+    headerName: "Updated On",
+    width: 160,
+    type: "string",
+    filterable: false,
+    valueGetter: dateValueGetter,
+  },
+  {
+    field: "createdOn",
+    headerName: "Created On",
+    width: 160,
+    type: "string",
+    filterable: false,
+    valueGetter: dateValueGetter,
+  },
+  {
     field: "isDeleted",
-    headerName: "Is Deleted",
-    width: 100,
+    headerName: "Deleted",
+    width: 60,
     type: "boolean",
     filterable: false,
   },

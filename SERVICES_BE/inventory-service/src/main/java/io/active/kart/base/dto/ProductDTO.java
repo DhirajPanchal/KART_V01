@@ -23,7 +23,7 @@ public class ProductDTO {
 
     private Boolean isDeleted;
 
-    private Date createOn;
+    private Date createdOn;
 
     private Date updatedOn;
 

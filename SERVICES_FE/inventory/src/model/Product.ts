@@ -10,7 +10,7 @@ export interface Product {
 
   isDeleted: boolean;
 
-  createOn: String;
+  createdOn: String;
 
   updatedOn: String;
 

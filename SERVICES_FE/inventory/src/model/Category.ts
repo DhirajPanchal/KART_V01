@@ -7,7 +7,7 @@ export interface Category {
 
   isDeleted: boolean;
 
-  createOn: String;
+  createdOn: String;
 
   updatedOn: String;
 }

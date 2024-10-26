@@ -3,7 +3,6 @@ import "../composer/composer.css";
 import { Routes, Route, Navigate, Outlet, useNavigate } from "react-router-dom";
 import EntityHeaderNav from "../composer/EntityHeaderNav";
 import EntityNew from "../composer/EntityNew";
-import EntityView from "../composer/EntityView";
 import EntityViewNone from "../composer/EntityViewNone";
 import ActiveDataGrid from "./ActiveDataGrid";
 import {
@@ -14,6 +13,7 @@ import {
 import ApiHub from "../service/ApiHub";
 import { ListResponse } from "../model/ListResponse";
 import { Category } from "../model/Category";
+import EntityViewRenderer from "../composer/EntityViewRenderer";
 
 //  - - - - - - - - - - -
 //
@@ -22,9 +22,9 @@ import { Category } from "../model/Category";
 //  - - - - - - - - - - -
 
 export default function CategoryEntity() {
-  console.log("< CATEGORT >");
+  // console.log("< CATEGORT >");
 
-  const entityType = "Category";
+  const entityType = "category";
 
   const navigation = useNavigate();
 
@@ -49,7 +49,7 @@ export default function CategoryEntity() {
   };
 
   const handleRowSelection = (id: number) => {
-    console.log("__handleRowSelection : " + id);
+    // console.log("__handleRowSelection : " + id);
     // setEntityId(id);
     navigation("" + id);
   };
@@ -58,7 +58,7 @@ export default function CategoryEntity() {
     <>
       <div className="entity-root">
         <div className="entity-listing">
-          {entityId}
+          {/* {entityId} */}
           <ActiveDataGrid
             columns={CATEGORY_COLUMNS}
             provider={listResponse}
@@ -82,9 +82,18 @@ export default function CategoryEntity() {
                 path="0"
                 element={<EntityViewNone entityType={entityType} />}
               />
-              <Route
+              {/* <Route
                 path=":id"
                 element={<EntityView entityType={entityType} apiMethod={ApiHub.loadCategoryById} />}
+              /> */}
+              <Route
+                path=":id"
+                element={
+                  <EntityViewRenderer
+                    entityType={entityType}
+                    apiMethod={ApiHub.loadCategoryById}
+                  />
+                }
               />
               <Route path=":id/edit" element={<h1>EDIT</h1>} />
               <Route

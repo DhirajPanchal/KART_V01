@@ -9,7 +9,7 @@ export interface SubCategory {
 
   isDeleted: boolean;
 
-  createOn: String;
+  createdOn: String;
 
   updatedOn: String;
 

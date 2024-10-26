@@ -29,7 +29,7 @@ public abstract class BaseEntity implements Serializable {
     private Boolean isDeleted;
 
     @Column(name = "created_on")
-    private Date createOn;
+    private Date createdOn;
 
     @Column(name = "updated_on")
     private Date updatedOn;

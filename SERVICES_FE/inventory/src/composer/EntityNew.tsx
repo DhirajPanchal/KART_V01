@@ -19,12 +19,18 @@ export default function EntityNew({ entityType }: EntityNewProps) {
 
     console.log(input);
 
-    if (input.isDeleted === undefined) {
-      input.isDeleted = "false";
-    } else if (input.isDeleted === "on") {
-      input.isDeleted = "true";
-    }
-
+    // if (input.active === undefined) {
+    //   input.active = "false";
+    // } else if (input.active === "on") {
+    //   input.active = "true";
+    // }
+    // if (input.isDeleted === undefined) {
+    //   input.isDeleted = "false";
+    // } else if (input.isDeleted === "on") {
+    //   input.isDeleted = "true";
+    // }
+    input.active = "true";
+    input.isDeleted = "false";
     console.log(input);
 
     ApiHub.addCategory(input)
@@ -63,6 +69,20 @@ export default function EntityNew({ entityType }: EntityNewProps) {
             <input id="name" type="text" name="name" />
           </div>
         </div>
+
+        <div className="control-row">
+          <div className="control">
+            <label htmlFor="active">
+              <input
+                type="checkbox"
+                id="active"
+                name="active"
+              />
+              Active.
+            </label>
+          </div>
+        </div>
+
         <div className="control-row">
           <div className="control">
             <label htmlFor="terms-and-conditions">
@@ -71,7 +91,7 @@ export default function EntityNew({ entityType }: EntityNewProps) {
                 id="terms-and-conditions"
                 name="isDeleted"
               />
-              Make it Non Active.
+              Deleted
             </label>
           </div>
         </div>

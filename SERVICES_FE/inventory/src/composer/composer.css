@@ -70,15 +70,18 @@
 .entity-curd {
   flex-grow: 1;
   display: flex;
+  /* background-color: lightblue; */
 }
 
 .entity-view-none {
+  height: auto;
   color: gray;
   font-style: italic;
   font-size: large;
   text-align: center;
   padding: 48px;
   padding-top: 80px;
+  /* background-color: aqua; */
 }
 
 /* -----------------------------------------------------------------   ENTITY - NEW  -------------- */
@@ -145,7 +148,7 @@
 .entity-table-wrapper {
   flex-grow: 1;
   overflow: auto;
-  height: 540px;
+  height: 520px;
   scrollbar-color: #006064 rgb(240, 240, 240);
   scrollbar-width: thin;
   /* max-height: 100%; */
@@ -173,9 +176,9 @@
   min-width: 60%;
 }
 
-.entity-view tbody {
-  /* overflow: auto; */
-}
+/* .entity-view tbody {
+  overflow: auto;
+} */
 
 /* .entity-view tbody > tr:nth-of-type(odd) {
   background-color: rgb(240, 240, 240);
@@ -201,4 +204,5 @@
 
 .entity-field-space {
   width: 24px;
+color: grey;
 }
