@@ -30,9 +30,6 @@ public class BaseService<E extends BaseEntity, D, R extends BaseRepository<E>> {
 
     protected final Class<D> typeDtoClass;
 
-    @Autowired
-    protected CategoryRepository cr;
-
     public BaseService(R repository, Class<E> typeEntityClass, Class<D> typeDtoClass) {
         this.repository = repository;
         this.typeEntityClass = typeEntityClass;
@@ -47,11 +44,6 @@ public class BaseService<E extends BaseEntity, D, R extends BaseRepository<E>> {
         E entity = mapper.map(dto, typeEntityClass);
         System.out.println("entity ---------------------------------------- ");
         System.out.println(entity.toString());
-        Category e2 = new Category();
-        e2.setName("X1");
-        System.out.println(e2.toString());
-
-        cr.save(e2);
 
         E entityFromDb = repository.findByNameLikeIgnoreCase(entity.getName());
         if (entityFromDb != null)

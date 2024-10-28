@@ -18,7 +18,7 @@ export interface ListPayload {
 export const DEFAULT_LIST_PAYLOAD: ListPayload = {
   search: "",
   sort: { id: "asc" },
-  includeDeleted: false,
+  includeDeleted: true,
   ui_only: {
     index: 0,
     size: 20,

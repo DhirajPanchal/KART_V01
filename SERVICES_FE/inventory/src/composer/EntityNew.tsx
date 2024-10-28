@@ -19,19 +19,8 @@ export default function EntityNew({ entityType }: EntityNewProps) {
 
     console.log(input);
 
-    // if (input.active === undefined) {
-    //   input.active = "false";
-    // } else if (input.active === "on") {
-    //   input.active = "true";
-    // }
-    // if (input.deleted === undefined) {
-    //   input.deleted = "false";
-    // } else if (input.deleted === "on") {
-    //   input.deleted = "true";
-    // }
-    input.active = "true";
-    input.deleted = "false";
-    console.log(input);
+    input.active = "" + true;
+    input.deleted = "" + false;
 
     ApiHub.addCategory(input)
       .then((data: Category) => {
@@ -40,7 +29,6 @@ export default function EntityNew({ entityType }: EntityNewProps) {
         if (data && data.id) {
           console.log("NAV " + data.id);
           navigation(`../${data.id}`);
-
         }
       })
       .catch(() => {});
@@ -52,7 +40,7 @@ export default function EntityNew({ entityType }: EntityNewProps) {
 
   return (
     <div className="entity-new">
-        {/* <button onClick={navi}> NAV </button> */}
+      {/* <button onClick={navi}> NAV </button> */}
       <div className="entity-view-type">
         <Chip
           label={entityType ? entityType.toUpperCase() : ""}
@@ -73,11 +61,7 @@ export default function EntityNew({ entityType }: EntityNewProps) {
         <div className="control-row">
           <div className="control">
             <label htmlFor="active">
-              <input
-                type="checkbox"
-                id="active"
-                name="active"
-              />
+              <input type="checkbox" id="active" name="active" />
               Active.
             </label>
           </div>
@@ -86,18 +70,13 @@ export default function EntityNew({ entityType }: EntityNewProps) {
         <div className="control-row">
           <div className="control">
             <label htmlFor="terms-and-conditions">
-              <input
-                type="checkbox"
-                id="terms-and-conditions"
-                name="deleted"
-              />
+              <input type="checkbox" id="terms-and-conditions" name="deleted" />
               Deleted
             </label>
           </div>
         </div>
         <div className="entity-new-space"></div>
         <p className="form-actions">
-          
           <button type="reset" className="button button-flat">
             R e s e t
           </button>

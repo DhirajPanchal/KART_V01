@@ -1,5 +1,5 @@
 export interface Category {
-  id: number;
+  id?: number;
 
   name: string;
 
@@ -7,9 +7,9 @@ export interface Category {
 
   deleted: boolean;
 
-  createdOn: String;
+  createdOn?: String;
 
-  updatedOn: String;
+  updatedOn?: String;
 }
 
 export interface CategoryLabel {
@@ -17,3 +17,11 @@ export interface CategoryLabel {
 
   name: string;
 }
+
+export const defaultCategory = (): Category => {
+  return {
+    name: "",
+    active: true,
+    deleted: false,
+  };
+};

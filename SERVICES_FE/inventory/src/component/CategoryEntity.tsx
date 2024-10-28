@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "../composer/composer.css";
 import { Routes, Route, Navigate, Outlet, useNavigate } from "react-router-dom";
 import EntityHeaderNav from "../composer/EntityHeaderNav";
-import EntityNew from "../composer/EntityNew";
 import EntityViewNone from "../composer/EntityViewNone";
 import ActiveDataGrid from "./ActiveDataGrid";
 import {
@@ -14,6 +13,7 @@ import ApiHub from "../service/ApiHub";
 import { ListResponse } from "../model/ListResponse";
 import { Category } from "../model/Category";
 import EntityViewRenderer from "../composer/EntityViewRenderer";
+import EntityNewOrEdit from "../composer/EntityNewOrEdit";
 
 //  - - - - - - - - - - -
 //
@@ -49,8 +49,8 @@ export default function CategoryEntity() {
   };
 
   const handleRowSelection = (id: number) => {
-    // console.log("__handleRowSelection : " + id);
-    // setEntityId(id);
+    //  console.log("__handleRowSelection : " + id);
+    setEntityId(id);
     navigation("" + id);
   };
 
@@ -82,10 +82,6 @@ export default function CategoryEntity() {
                 path="0"
                 element={<EntityViewNone entityType={entityType} />}
               />
-              {/* <Route
-                path=":id"
-                element={<EntityView entityType={entityType} apiMethod={ApiHub.loadCategoryById} />}
-              /> */}
               <Route
                 path=":id"
                 element={
@@ -95,10 +91,28 @@ export default function CategoryEntity() {
                   />
                 }
               />
-              <Route path=":id/edit" element={<h1>EDIT</h1>} />
+              <Route
+                path=":id/edit"
+                element={
+                  <EntityNewOrEdit
+                    mode="EDIT"
+                    entityType={entityType}
+                    entityId={entityId}
+                    getApiMethod={ApiHub.loadCategoryById}
+                  />
+                }
+              />
               <Route
                 path="new"
-                element={<EntityNew entityType={entityType} />}
+                element={
+                  <EntityNewOrEdit
+                    mode="NEW"
+                    entityType={entityType}
+                    entityId={0}
+                    getApiMethod={ApiHub.loadCategoryById}
+                    postApiMethod={ApiHub.addCategory}
+                  />
+                }
               />
             </Routes>
             <Outlet />

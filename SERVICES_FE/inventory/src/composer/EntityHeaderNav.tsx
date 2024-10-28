@@ -45,12 +45,12 @@ export default function EntityHeaderNav({
   };
 
   const handleEdit = () => {
-    console.log("__handleEdit");
+    console.log("__handleEdit "+entityId);
     navigation(`${entityId}/edit`);
   };
 
   const handleCancel = () => {
-    console.log("__handleCancel");
+    // console.log("__handleCancel");
     if (onNewNaviation) {
       onNewNaviation();
     }

@@ -1,6 +1,7 @@
 import { alpha, styled } from "@mui/material/styles";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
+import RefreshIcon from '@mui/icons-material/Refresh';
 import Fab from "@mui/material/Fab";
 import {
   DataGrid,
@@ -129,6 +130,15 @@ export default function ActiveDataGrid({
     triggerDataRefresh(localPayload);
   };
 
+
+
+  const handleReload = () => {
+    console.log("__handleReload");
+    if (props.triggerDataLoad) {
+      props.triggerDataLoad(payload);
+    }
+  };
+
   const handleClear = () => {
     console.log("__handleClear");
     const localPayload: ListPayload = { ...payload, ...DEFAULT_LIST_PAYLOAD };
@@ -215,6 +225,18 @@ export default function ActiveDataGrid({
         />
       </div>
       <div className="entity-data-grid-footer">
+
+      <Fab
+          color="default"
+          variant="extended"
+          aria-label="clear"
+          onClick={handleReload}
+          size="small"
+        >
+          <RefreshIcon />
+          Reload
+        </Fab>
+
         <FormControlLabel
           value="end"
           control={
@@ -228,7 +250,7 @@ export default function ActiveDataGrid({
               }}
             ></Checkbox>
           }
-          label="Include deleted"
+          label="Include Deleted"
           onChange={(event, checked) => handleIncludeDeleted(checked)}
         />
 

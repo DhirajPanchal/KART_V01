@@ -10,36 +10,42 @@ const categoryConfig: ActiveEntity = {
       type: "number",
       label: "ID",
       optional: true,
+      mode: "generated",
     },
     {
       key: "name",
       type: "string",
       label: "Category Name",
       optional: false,
+      mode: "write",
     },
     {
       key: "active",
       type: "boolean",
       label: "Active",
       optional: false,
+      mode: "write",
     },
     {
       key: "deleted",
       type: "boolean",
       label: "Deleted",
       optional: true,
+      mode: "write",
     },
     {
       key: "createdOn",
       type: "date",
       label: "Created On",
       optional: true,
+      mode: "ready",
     },
     {
       key: "updatedOn",
       type: "date",
       label: "Updated On",
       optional: true,
+      mode: "ready",
     },
   ]),
 };
@@ -94,7 +100,6 @@ const subCategoryConfig: ActiveEntity = {
   ]),
 };
 
-
 const productConfig: ActiveEntity = {
   key: "product",
   type: "product",
@@ -144,8 +149,6 @@ const productConfig: ActiveEntity = {
     },
   ]),
 };
-
-
 
 export const ENTITY_CONFIG: ActiveMap<ActiveEntity> = new ActiveMap();
 ENTITY_CONFIG.add("category", categoryConfig);

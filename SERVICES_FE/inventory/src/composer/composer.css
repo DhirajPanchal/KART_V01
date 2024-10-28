@@ -84,15 +84,6 @@
   /* background-color: aqua; */
 }
 
-/* -----------------------------------------------------------------   ENTITY - NEW  -------------- */
-.entity-new {
-  padding: 16px;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-}
-
 /* -----------------------------------------------------------------   ENTITY - VIEW  -------------- */
 
 .entity-view {
@@ -204,5 +195,25 @@
 
 .entity-field-space {
   width: 24px;
-color: grey;
+  color: grey;
+}
+
+/* -----------------------------------------------------------------   ENTITY - NEW  -------------- */
+.entity-new {
+  padding: 16px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  /* background-color: lightskyblue; */
+}
+
+/* -----------------------------------------------------------------   ENTITY - VIEW - TABLE -------------- */
+
+.active-g-form {
+  margin-top: 16px;
+  padding: 16px;
+  /* border: 1px solid black; */
+  /* background-color: whitesmoke; */
+  row-gap: 16px;
 }

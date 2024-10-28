@@ -1,8 +1,8 @@
-
 export interface ActiveEntity {
   key: string;
   label: string;
   type: string;
+  mode?: "ready" | "write" | "generated";
   optional?: boolean;
   valueRenderer?: string;
   fields?: ActiveMap<ActiveEntity>;
@@ -35,6 +35,10 @@ export class ActiveMap<K> {
     }
     return undefined;
   }
+
+  public getInternalMap(): { [key: string]: K } {
+    return this.map;
+  }
 }
 
 export const entityListToMap = (entities: ActiveEntity[]): ActiveMap<any> => {
@@ -43,4 +47,24 @@ export const entityListToMap = (entities: ActiveEntity[]): ActiveMap<any> => {
     map.add(item.key, item);
   });
   return map;
+};
+
+export const entityMapToFormList = (map: { [key: string]: any }):ActiveEntity[] => {
+  console.log("-----------------------", map);
+  const list:ActiveEntity[] = [];
+  for (const [key, value] of Object.entries(map)) {
+    // console.log(`(F) ${key}  `);
+    const feildMap = value as ActiveEntity;
+    // console.log(feildMap);
+    if (
+      feildMap &&
+      feildMap.mode &&
+      (feildMap.mode === "write" || feildMap.mode === "generated")
+    ) {
+      console.log(feildMap);
+      list.push(feildMap);
+    }    
+  }
+  // console.log(list)
+  return list;
 };
