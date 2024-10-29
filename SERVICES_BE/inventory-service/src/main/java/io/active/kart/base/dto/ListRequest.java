@@ -19,6 +19,6 @@ public class ListRequest {
 
     private String search = "";
 
-    private boolean includeDeleted = false;
+    private boolean onlyActive = false;
 
 }

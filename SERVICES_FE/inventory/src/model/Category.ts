@@ -5,8 +5,6 @@ export interface Category {
 
   active: boolean;
 
-  deleted: boolean;
-
   createdOn?: String;
 
   updatedOn?: String;
@@ -18,10 +16,11 @@ export interface CategoryLabel {
   name: string;
 }
 
-export const defaultCategory = (): Category => {
+export const defaultCategory = (): any => {
   return {
     name: "",
     active: true,
-    deleted: false,
+    // CAT: undefined,
+    // SUB:undefined
   };
 };

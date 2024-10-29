@@ -1,7 +1,7 @@
 import { alpha, styled } from "@mui/material/styles";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
-import RefreshIcon from '@mui/icons-material/Refresh';
+import RefreshIcon from "@mui/icons-material/Refresh";
 import Fab from "@mui/material/Fab";
 import {
   DataGrid,
@@ -20,13 +20,14 @@ import {
   ListPayload,
   SortObject,
 } from "./DataGridHelper";
+import { Switch } from "@mui/material";
 
 type ActiveDataGridProps = {
   columns: GridColDef[];
   provider: ListResponse<any>;
   triggerDataLoad?: (payload: any) => void;
   onRowSelection?: (entityId: number) => void | undefined;
-  onClear?: ()=>void;
+  onClear?: () => void;
   categoryId?: number;
   subCategoryId?: number;
 };
@@ -121,16 +122,14 @@ export default function ActiveDataGrid({
     triggerDataRefresh(localPayload);
   }
 
-  const handleIncludeDeleted = (checked: boolean) => {
-    console.log("__handleIncludeDeleted ( " + checked + " )");
+  const handleOnlyActive = (checked: boolean) => {
+    console.log("__handleOnlyActive ( " + checked + " )");
     const localPayload: ListPayload = {
       ...payload,
-      includeDeleted: checked,
+      onlyActive: checked,
     };
     triggerDataRefresh(localPayload);
   };
-
-
 
   const handleReload = () => {
     console.log("__handleReload");
@@ -143,7 +142,7 @@ export default function ActiveDataGrid({
     console.log("__handleClear");
     const localPayload: ListPayload = { ...payload, ...DEFAULT_LIST_PAYLOAD };
     triggerDataRefresh(localPayload);
-    if(props.onClear){
+    if (props.onClear) {
       props.onClear();
     }
   };
@@ -225,33 +224,14 @@ export default function ActiveDataGrid({
         />
       </div>
       <div className="entity-data-grid-footer">
-
-      <Fab
-          color="default"
-          variant="extended"
-          aria-label="clear"
-          onClick={handleReload}
-          size="small"
-        >
-          <RefreshIcon />
-          Reload
-        </Fab>
-
         <FormControlLabel
-          value="end"
-          control={
-            <Checkbox
-              checked={payload.includeDeleted}
-              sx={{
-                color: "#006064",
-                "&.Mui-checked": {
-                  color: "#006064",
-                },
-              }}
-            ></Checkbox>
-          }
-          label="Include Deleted"
-          onChange={(event, checked) => handleIncludeDeleted(checked)}
+          control={<Switch defaultChecked />}
+          label="Active only"
+          onChange={(event, checked) => {
+            handleOnlyActive(checked);
+          }}
+          checked={payload.onlyActive}
+          sx={{ paddingLeft: 2 }}
         />
 
         <Fab
@@ -263,6 +243,17 @@ export default function ActiveDataGrid({
         >
           <ClearIcon />
           Clear
+        </Fab>
+        <span style={{ color: "white" }}>....</span>
+        <Fab
+          color="default"
+          variant="extended"
+          aria-label="clear"
+          onClick={handleReload}
+          size="small"
+        >
+          <RefreshIcon />
+          Reload
         </Fab>
       </div>
     </>

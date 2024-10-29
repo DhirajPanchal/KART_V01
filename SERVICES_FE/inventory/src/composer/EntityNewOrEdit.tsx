@@ -11,21 +11,26 @@ import { ENTITY_CONFIG } from "../config/config";
 import { ActiveEntity, entityMapToFormList } from "../config/ConfigMetadata";
 import { defaultCategory } from "../model/Category";
 import { useNavigate } from "react-router-dom";
+import { CategoryDropdown } from "../component/EntityDropdown";
 
 type EntityNewOrEditProps = {
   mode: "NEW" | "EDIT";
   entityType: string;
   entityId: number;
-  getApiMethod?: any;
-  postApiMethod?: any;
+  entityGetApi?: any;
+  entityCreateApi?: any;
+  entityUpdateApi?: any;
+  refreshDatagrid?: any;
 };
 
 function EntityNewOrEdit({
   mode,
   entityType,
   entityId,
-  getApiMethod,
-  postApiMethod,
+  entityGetApi,
+  entityCreateApi,
+  entityUpdateApi,
+  refreshDatagrid,
 }: EntityNewOrEditProps) {
   console.log(`< EntityNewOrEdit > ${mode}***`);
   const navigation = useNavigate();
@@ -36,11 +41,14 @@ function EntityNewOrEdit({
     console.log("__handleSubmit");
     console.log(entity);
     if (mode === "NEW") {
-      if (postApiMethod) {
-        postApiMethod(entity)
+      if (entityCreateApi) {
+        entityCreateApi(entity)
           .then((data: any) => {
             console.log("---");
             console.log(data);
+            if (refreshDatagrid) {
+              refreshDatagrid();
+            }
             if (data && data.id) {
               console.log("NAV " + data.id);
               navigation(`../${data.id}`);
@@ -49,6 +57,21 @@ function EntityNewOrEdit({
           .catch(() => {});
       }
     } else if (mode === "EDIT") {
+      if (entityUpdateApi) {
+        entityUpdateApi(entity.id, entity)
+          .then((data: any) => {
+            console.log("---");
+            console.log(data);
+            if (refreshDatagrid) {
+              refreshDatagrid();
+            }
+            if (data && data.id) {
+              console.log("NAV " + data.id);
+              navigation(`../${data.id}`);
+            }
+          })
+          .catch(() => {});
+      }
     }
   };
 
@@ -67,8 +90,8 @@ function EntityNewOrEdit({
       setEntity(defaultCategory());
     } else if (mode === "EDIT") {
       if (!isNaN(entityId) && entityId > 0) {
-        if (getApiMethod) {
-          getApiMethod(entityId)
+        if (entityGetApi) {
+          entityGetApi(entityId)
             .then((data: any) => {
               setEntity(data);
             })
@@ -103,6 +126,8 @@ function EntityNewOrEdit({
               controls.push(genTextField(formItem));
             } else if (formItem.type === "boolean") {
               controls.push(genBooleanField(formItem));
+            } else if (formItem.type === "category") {
+              controls.push(genCategoryField(formItem));
             }
           });
         }
@@ -157,6 +182,19 @@ function EntityNewOrEdit({
       </FormControl>
     );
   }
+  function genCategoryField(formItem: ActiveEntity): ReactNode {
+    return (
+      <FormControl key={formItem.key}>
+        <CategoryDropdown 
+        // catValue={{id:entity[formItem.key]?.id, name:entity[formItem.key]?.name}}
+        onChange={(id) => updateValue("CAT", id)} />
+      </FormControl>
+    );
+  }
+
+  const handleCategoryChange = (id: number) => {
+    console.log("__handleCategoryChange " + id);
+  };
 
   return (
     <div className="entity-new">

@@ -87,7 +87,7 @@ export default function CategoryEntity() {
                 element={
                   <EntityViewRenderer
                     entityType={entityType}
-                    apiMethod={ApiHub.loadCategoryById}
+                    entityGetApi={ApiHub.loadCategoryById}
                   />
                 }
               />
@@ -98,7 +98,9 @@ export default function CategoryEntity() {
                     mode="EDIT"
                     entityType={entityType}
                     entityId={entityId}
-                    getApiMethod={ApiHub.loadCategoryById}
+                    entityGetApi={ApiHub.loadCategoryById}
+                    entityUpdateApi={ApiHub.updateCategory}
+                    refreshDatagrid={handleDataLoadTrigger}
                   />
                 }
               />
@@ -109,8 +111,9 @@ export default function CategoryEntity() {
                     mode="NEW"
                     entityType={entityType}
                     entityId={0}
-                    getApiMethod={ApiHub.loadCategoryById}
-                    postApiMethod={ApiHub.addCategory}
+                    entityGetApi={ApiHub.loadCategoryById}
+                    entityCreateApi={ApiHub.addCategory}
+                    refreshDatagrid={handleDataLoadTrigger}
                   />
                 }
               />

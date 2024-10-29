@@ -21,8 +21,6 @@ public class CategoryDTO {
 
     private Boolean active = true;
 
-    private Boolean deleted = false;
-
     private Date createdOn;
 
     private Date updatedOn;

@@ -7,8 +7,6 @@ export interface SubCategory {
 
   active: boolean;
 
-  deleted: boolean;
-
   createdOn: String;
 
   updatedOn: String;

@@ -7,9 +7,11 @@ import { SubCategoryLabel } from "../model/SubCategory";
 
 type CategoryDropdownProps = {
   onChange?: (id: number) => void;
+  onChangeValue?: (id: number, name:string) => void;
+  catValue?: any;
 };
 
-export const CategoryDropdown = ({ onChange }: CategoryDropdownProps) => {
+export const CategoryDropdown = ({ onChange,onChangeValue, catValue }: CategoryDropdownProps) => {
   // console.log("< CATEGORT DROP DOWN > ");
   const [list, setList] = useState<CategoryLabel[]>([]);
 
@@ -38,11 +40,15 @@ export const CategoryDropdown = ({ onChange }: CategoryDropdownProps) => {
     if (onChange) {
       onChange(id);
     }
+    if(onChangeValue){
+      onChangeValue(id, value.name)
+    }
   };
 
   return (
     <>
       <Autocomplete
+        value={catValue}
         disablePortal
         options={list === undefined || list === null ? [] : list}
         getOptionLabel={(obj) => dropdownLabel(obj)}

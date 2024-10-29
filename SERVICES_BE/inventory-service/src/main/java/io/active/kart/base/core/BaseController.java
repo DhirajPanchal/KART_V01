@@ -13,7 +13,6 @@ public abstract class BaseController<E extends BaseEntity, D, R extends BaseRepo
 
     protected final S service;
 
-
     public BaseController(S service) {
         System.out.println("__ BaseController");
         this.service = service;
@@ -28,13 +27,13 @@ public abstract class BaseController<E extends BaseEntity, D, R extends BaseRepo
     }
 
 
-    @PutMapping("/{id}")
-    public ResponseEntity<D> put(@Valid @RequestBody D dto,
-                                 @PathVariable Long id) {
-        System.out.println("__ BaseController . PUT : " + id + " , " + dto);
-        D savedDto = service.put(id, dto);
-        return new ResponseEntity<>(savedDto, HttpStatus.OK);
-    }
+//    @PutMapping("/{id}")
+//    public ResponseEntity<D> put(@Valid @RequestBody D dto,
+//                                 @PathVariable Long id) {
+//        System.out.println("__ BaseController . PUT : " + id + " , " + dto);
+//        D savedDto = service.put(id, dto);
+//        return new ResponseEntity<>(savedDto, HttpStatus.OK);
+//    }
 
 
     @DeleteMapping("/{id}")

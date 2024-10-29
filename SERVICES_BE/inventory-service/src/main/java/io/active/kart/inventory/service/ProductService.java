@@ -38,7 +38,7 @@ public class ProductService extends BaseService<Product, ProductDTO, ProductRepo
 
 
     @Override
-    protected Product update(Product newEntity, Product existingEntity) {
+    protected Product update(Product newEntity, Product existingEntity, ProductDTO dto) {
 
         System.out.println("__ SubCategoryService . PUT . UPDATE : ");
 
@@ -87,10 +87,10 @@ public class ProductService extends BaseService<Product, ProductDTO, ProductRepo
             SubCategory subCategory = subCategoryRepository.findById(subCategoryId)
                     .orElseThrow(() -> new ResourceNotFoundException("SubCategory", "id", subCategoryId));
 
-            if (Boolean.TRUE.equals(requestBody.isIncludeDeleted())) {
-                page = this.repository.findBySubCategoryAndNameLikeIgnoreCase(subCategory, getSearchValue(requestBody), pageable);
+            if (Boolean.TRUE.equals(requestBody.isOnlyActive())) {
+                page = this.repository.findBySubCategoryAndNameLikeIgnoreCaseAndActive(subCategory, getSearchValue(requestBody), true, pageable);
             } else {
-                page = this.repository.findBySubCategoryAndNameLikeIgnoreCaseAndDeleted(subCategory, getSearchValue(requestBody), false, pageable);
+                page = this.repository.findBySubCategoryAndNameLikeIgnoreCase(subCategory, getSearchValue(requestBody), pageable);
             }
 
         } else if (categoryId > 0 && subCategoryId == 0) {
@@ -99,19 +99,19 @@ public class ProductService extends BaseService<Product, ProductDTO, ProductRepo
             Category category = categoryRepository.findById(categoryId)
                     .orElseThrow(() -> new ResourceNotFoundException("Category", "id", categoryId));
 
-            if (Boolean.TRUE.equals(requestBody.isIncludeDeleted())) {
-                page = this.repository.findByCategoryAndNameLikeIgnoreCase(category, getSearchValue(requestBody), pageable);
+            if (Boolean.TRUE.equals(requestBody.isOnlyActive())) {
+                page = this.repository.findByCategoryAndNameLikeIgnoreCaseAndActive(category, getSearchValue(requestBody), true, pageable);
             } else {
-                page = this.repository.findByCategoryAndNameLikeIgnoreCaseAndDeleted(category, getSearchValue(requestBody), false, pageable);
+                page = this.repository.findByCategoryAndNameLikeIgnoreCase(category, getSearchValue(requestBody), pageable);
             }
 
-        } else if (categoryId == 0 ) {
+        } else if (categoryId == 0) {
             System.out.println("Products By ALL");
 
-            if (Boolean.TRUE.equals(requestBody.isIncludeDeleted())) {
-                page = this.repository.findByNameLikeIgnoreCase(getSearchValue(requestBody), pageable);
+            if (Boolean.TRUE.equals(requestBody.isOnlyActive())) {
+                page = this.repository.findByNameLikeIgnoreCaseAndActive(getSearchValue(requestBody), true, pageable);
             } else {
-                page = this.repository.findByNameLikeIgnoreCaseAndDeleted(getSearchValue(requestBody), false, pageable);
+                page = this.repository.findByNameLikeIgnoreCase(getSearchValue(requestBody), pageable);
             }
 
         }

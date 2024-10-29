@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../composer/composer.css";
 import { Routes, Route, Navigate, Outlet, useNavigate } from "react-router-dom";
 import EntityHeaderNav from "../composer/EntityHeaderNav";
-import EntityNew from "../composer/EntityNew";
+
 import EntityViewNone from "../composer/EntityViewNone";
 import ActiveDataGrid from "./ActiveDataGrid";
 import {
@@ -15,6 +15,7 @@ import { ListResponse } from "../model/ListResponse";
 import { Product } from "../model/Product";
 import { CategoryDropdown, SubCategoryDropdown } from "./EntityDropdown";
 import EntityViewRenderer from "../composer/EntityViewRenderer";
+import EntityNew from "../composer/EntityNew";
 
 //  - - - - - - - - - - -
 //
@@ -127,7 +128,7 @@ export default function ProductEntity() {
               />
               <Route
                 path=":id"
-                element={<EntityViewRenderer entityType={entityType} apiMethod={ApiHub.loadProductById}/>}
+                element={<EntityViewRenderer entityType={entityType} entityGetApi={ApiHub.loadProductById}/>}
               />
               <Route path=":id/edit" element={<h1>EDIT</h1>} />
               <Route

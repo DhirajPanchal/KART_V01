@@ -16,7 +16,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -35,17 +34,16 @@ public class SubCategoryService
 
 
     @Override
-    protected SubCategory update(SubCategory newEntity, SubCategory existingEntity) {
+    protected SubCategory update(SubCategory newEntity, SubCategory existingEntity, SubCategoryDTO dto) {
 
-        System.out.println("__ SubCategoryService . PUT . UPDATE : ");
-
+        System.out.println("__ SubCategoryService . PUT . UPDATE ");
+        System.out.println(dto);
         newEntity.setCategory(existingEntity.getCategory());
         return newEntity;
 
     }
 
 
-    @PostMapping
     public SubCategoryDTO post(Long categoryId, SubCategoryDTO dto) {
 
         System.out.println("__ SubCategoryService . POST : " + dto);
@@ -67,6 +65,27 @@ public class SubCategoryService
     }
 
 
+    public SubCategoryDTO put(Long categoryId, Long subCategoryId, SubCategoryDTO dto) {
+
+        System.out.println("__ SubCategoryService . PUT : ******************** " + dto);
+
+        SubCategory entity = mapper.map(dto, typeEntityClass);
+
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new ResourceNotFoundException("Category", "id", categoryId));
+
+        entity.setCategory(category);
+//
+//        SubCategory entityFromDb = repository.findById(subCategoryId)
+//                .orElseThrow(() -> new ResourceNotFoundException("Sub-Category", "id", subCategoryId));
+
+
+        SubCategory savedEntity = repository.save(entity);
+
+        return mapper.map(savedEntity, typeDtoClass);
+
+    }
+
     public ListResponse<SubCategoryDTO> list(Long categoryId, int index, int size, ListRequest requestBody) {
 
         System.out.println("__ SubCategoryService . POST . LIST  : ");
@@ -84,18 +103,18 @@ public class SubCategoryService
             Category category = categoryRepository.findById(categoryId)
                     .orElseThrow(() -> new ResourceNotFoundException("SubCategory", "id", categoryId));
 
-            if (Boolean.TRUE.equals(requestBody.isIncludeDeleted())) {
-                page = this.repository.findByCategoryAndNameLikeIgnoreCase(category, getSearchValue(requestBody), pageable);
+            if (Boolean.TRUE.equals(requestBody.isOnlyActive())) {
+                page = this.repository.findByCategoryAndNameLikeIgnoreCaseAndActive(category, getSearchValue(requestBody), true, pageable);
             } else {
-                page = this.repository.findByCategoryAndNameLikeIgnoreCaseAndDeleted(category, getSearchValue(requestBody), false, pageable);
+                page = this.repository.findByCategoryAndNameLikeIgnoreCase(category, getSearchValue(requestBody), pageable);
             }
         } else if (categoryId == 0) {
 
             System.out.println("SubCategories By ALL");
-            if (Boolean.TRUE.equals(requestBody.isIncludeDeleted())) {
-                page = this.repository.findByNameLikeIgnoreCase(getSearchValue(requestBody), pageable);
+            if (Boolean.TRUE.equals(requestBody.isOnlyActive())) {
+                page = this.repository.findByNameLikeIgnoreCaseAndActive(getSearchValue(requestBody), true, pageable);
             } else {
-                page = this.repository.findByNameLikeIgnoreCaseAndDeleted(getSearchValue(requestBody), false, pageable);
+                page = this.repository.findByNameLikeIgnoreCase(getSearchValue(requestBody), pageable);
             }
         }
 

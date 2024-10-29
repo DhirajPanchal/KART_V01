@@ -36,6 +36,17 @@ public class SubCategoryController extends BaseController<SubCategory, SubCatego
     }
 
 
+    @PutMapping("/{subCategoryId}")
+    public ResponseEntity<SubCategoryDTO> put(@PathVariable Long categoryId, @PathVariable Long subCategoryId,  @Valid @RequestBody SubCategoryDTO dto) {
+
+        System.out.println("__ SubCategoryController . PUT ******************** : " + categoryId + " , " + dto);
+
+        SubCategoryDTO savedDto = service.put(categoryId, subCategoryId,  dto);
+
+        return new ResponseEntity<>(savedDto, HttpStatus.CREATED);
+
+    }
+
     @PostMapping("/list")
     public ResponseEntity<ListResponse<SubCategoryDTO>> list(@PathVariable Long categoryId,
                                                              @RequestParam(name = PAGE_INDEX, defaultValue = PAGE_INDEX_DEFAULT) int index,

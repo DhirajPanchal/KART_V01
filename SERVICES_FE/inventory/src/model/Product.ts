@@ -8,8 +8,6 @@ export interface Product {
 
   active: boolean;
 
-  deleted: boolean;
-
   createdOn: String;
 
   updatedOn: String;

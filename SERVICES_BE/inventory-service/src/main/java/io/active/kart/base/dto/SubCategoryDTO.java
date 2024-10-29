@@ -20,9 +20,7 @@ public class SubCategoryDTO {
     @Size(min = 3, message = "Category name must contain at least 3 characters")
     private String name;
 
-    private Boolean active;
-
-    private Boolean deleted;
+    private Boolean active = true;
 
     private Date createdOn;
 

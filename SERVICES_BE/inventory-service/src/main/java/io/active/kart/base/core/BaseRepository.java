@@ -12,6 +12,6 @@ public interface BaseRepository<E> extends JpaRepository<E, Long> {
 
     Page<E> findByNameLikeIgnoreCase(String name, Pageable pageDetails);
 
-    Page<E> findByNameLikeIgnoreCaseAndDeleted(String name, boolean deleted, Pageable pageDetails);
+    Page<E> findByNameLikeIgnoreCaseAndActive(String name, boolean active, Pageable pageDetails);
 
 }

@@ -20,15 +20,15 @@ public class AnnotationDrivenEndpointsListener {
     @EventListener
     public void handleContextRefresh(ContextRefreshedEvent event) {
 
-        System.out.println("***********************************************************************************************");
-        System.out.println("* END POINTs ");
-        System.out.println("***********************************************************************************************");
-
-        ApplicationContext applicationContext = event.getApplicationContext();
-        RequestMappingHandlerMapping requestMappingHandlerMapping = applicationContext
-                .getBean("requestMappingHandlerMapping", RequestMappingHandlerMapping.class);
-        Map<RequestMappingInfo, HandlerMethod> map = requestMappingHandlerMapping.getHandlerMethods();
-        map.forEach((key, value) -> System.out.printf("%-100s %s%n", key + " :: ", value) );
-        System.out.println("***********************************************************************************************|");
+//        System.out.println("***********************************************************************************************");
+//        System.out.println("* END POINTs ");
+//        System.out.println("***********************************************************************************************");
+//
+//        ApplicationContext applicationContext = event.getApplicationContext();
+//        RequestMappingHandlerMapping requestMappingHandlerMapping = applicationContext
+//                .getBean("requestMappingHandlerMapping", RequestMappingHandlerMapping.class);
+//        Map<RequestMappingInfo, HandlerMethod> map = requestMappingHandlerMapping.getHandlerMethods();
+//        map.forEach((key, value) -> System.out.printf("%-100s %s%n", key + " :: ", value) );
+//        System.out.println("***********************************************************************************************|");
     }
 }

@@ -103,6 +103,10 @@ const addCategory = (payload: any) => {
   return request.post<Category>(`inventory/category`, payload);
 };
 
+const updateCategory = (id: number, payload: any) => {
+  return request.put<Category>(`inventory/category/${id}`, payload);
+};
+
 //  * * *  S U B - C A T E G O R Y  * * *
 
 const loadSubCategoryList = (payload: ListPayload = DEFAULT_LIST_PAYLOAD) =>
@@ -121,6 +125,20 @@ const loadSubCategoryLabelList = (
 
 const loadSubCategoryById = (id: number) => {
   return request.get<SubCategory>(`inventory/category/0/subcategory/${id}`);
+};
+
+const addSubCategory = (payload: any) => {
+  return request.post<Category>(
+    `inventory/category/${payload.CAT}/subcategory`,
+    payload
+  );
+};
+
+const updateSubCategory = (id: number, payload: any) => {
+  return request.put<Category>(
+    `inventory/category/${payload.CAT}/subcategory/${id}`,
+    payload
+  );
 };
 
 //  * * *  P R O D U C T  * * *
@@ -142,13 +160,16 @@ const ApiHub = {
   loadCategoryLabelList,
   loadCategoryById,
   addCategory,
+  updateCategory,
 
   loadSubCategoryList,
   loadSubCategoryLabelList,
   loadSubCategoryById,
+  addSubCategory,
+  updateSubCategory,
 
   loadProductList,
-  loadProductById
+  loadProductById,
 };
 
 export default ApiHub;

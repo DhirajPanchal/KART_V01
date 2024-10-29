@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ENTITY_CONFIG } from "../config/config";
 import { Chip, FormControlLabel, Checkbox, Switch } from "@mui/material";
-
+import { localDateTimeFormatter } from "../service/Util";
 type EntityViewRendererProps = {
   entityType?: string;
-  apiMethod?: any;
+  entityGetApi?: any;
 };
 
 type RowRenderer = {
@@ -18,7 +18,7 @@ type RowRenderer = {
 
 function EntityViewRenderer({
   entityType = "",
-  apiMethod,
+  entityGetApi,
 }: EntityViewRendererProps) {
   let params = useParams();
 
@@ -33,8 +33,8 @@ function EntityViewRenderer({
     console.log(`<EVR> - LOAD : ${params.id}`);
     let entityId = params.id ? +params.id : 0;
     if (!isNaN(entityId) && entityId > 0) {
-      if (apiMethod) {
-        apiMethod(entityId)
+      if (entityGetApi) {
+        entityGetApi(entityId)
           .then((data: any) => {
             setEntity(data);
           })
@@ -103,14 +103,14 @@ function EntityViewRenderer({
                   let strDate =
                     value === undefined || value === null ? "" : value + "";
 
-                  fieldValue = strDate.split("T")[0];
+                  fieldValue = localDateTimeFormatter(strDate);
                 } else {
                   fieldValue =
                     value === undefined || value === null ? "" : value + "";
                 }
 
                 rowList.push({
-                  label: fieldLabel ,
+                  label: fieldLabel,
                   value: fieldValue,
                   key: fieldLabel + "_" + depth,
                   depth: depth,
@@ -170,6 +170,7 @@ function EntityViewRenderer({
 
     return "";
   };
+
 
   return (
     <div className="entity-view">

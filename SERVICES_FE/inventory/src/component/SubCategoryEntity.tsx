@@ -16,6 +16,7 @@ import { ListResponse } from "../model/ListResponse";
 import { SubCategory, SubCategoryLabel } from "../model/SubCategory";
 import { CategoryDropdown } from "./EntityDropdown";
 import EntityViewRenderer from "../composer/EntityViewRenderer";
+import EntityNewOrEdit from "../composer/EntityNewOrEdit";
 
 //  - - - - - - - - - - -
 //
@@ -105,7 +106,7 @@ export default function SubCategoryEntity() {
               />
               {/* <Route
                 path=":id"
-                element={<EntityView entityType={entityType} apiMethod={ApiHub.loadSubCategoryById} />}
+                element={<EntityView entityType={entityType} entityGetApi={ApiHub.loadSubCategoryById} />}
               /> */}
 
               <Route
@@ -113,15 +114,35 @@ export default function SubCategoryEntity() {
                 element={
                   <EntityViewRenderer
                     entityType={entityType}
-                    apiMethod={ApiHub.loadSubCategoryById}
+                    entityGetApi={ApiHub.loadSubCategoryById}
                   />
                 }
               />
-
-              <Route path=":id/edit" element={<h1>EDIT</h1>} />
+              <Route
+                path=":id/edit"
+                element={
+                  <EntityNewOrEdit
+                    mode="EDIT"
+                    entityType={entityType}
+                    entityId={entityId}
+                    entityGetApi={ApiHub.loadSubCategoryById}
+                    entityUpdateApi={ApiHub.updateSubCategory}
+                    refreshDatagrid={handleDataLoadTrigger}
+                  />
+                }
+              />
               <Route
                 path="new"
-                element={<EntityNew entityType={entityType} />}
+                element={
+                  <EntityNewOrEdit
+                    mode="NEW"
+                    entityType={entityType}
+                    entityId={0}
+                    entityGetApi={ApiHub.loadSubCategoryById}
+                    entityCreateApi={ApiHub.addSubCategory}
+                    refreshDatagrid={handleDataLoadTrigger}
+                  />
+                }
               />
             </Routes>
             <Outlet />

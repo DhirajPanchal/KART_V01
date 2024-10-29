@@ -27,13 +27,6 @@ const categoryConfig: ActiveEntity = {
       mode: "write",
     },
     {
-      key: "deleted",
-      type: "boolean",
-      label: "Deleted",
-      optional: true,
-      mode: "write",
-    },
-    {
       key: "createdOn",
       type: "date",
       label: "Created On",
@@ -60,24 +53,21 @@ const subCategoryConfig: ActiveEntity = {
       type: "number",
       label: "ID",
       optional: true,
+      mode: "generated",
     },
     {
       key: "name",
       type: "string",
       label: "Sub-Category Name",
       optional: false,
+      mode: "write",
     },
     {
       key: "active",
       type: "boolean",
       label: "Active",
       optional: false,
-    },
-    {
-      key: "deleted",
-      type: "boolean",
-      label: "Deleted",
-      optional: true,
+      mode: "write",
     },
     {
       key: "createdOn",
@@ -96,6 +86,7 @@ const subCategoryConfig: ActiveEntity = {
       type: "category",
       label: "Category",
       optional: false,
+      mode: "write",
     },
   ]),
 };
@@ -122,12 +113,6 @@ const productConfig: ActiveEntity = {
       type: "boolean",
       label: "Active",
       optional: false,
-    },
-    {
-      key: "deleted",
-      type: "boolean",
-      label: "Deleted",
-      optional: true,
     },
     {
       key: "createdOn",

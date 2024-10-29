@@ -35,6 +35,13 @@ public class CategoryController extends BaseController<Category, CategoryDTO, Ca
 
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<CategoryDTO> put(@Valid @RequestBody CategoryDTO dto,
+                                           @PathVariable Long id) {
+        System.out.println("__ CategoryRestController . PUT : " + id + " , " + dto);
+        CategoryDTO savedDto = service.put(id, dto);
+        return new ResponseEntity<>(savedDto, HttpStatus.OK);
+    }
 
     @PostMapping("/list")
     public ResponseEntity<ListResponse<CategoryDTO>> list(@RequestParam(name = PAGE_INDEX, defaultValue = PAGE_INDEX_DEFAULT) int index,

@@ -27,9 +27,6 @@ public abstract class BaseEntity implements Serializable {
     @Column(name = "active")
     private Boolean active=true;
 
-    @Column(name = "deleted")
-    private Boolean deleted = false;
-
     @Column(name = "created_on", updatable = false)
     @CreationTimestamp
     private Date createdOn;
@@ -44,7 +41,6 @@ public abstract class BaseEntity implements Serializable {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", active=" + active +
-                ", deleted=" + deleted +
                 ", createdOn=" + createdOn +
                 ", updatedOn=" + updatedOn +
                 '}';

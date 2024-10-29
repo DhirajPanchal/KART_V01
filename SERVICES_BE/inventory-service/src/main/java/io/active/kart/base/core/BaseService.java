@@ -79,7 +79,7 @@ public class BaseService<E extends BaseEntity, D, R extends BaseRepository<E>> {
 
         entity.setId(id);
 
-        entity = update(entity, existing);
+        entity = update(entity, existing, dto);
 
         E savedEntity = repository.save(entity);
 
@@ -95,24 +95,23 @@ public class BaseService<E extends BaseEntity, D, R extends BaseRepository<E>> {
         E entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(typeEntityClass.getSimpleName(), "id", id));
 
-        entity.setDeleted(true);
-        E savedEntity = repository.save(entity);
+        repository.deleteById(id);
 
-        return mapper.map(savedEntity, typeDtoClass);
+        return mapper.map(entity, typeDtoClass);
 
     }
 
 
-    protected E update(E newEntity, E existingEntity) {
+    protected E update(E newEntity, E existingEntity, D dto) {
         System.out.println("__ BaseService . PUT . UPDATE : ");
-        newEntity.setDeleted(existingEntity.getDeleted());
+        //newEntity.setDeleted(existingEntity.getDeleted());
         return newEntity;
     }
 
 
     public ListResponse<D> list(int index, int size, ListRequest requestBody) {
 
-        System.out.println("__ BaseService . LIST : " + requestBody.isIncludeDeleted());
+        System.out.println("__ BaseService . LIST :X " + requestBody.isOnlyActive());
 
         Sort sort = createSort(requestBody);
         System.out.println(" Search : |" + getSearchValue(requestBody) + "|");
@@ -120,15 +119,17 @@ public class BaseService<E extends BaseEntity, D, R extends BaseRepository<E>> {
         Pageable pageable = PageRequest.of(index, size, sort);
         Page<E> page;
 
-        if (Boolean.TRUE.equals(requestBody.isIncludeDeleted())) {
+        if (Boolean.TRUE.equals(requestBody.isOnlyActive())) {
+            page = this.repository.findByNameLikeIgnoreCaseAndActive(
+                    getSearchValue(requestBody),
+                    true,
+                    pageable);
+        } else {
+            System.out.println("X");
             page = this.repository.findByNameLikeIgnoreCase(
                     getSearchValue(requestBody),
                     pageable);
-        } else {
-            page = this.repository.findByNameLikeIgnoreCaseAndDeleted(
-                    getSearchValue(requestBody),
-                    false,
-                    pageable);
+
         }
 
         ListResponse<D> response = new ListResponse<>();
