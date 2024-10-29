@@ -101,18 +101,21 @@ const productConfig: ActiveEntity = {
       type: "number",
       label: "ID",
       optional: true,
+      mode: "generated",
     },
     {
       key: "name",
       type: "string",
       label: "Product Name",
       optional: false,
+      mode: "write",
     },
     {
       key: "active",
       type: "boolean",
       label: "Active",
       optional: false,
+      mode: "write",
     },
     {
       key: "createdOn",

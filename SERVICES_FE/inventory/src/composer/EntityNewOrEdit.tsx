@@ -235,9 +235,9 @@ function EntityNewOrEdit({
         setEntity((pre: any) => {
           return { ...pre, category: value };
         });
-      } else if (entityType === "product") {
+      } else if (entityType === "subCategory") {
         setEntity((pre: any) => {
-          return { ...pre, subCategory: value };
+          return { ...pre, suCategory: value };
         });
       }
     }

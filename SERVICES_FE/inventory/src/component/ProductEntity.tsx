@@ -58,7 +58,7 @@ export default function ProductEntity() {
   const handleRowSelection = (entityId: number) => {
     // console.log("__handleRowSelection : " + entityId);
     setEntityId(entityId);
-    navigation("" + (entityId));
+    navigation("" + entityId);
   };
 
   const onCategoryChange = (id: number) => {
@@ -128,7 +128,12 @@ export default function ProductEntity() {
               />
               <Route
                 path=":id"
-                element={<EntityViewRenderer entityType={entityType} entityGetApi={ApiHub.loadProductById}/>}
+                element={
+                  <EntityViewRenderer
+                    entityType={entityType}
+                    entityGetApi={ApiHub.loadProductById}
+                  />
+                }
               />
               <Route path=":id/edit" element={<h1>EDIT</h1>} />
               <Route

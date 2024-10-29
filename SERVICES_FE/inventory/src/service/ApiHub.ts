@@ -155,6 +155,20 @@ const loadProductById = (id: number) => {
   );
 };
 
+const addProduct = (payload: any) => {
+  return request.post<Product>(
+    `inventory/category/0/subcategory/${payload.ADD_KEY}/product`,
+    payload
+  );
+};
+
+const updateProduct = (id: number, payload: any) => {
+  return request.put<Product>(
+    `inventory/category/0/subcategory/${payload.ADD_KEY}/product/${id}`,
+    payload
+  );
+};
+
 const ApiHub = {
   loadCategoryList,
   loadCategoryLabelList,
