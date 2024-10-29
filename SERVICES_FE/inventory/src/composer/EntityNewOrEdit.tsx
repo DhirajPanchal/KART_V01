@@ -1,4 +1,5 @@
 import {
+  Autocomplete,
   Button,
   Chip,
   FormControl,
@@ -9,9 +10,11 @@ import {
 import React, { ReactNode, useEffect, useState } from "react";
 import { ENTITY_CONFIG } from "../config/config";
 import { ActiveEntity, entityMapToFormList } from "../config/ConfigMetadata";
-import { defaultCategory } from "../model/Category";
+import { CategoryLabel, defaultCategory } from "../model/Category";
 import { useNavigate } from "react-router-dom";
-import { CategoryDropdown } from "../component/EntityDropdown";
+import { dropdownLabel } from "../component/EntityDropdown";
+import { DEFAULT_LABEL_LIST_PAYLOAD } from "../component/DataGridHelper";
+import { SubCategoryLabel } from "../model/SubCategory";
 
 type EntityNewOrEditProps = {
   mode: "NEW" | "EDIT";
@@ -21,6 +24,7 @@ type EntityNewOrEditProps = {
   entityCreateApi?: any;
   entityUpdateApi?: any;
   refreshDatagrid?: any;
+  catSubListApi?: any;
 };
 
 function EntityNewOrEdit({
@@ -31,15 +35,19 @@ function EntityNewOrEdit({
   entityCreateApi,
   entityUpdateApi,
   refreshDatagrid,
+  catSubListApi,
 }: EntityNewOrEditProps) {
   console.log(`< EntityNewOrEdit > ${mode}***`);
   const navigation = useNavigate();
   const [entity, setEntity] = useState<any>(undefined);
-
+  const [catOrSub, setCatOrSub] = useState<
+    CategoryLabel[] | SubCategoryLabel[]
+  >([]);
   const handleSubmit = (event: any) => {
     event.preventDefault();
     console.log("__handleSubmit");
     console.log(entity);
+    // return;
     if (mode === "NEW") {
       if (entityCreateApi) {
         entityCreateApi(entity)
@@ -183,17 +191,56 @@ function EntityNewOrEdit({
     );
   }
   function genCategoryField(formItem: ActiveEntity): ReactNode {
+    if (catOrSub.length === 0) {
+      loadCatOrSub();
+    }
+    if (mode === "EDIT") {
+      entity.ADD_KEY = entity[formItem.key]["id"];
+    }
+
     return (
       <FormControl key={formItem.key}>
-        <CategoryDropdown 
-        // catValue={{id:entity[formItem.key]?.id, name:entity[formItem.key]?.name}}
-        onChange={(id) => updateValue("CAT", id)} />
+        <Autocomplete
+          value={entity[formItem.key]}
+          disablePortal
+          options={catOrSub ? catOrSub : []}
+          getOptionLabel={(obj) => dropdownLabel(obj)}
+          sx={{ width: 240 }}
+          onChange={(event, value) => handleCatOrSubChange(value)}
+          renderInput={(params) => (
+            <TextField {...params} label="Select Category" required />
+          )}
+        />
       </FormControl>
     );
   }
 
-  const handleCategoryChange = (id: number) => {
-    console.log("__handleCategoryChange " + id);
+  const loadCatOrSub = (payload: any = DEFAULT_LABEL_LIST_PAYLOAD) => {
+    console.log("< CATEGORT DROP DOWN > API - LIST : ", payload);
+    // console.log(payload);
+    if (catSubListApi) {
+      catSubListApi(payload)
+        .then((data: any) => {
+          setCatOrSub(data.list);
+        })
+        .catch(() => {});
+    }
+  };
+  const handleCatOrSubChange = (value: any) => {
+    console.log("__handleCategoryChange");
+    console.log(value);
+    if (value && value.id) {
+      updateValue("ADD_KEY", value.id);
+      if (entityType === "subCategory") {
+        setEntity((pre: any) => {
+          return { ...pre, category: value };
+        });
+      } else if (entityType === "product") {
+        setEntity((pre: any) => {
+          return { ...pre, subCategory: value };
+        });
+      }
+    }
   };
 
   return (

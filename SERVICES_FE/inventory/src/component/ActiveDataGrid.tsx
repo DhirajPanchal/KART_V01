@@ -225,7 +225,7 @@ export default function ActiveDataGrid({
       </div>
       <div className="entity-data-grid-footer">
         <FormControlLabel
-          control={<Switch defaultChecked />}
+          control={<Switch />}
           label="Active only"
           onChange={(event, checked) => {
             handleOnlyActive(checked);

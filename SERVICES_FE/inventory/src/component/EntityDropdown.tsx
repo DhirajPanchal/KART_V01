@@ -127,7 +127,7 @@ export const SubCategoryDropdown = ({
   );
 };
 
-const dropdownLabel = (item: any): string => {
+export const dropdownLabel = (item: any): string => {
   if (item !== undefined && item.name !== undefined && item.id !== undefined) {
     return ` ${item.name} ( ${item.id} ) `;
   }

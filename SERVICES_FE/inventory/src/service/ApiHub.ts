@@ -129,14 +129,14 @@ const loadSubCategoryById = (id: number) => {
 
 const addSubCategory = (payload: any) => {
   return request.post<Category>(
-    `inventory/category/${payload.CAT}/subcategory`,
+    `inventory/category/${payload.ADD_KEY}/subcategory`,
     payload
   );
 };
 
 const updateSubCategory = (id: number, payload: any) => {
   return request.put<Category>(
-    `inventory/category/${payload.CAT}/subcategory/${id}`,
+    `inventory/category/${payload.ADD_KEY}/subcategory/${id}`,
     payload
   );
 };

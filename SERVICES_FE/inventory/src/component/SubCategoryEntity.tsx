@@ -128,6 +128,7 @@ export default function SubCategoryEntity() {
                     entityGetApi={ApiHub.loadSubCategoryById}
                     entityUpdateApi={ApiHub.updateSubCategory}
                     refreshDatagrid={handleDataLoadTrigger}
+                    catSubListApi={ApiHub.loadCategoryLabelList}
                   />
                 }
               />
@@ -141,6 +142,7 @@ export default function SubCategoryEntity() {
                     entityGetApi={ApiHub.loadSubCategoryById}
                     entityCreateApi={ApiHub.addSubCategory}
                     refreshDatagrid={handleDataLoadTrigger}
+                    catSubListApi={ApiHub.loadCategoryLabelList}
                   />
                 }
               />
