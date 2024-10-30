@@ -78,7 +78,7 @@ export default function App() {
 
       <ToastContainer
         position="top-center"
-        transition={Slide}
+        transition={Flip}
         autoClose={1200}
         pauseOnFocusLoss={false}
       />

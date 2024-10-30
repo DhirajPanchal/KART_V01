@@ -92,7 +92,7 @@ function responseAnalysis(response: AxiosResponse<any, any>) {
     toast.success("Updated successful");
   } else if (response?.config?.method === "post") {
     if (response?.config?.url?.includes("/list")) {
-      toast("Data grid refreshed");
+      // toast("Data grid refreshed");
     } else {
       toast.success("Created successful");
     }
