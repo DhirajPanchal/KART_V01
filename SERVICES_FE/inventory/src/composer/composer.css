@@ -93,6 +93,7 @@
   display: flex;
   flex-direction: column;
   /* background-color: aqua; */
+  width: 100%;
 }
 
 .entity-view-header {
@@ -143,6 +144,7 @@
   scrollbar-color: #006064 rgb(240, 240, 240);
   scrollbar-width: thin;
   /* max-height: 100%; */
+  /* width: 80%; */
   /* background-color: blueviolet; */
 }
 
@@ -194,7 +196,7 @@
 }
 
 .entity-field-space {
-  width: 24px;
+  width: 36px;
   color: grey;
 }
 
@@ -227,4 +229,9 @@ form {
   /* border: 1px solid black; */
   /* background-color: whitesmoke; */
   row-gap: 16px;
+}
+
+.animated-page {
+  width: 100%;
+  /* background-color: beige; */
 }

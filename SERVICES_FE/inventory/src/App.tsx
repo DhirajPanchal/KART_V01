@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route, NavLink, Navigate } from "react-router-dom";
 import "./index.css";
 import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
+import { Bounce, Flip, Slide, ToastContainer, Zoom } from "react-toastify";
 import CategoryEntity from "./component/CategoryEntity";
 import ProductEntity from "./component/ProductEntity";
 import SubCategoryEntity from "./component/SubCategoryEntity";
@@ -77,7 +77,7 @@ export default function App() {
         <Route path="product/*" element={<ProductEntity />} />
       </Routes>
 
-      <ToastContainer autoClose={400} pauseOnFocusLoss={false} />
+      <ToastContainer  transition={Flip} autoClose={800} pauseOnFocusLoss={false}  />
     </div>
   );
 }

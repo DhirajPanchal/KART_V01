@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "../composer/composer.css";
-import { Routes, Route, Navigate, Outlet, useNavigate } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  Navigate,
+  Outlet,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 import EntityHeaderNav from "../composer/EntityHeaderNav";
 
 import EntityViewNone from "../composer/EntityViewNone";
@@ -16,6 +23,8 @@ import { Product } from "../model/Product";
 import { CategoryDropdown, SubCategoryDropdown } from "./EntityDropdown";
 import EntityViewRenderer from "../composer/EntityViewRenderer";
 import EntityNewOrEdit from "../composer/EntityNewOrEdit";
+import { AnimatePresence } from "framer-motion";
+import AnimatedPage from "./AnimatedPage";
 
 //  - - - - - - - - - - -
 //
@@ -27,7 +36,7 @@ export default function ProductEntity() {
   console.log("< PRODUCT >");
 
   const entityType = "product";
-
+  const location = useLocation();
   const navigation = useNavigate();
 
   const [entityId, setEntityId] = useState<number>(0);
@@ -84,18 +93,15 @@ export default function ProductEntity() {
       <div className="entity-root">
         <div className="entity-listing">
           <div className="cb-arrange-horizontally">
-            <div className="cb-arrange-horizontally">
-              {/* {entityId} */}
-              <CategoryDropdown onChange={(id) => onCategoryChange(id)} />
-              {/* {selectedCategoryId} */}
-              {selectedCategoryId !== undefined && selectedCategoryId > 0 && (
-                <SubCategoryDropdown
-                  categoryId={selectedCategoryId}
-                  onChange={(id) => onSubCategoryChange(id)}
-                />
-              )}
-              {/* {selectedSubCategoryId} */}
-            </div>
+            <CategoryDropdown onChange={(id) => onCategoryChange(id)} />
+            {/* {selectedCategoryId} */}
+            {selectedCategoryId !== undefined && selectedCategoryId > 0 && (
+              <SubCategoryDropdown
+                categoryId={selectedCategoryId}
+                onChange={(id) => onSubCategoryChange(id)}
+              />
+            )}
+            {/* {selectedSubCategoryId} */}
           </div>
 
           <ActiveDataGrid
@@ -110,58 +116,71 @@ export default function ProductEntity() {
         </div>
 
         <div className="entity-body">
-          <div className="entity-nav">
-            <EntityHeaderNav
-              entityId={entityId}
-              onNewNaviation={() => handleRowSelection(0)}
-            />
-          </div>
-
+          <AnimatedPage animaDuration={1}>
+            <div className="entity-nav">
+              <EntityHeaderNav
+                entityId={entityId}
+                onNewNaviation={() => handleRowSelection(0)}
+              />
+            </div>
+          </AnimatedPage>
           <div className="entity-curd">
-            <Routes>
-              <Route index element={<Navigate replace to="0" />} />
-              <Route
-                path="0"
-                element={<EntityViewNone entityType={entityType} />}
-              />
-              <Route
-                path=":id"
-                element={
-                  <EntityViewRenderer
-                    entityType={entityType}
-                    entityGetApi={ApiHub.loadProductById}
-                  />
-                }
-              />
-              <Route
-                path=":id/edit"
-                element={
-                  <EntityNewOrEdit
-                    mode="EDIT"
-                    entityType={entityType}
-                    entityId={entityId}
-                    entityGetApi={ApiHub.loadProductById}
-                    entityUpdateApi={ApiHub.updateProduct}
-                    refreshDatagrid={handleDataLoadTrigger}
-                    catSubListApi={ApiHub.loadSubCategoryLabelList}
-                  />
-                }
-              />
-              <Route
-                path="new"
-                element={
-                  <EntityNewOrEdit
-                    mode="NEW"
-                    entityType={entityType}
-                    entityId={0}
-                    entityGetApi={ApiHub.loadProductById}
-                    entityCreateApi={ApiHub.addProduct}
-                    refreshDatagrid={handleDataLoadTrigger}
-                    catSubListApi={ApiHub.loadSubCategoryLabelList}
-                  />
-                }
-              />
-            </Routes>
+            <AnimatePresence mode="wait">
+              <Routes key={location.pathname} location={location}>
+                <Route index element={<Navigate replace to="0" />} />
+                <Route
+                  path="0"
+                  element={
+                    <AnimatedPage>
+                      <EntityViewNone entityType={entityType} />{" "}
+                    </AnimatedPage>
+                  }
+                />
+                <Route
+                  path=":id"
+                  element={
+                    <AnimatedPage>
+                      <EntityViewRenderer
+                        entityType={entityType}
+                        entityGetApi={ApiHub.loadProductById}
+                      />
+                    </AnimatedPage>
+                  }
+                />
+                <Route
+                  path=":id/edit"
+                  element={
+                    <AnimatedPage>
+                      <EntityNewOrEdit
+                        mode="EDIT"
+                        entityType={entityType}
+                        entityId={entityId}
+                        entityGetApi={ApiHub.loadProductById}
+                        entityUpdateApi={ApiHub.updateProduct}
+                        refreshDatagrid={handleDataLoadTrigger}
+                        catSubListApi={ApiHub.loadSubCategoryLabelList}
+                      />{" "}
+                    </AnimatedPage>
+                  }
+                />
+                <Route
+                  path="new"
+                  element={
+                    <AnimatedPage>
+                      <EntityNewOrEdit
+                        mode="NEW"
+                        entityType={entityType}
+                        entityId={0}
+                        entityGetApi={ApiHub.loadProductById}
+                        entityCreateApi={ApiHub.addProduct}
+                        refreshDatagrid={handleDataLoadTrigger}
+                        catSubListApi={ApiHub.loadSubCategoryLabelList}
+                      />{" "}
+                    </AnimatedPage>
+                  }
+                />
+              </Routes>
+            </AnimatePresence>
             <Outlet />
           </div>
         </div>

@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "../composer/composer.css";
-import { Routes, Route, Navigate, Outlet, useNavigate } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  Navigate,
+  Outlet,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 import EntityHeaderNav from "../composer/EntityHeaderNav";
-import EntityNew from "../composer/EntityNew";
+
 import EntityViewNone from "../composer/EntityViewNone";
 import ActiveDataGrid from "./ActiveDataGrid";
 import {
@@ -13,10 +20,12 @@ import {
 } from "./DataGridHelper";
 import ApiHub from "../service/ApiHub";
 import { ListResponse } from "../model/ListResponse";
-import { SubCategory, SubCategoryLabel } from "../model/SubCategory";
+import { SubCategory } from "../model/SubCategory";
 import { CategoryDropdown } from "./EntityDropdown";
 import EntityViewRenderer from "../composer/EntityViewRenderer";
 import EntityNewOrEdit from "../composer/EntityNewOrEdit";
+import { AnimatePresence } from "framer-motion";
+import AnimatedPage from "./AnimatedPage";
 
 //  - - - - - - - - - - -
 //
@@ -28,7 +37,7 @@ export default function SubCategoryEntity() {
   console.log("< SUB-CATEGORT >");
 
   const entityType = "subCategory";
-
+  const location = useLocation();
   const navigation = useNavigate();
 
   const [entityId, setEntityId] = useState<number>(0);
@@ -74,6 +83,7 @@ export default function SubCategoryEntity() {
     <>
       <div className="entity-root">
         <div className="entity-listing">
+          
           <div className="cb-arrange-horizontally">
             <CategoryDropdown onChange={(id) => onCategoryChange(id)} />
             {selectedCategoryId}
@@ -90,63 +100,72 @@ export default function SubCategoryEntity() {
         </div>
 
         <div className="entity-body">
-          <div className="entity-nav">
-            <EntityHeaderNav
-              entityId={entityId}
-              onNewNaviation={() => handleRowSelection(0)}
-            />
-          </div>
-
+          <AnimatedPage  animaDuration={1}>
+            <div className="entity-nav">
+              <EntityHeaderNav
+                entityId={entityId}
+                onNewNaviation={() => handleRowSelection(0)}
+              />
+            </div>
+          </AnimatedPage>
           <div className="entity-curd">
-            <Routes>
-              <Route index element={<Navigate replace to="0" />} />
-              <Route
-                path="0"
-                element={<EntityViewNone entityType={entityType} />}
-              />
-              {/* <Route
-                path=":id"
-                element={<EntityView entityType={entityType} entityGetApi={ApiHub.loadSubCategoryById} />}
-              /> */}
+            <AnimatePresence mode="wait">
+              <Routes key={location.pathname} location={location}>
+                <Route index element={<Navigate replace to="0" />} />
+                <Route
+                  path="0"
+                  element={
+                    <AnimatedPage>
+                      <EntityViewNone entityType={entityType} />
+                    </AnimatedPage>
+                  }
+                />
 
-              <Route
-                path=":id"
-                element={
-                  <EntityViewRenderer
-                    entityType={entityType}
-                    entityGetApi={ApiHub.loadSubCategoryById}
-                  />
-                }
-              />
-              <Route
-                path=":id/edit"
-                element={
-                  <EntityNewOrEdit
-                    mode="EDIT"
-                    entityType={entityType}
-                    entityId={entityId}
-                    entityGetApi={ApiHub.loadSubCategoryById}
-                    entityUpdateApi={ApiHub.updateSubCategory}
-                    refreshDatagrid={handleDataLoadTrigger}
-                    catSubListApi={ApiHub.loadCategoryLabelList}
-                  />
-                }
-              />
-              <Route
-                path="new"
-                element={
-                  <EntityNewOrEdit
-                    mode="NEW"
-                    entityType={entityType}
-                    entityId={0}
-                    entityGetApi={ApiHub.loadSubCategoryById}
-                    entityCreateApi={ApiHub.addSubCategory}
-                    refreshDatagrid={handleDataLoadTrigger}
-                    catSubListApi={ApiHub.loadCategoryLabelList}
-                  />
-                }
-              />
-            </Routes>
+                <Route
+                  path=":id"
+                  element={
+                    <AnimatedPage>
+                      <EntityViewRenderer
+                        entityType={entityType}
+                        entityGetApi={ApiHub.loadSubCategoryById}
+                      />
+                    </AnimatedPage>
+                  }
+                />
+                <Route
+                  path=":id/edit"
+                  element={
+                    <AnimatedPage>
+                      <EntityNewOrEdit
+                        mode="EDIT"
+                        entityType={entityType}
+                        entityId={entityId}
+                        entityGetApi={ApiHub.loadSubCategoryById}
+                        entityUpdateApi={ApiHub.updateSubCategory}
+                        refreshDatagrid={handleDataLoadTrigger}
+                        catSubListApi={ApiHub.loadCategoryLabelList}
+                      />
+                    </AnimatedPage>
+                  }
+                />
+                <Route
+                  path="new"
+                  element={
+                    <AnimatedPage>
+                      <EntityNewOrEdit
+                        mode="NEW"
+                        entityType={entityType}
+                        entityId={0}
+                        entityGetApi={ApiHub.loadSubCategoryById}
+                        entityCreateApi={ApiHub.addSubCategory}
+                        refreshDatagrid={handleDataLoadTrigger}
+                        catSubListApi={ApiHub.loadCategoryLabelList}
+                      />
+                    </AnimatedPage>
+                  }
+                />
+              </Routes>
+            </AnimatePresence>
             <Outlet />
           </div>
         </div>

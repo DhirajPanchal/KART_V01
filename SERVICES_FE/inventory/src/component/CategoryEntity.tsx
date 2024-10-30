@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "../composer/composer.css";
-import { Routes, Route, Navigate, Outlet, useNavigate } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  Navigate,
+  Outlet,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 import EntityHeaderNav from "../composer/EntityHeaderNav";
 import EntityViewNone from "../composer/EntityViewNone";
 import ActiveDataGrid from "./ActiveDataGrid";
@@ -14,6 +21,8 @@ import { ListResponse } from "../model/ListResponse";
 import { Category } from "../model/Category";
 import EntityViewRenderer from "../composer/EntityViewRenderer";
 import EntityNewOrEdit from "../composer/EntityNewOrEdit";
+import AnimatedPage from "./AnimatedPage";
+import { AnimatePresence } from "framer-motion";
 
 //  - - - - - - - - - - -
 //
@@ -25,7 +34,7 @@ export default function CategoryEntity() {
   // console.log("< CATEGORT >");
 
   const entityType = "category";
-
+  const location = useLocation();
   const navigation = useNavigate();
 
   const [listResponse, setListResponse] = useState<ListResponse<Category>>(
@@ -68,56 +77,69 @@ export default function CategoryEntity() {
         </div>
 
         <div className="entity-body">
-          <div className="entity-nav">
-            <EntityHeaderNav
-              entityId={entityId}
-              onNewNaviation={() => handleRowSelection(0)}
-            />
-          </div>
-
+          <AnimatedPage animaDuration={1}>
+            <div className="entity-nav">
+              <EntityHeaderNav
+                entityId={entityId}
+                onNewNaviation={() => handleRowSelection(0)}
+              />
+            </div>
+          </AnimatedPage>
           <div className="entity-curd">
-            <Routes>
-              <Route index element={<Navigate replace to="0" />} />
-              <Route
-                path="0"
-                element={<EntityViewNone entityType={entityType} />}
-              />
-              <Route
-                path=":id"
-                element={
-                  <EntityViewRenderer
-                    entityType={entityType}
-                    entityGetApi={ApiHub.loadCategoryById}
-                  />
-                }
-              />
-              <Route
-                path=":id/edit"
-                element={
-                  <EntityNewOrEdit
-                    mode="EDIT"
-                    entityType={entityType}
-                    entityId={entityId}
-                    entityGetApi={ApiHub.loadCategoryById}
-                    entityUpdateApi={ApiHub.updateCategory}
-                    refreshDatagrid={handleDataLoadTrigger}
-                  />
-                }
-              />
-              <Route
-                path="new"
-                element={
-                  <EntityNewOrEdit
-                    mode="NEW"
-                    entityType={entityType}
-                    entityId={0}
-                    entityGetApi={ApiHub.loadCategoryById}
-                    entityCreateApi={ApiHub.addCategory}
-                    refreshDatagrid={handleDataLoadTrigger}
-                  />
-                }
-              />
-            </Routes>
+            <AnimatePresence mode="wait">
+              <Routes key={location.pathname} location={location}>
+                <Route index element={<Navigate replace to="0" />} />
+                <Route
+                  path="0"
+                  element={
+                    <AnimatedPage>
+                      <EntityViewNone entityType={entityType} />
+                    </AnimatedPage>
+                  }
+                />
+                <Route
+                  path=":id"
+                  element={
+                    <AnimatedPage>
+                      <EntityViewRenderer
+                        entityType={entityType}
+                        entityGetApi={ApiHub.loadCategoryById}
+                      />
+                    </AnimatedPage>
+                  }
+                />
+                <Route
+                  path=":id/edit"
+                  element={
+                    <AnimatedPage>
+                      <EntityNewOrEdit
+                        mode="EDIT"
+                        entityType={entityType}
+                        entityId={entityId}
+                        entityGetApi={ApiHub.loadCategoryById}
+                        entityUpdateApi={ApiHub.updateCategory}
+                        refreshDatagrid={handleDataLoadTrigger}
+                      />
+                    </AnimatedPage>
+                  }
+                />
+                <Route
+                  path="new"
+                  element={
+                    <AnimatedPage>
+                      <EntityNewOrEdit
+                        mode="NEW"
+                        entityType={entityType}
+                        entityId={0}
+                        entityGetApi={ApiHub.loadCategoryById}
+                        entityCreateApi={ApiHub.addCategory}
+                        refreshDatagrid={handleDataLoadTrigger}
+                      />
+                    </AnimatedPage>
+                  }
+                />
+              </Routes>
+            </AnimatePresence>
             <Outlet />
           </div>
         </div>
