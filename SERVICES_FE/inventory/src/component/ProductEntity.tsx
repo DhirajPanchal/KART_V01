@@ -16,6 +16,7 @@ import { Product } from "../model/Product";
 import { CategoryDropdown, SubCategoryDropdown } from "./EntityDropdown";
 import EntityViewRenderer from "../composer/EntityViewRenderer";
 import EntityNew from "../composer/EntityNew";
+import EntityNewOrEdit from "../composer/EntityNewOrEdit";
 
 //  - - - - - - - - - - -
 //
@@ -135,10 +136,33 @@ export default function ProductEntity() {
                   />
                 }
               />
-              <Route path=":id/edit" element={<h1>EDIT</h1>} />
+              <Route
+                path=":id/edit"
+                element={
+                  <EntityNewOrEdit
+                    mode="EDIT"
+                    entityType={entityType}
+                    entityId={entityId}
+                    entityGetApi={ApiHub.loadProductById}
+                    entityUpdateApi={ApiHub.updateProduct}
+                    refreshDatagrid={handleDataLoadTrigger}
+                    catSubListApi={ApiHub.loadSubCategoryLabelList}
+                  />
+                }
+              />
               <Route
                 path="new"
-                element={<EntityNew entityType={entityType} />}
+                element={
+                  <EntityNewOrEdit
+                    mode="NEW"
+                    entityType={entityType}
+                    entityId={0}
+                    entityGetApi={ApiHub.loadProductById}
+                    entityCreateApi={ApiHub.addProduct}
+                    refreshDatagrid={handleDataLoadTrigger}
+                    catSubListApi={ApiHub.loadSubCategoryLabelList}
+                  />
+                }
               />
             </Routes>
             <Outlet />

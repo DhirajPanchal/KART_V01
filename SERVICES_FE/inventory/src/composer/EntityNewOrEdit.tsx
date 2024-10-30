@@ -134,7 +134,7 @@ function EntityNewOrEdit({
               controls.push(genTextField(formItem));
             } else if (formItem.type === "boolean") {
               controls.push(genBooleanField(formItem));
-            } else if (formItem.type === "category") {
+            } else if (formItem.type === "category" || formItem.type === "subCategory") {
               controls.push(genCategoryField(formItem));
             }
           });

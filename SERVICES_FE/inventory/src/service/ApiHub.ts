@@ -184,6 +184,8 @@ const ApiHub = {
 
   loadProductList,
   loadProductById,
+  addProduct,
+  updateProduct
 };
 
 export default ApiHub;

@@ -134,6 +134,7 @@ const productConfig: ActiveEntity = {
       type: "subCategory",
       label: "Sub-Category",
       optional: false,
+      mode: "write",
     },
   ]),
 };

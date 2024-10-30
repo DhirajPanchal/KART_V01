@@ -3,7 +3,7 @@ import { Routes, Route, NavLink, Navigate } from "react-router-dom";
 import "./index.css";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-
+import "./composer/form.css";
 import CategoryEntity from "./component/CategoryEntity";
 import ProductEntity from "./component/ProductEntity";
 import SubCategoryEntity from "./component/SubCategoryEntity";
