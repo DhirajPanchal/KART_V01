@@ -17,7 +17,7 @@ export default function EntityHeaderNav({
 
   const navigation = useNavigate();
 
-  const [mode, setMode] = React.useState<string>("NONE");
+  const [mode, setMode] = React.useState<string>();
 
   React.useEffect(() => {
     //console.log("[EntityHeaderNav] pathname : " + pathname);
@@ -45,7 +45,7 @@ export default function EntityHeaderNav({
   };
 
   const handleEdit = () => {
-    console.log("__handleEdit "+entityId);
+    console.log("__handleEdit " + entityId);
     navigation(`${entityId}/edit`);
   };
 
@@ -59,19 +59,19 @@ export default function EntityHeaderNav({
 
   return (
     <>
-      {/* {` - ${mode} / ${entityId} -  `} */}
-
-      {mode === "VIEW" && (
-        <button onClick={handleEdit}>
-          {" "}
-          <EditIcon />{" "}
-        </button>
-      )}
+      {` ${mode}  `}
 
       {(mode === "NASCENT" || mode === "VIEW") && (
         <button onClick={handleNew}>
           {" "}
           <AddIcon />{" "}
+        </button>
+      )}
+
+      {mode === "VIEW" && (
+        <button onClick={handleEdit}>
+          {" "}
+          <EditIcon />{" "}
         </button>
       )}
 

@@ -208,6 +208,17 @@
   /* background-color: lightskyblue; */
 }
 
+form {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0px;
+  /* background-color: yellow;
+  border: 1px solid lightgray; */
+  margin-bottom: -8px;
+}
+
+
 /* -----------------------------------------------------------------   ENTITY - VIEW - TABLE -------------- */
 
 .active-g-form {

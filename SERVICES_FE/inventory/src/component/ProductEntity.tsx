@@ -15,7 +15,6 @@ import { ListResponse } from "../model/ListResponse";
 import { Product } from "../model/Product";
 import { CategoryDropdown, SubCategoryDropdown } from "./EntityDropdown";
 import EntityViewRenderer from "../composer/EntityViewRenderer";
-import EntityNew from "../composer/EntityNew";
 import EntityNewOrEdit from "../composer/EntityNewOrEdit";
 
 //  - - - - - - - - - - -
@@ -88,16 +87,14 @@ export default function ProductEntity() {
             <div className="cb-arrange-horizontally">
               {/* {entityId} */}
               <CategoryDropdown onChange={(id) => onCategoryChange(id)} />
-              {selectedCategoryId}
-
+              {/* {selectedCategoryId} */}
               {selectedCategoryId !== undefined && selectedCategoryId > 0 && (
                 <SubCategoryDropdown
                   categoryId={selectedCategoryId}
                   onChange={(id) => onSubCategoryChange(id)}
                 />
               )}
-
-              {selectedSubCategoryId}
+              {/* {selectedSubCategoryId} */}
             </div>
           </div>
 
