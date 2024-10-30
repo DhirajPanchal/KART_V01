@@ -12,9 +12,8 @@ export default function App() {
 
   const loadConfig = (): void => {
     console.log("[CONFIG]");
-    
   };
-  
+
   loadConfig();
 
   return (
@@ -77,7 +76,12 @@ export default function App() {
         <Route path="product/*" element={<ProductEntity />} />
       </Routes>
 
-      <ToastContainer  transition={Flip} autoClose={800} pauseOnFocusLoss={false}  />
+      <ToastContainer
+        position="top-center"
+        transition={Slide}
+        autoClose={1200}
+        pauseOnFocusLoss={false}
+      />
     </div>
   );
 }

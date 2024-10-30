@@ -306,10 +306,11 @@ function EntityNewOrEdit({
         <form onSubmit={handleSubmit} className="active-g-form">
           {drawForm().map((field) => field)}
           <Button
-            variant="outlined"
+            variant="contained"
             color="primary"
-            type="submit"
-            sx={{ width: "50%" }}
+            type="submit"     
+            size="large"       
+            sx={{ width: "50%", backgroundColor:"#5ea2a4", ":hover":{ backgroundColor:"#006064"} }}
           >
             {mode === "NEW" ? "CREATE" : "SAVE"}
           </Button>

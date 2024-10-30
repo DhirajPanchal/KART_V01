@@ -127,7 +127,7 @@ function EntityViewRenderer({
 
   const labelDepthLeveler = (depth: number): any => {
     return Array.from({ length: depth }, (_, i) => (
-      <div key={i} className="entity-field-space"/>
+      <div key={i} className="entity-field-space" />
     ));
   };
 
@@ -168,7 +168,6 @@ function EntityViewRenderer({
 
     return "";
   };
-
 
   return (
     <div className="entity-view">

@@ -65,6 +65,9 @@
 .entity-nav button {
   width: 52px;
   height: 52px;
+  background-color:#bae7e9; 
+  border: 1px solid #006064;
+  border-radius: 4px;
 }
 
 .entity-curd {
@@ -235,3 +238,4 @@ form {
   width: 100%;
   /* background-color: beige; */
 }
+

@@ -74,29 +74,60 @@ axios.interceptors.response.use(
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 
 function responseAnalysis(response: AxiosResponse<any, any>) {
-  console.log("**************************************************** START");
-  console.log(response);
-  console.log("METHOD : ", response?.config?.method);
-  console.log("URL   : ", response?.config?.url);
+  // console.log("**************************************************** START");
+  // console.log(response);
+  // console.log("METHOD : ", response?.config?.method);
+  // console.log("URL   : ", response?.config?.url);
+  const objective: string = response?.config?.headers["OBJECTIVE_TAG"];
+  // console.log("objective   : ", objective);
+  if (objective !== undefined && objective.trim().length > 0) {
+    if (objective !== "X") {
+      toast.success(objective);
+    }
+
+    return;
+  }
+
   if (response?.config?.method === "put") {
     toast.success("Updated successful");
   } else if (response?.config?.method === "post") {
     if (response?.config?.url?.includes("/list")) {
-      toast.success("Data grid refreshed");
+      toast("Data grid refreshed");
     } else {
       toast.success("Created successful");
     }
   }
 
-  console.log("****************************************************");
+  // console.log("****************************************************");
 }
 
 const request = {
-  get: <T>(url: string) => axios.get<T>(url).then(responseBody),
-  put: <T>(url: string, body: {}) => axios.put<T>(url, body).then(responseBody),
-  delete: <T>(url: string) => axios.delete<T>(url).then(responseBody),
-  post: <T>(url: string, body: any) =>
-    axios.post<T>(url, body).then(responseBody),
+  get: <T>(url: string, objective?: string) =>
+    axios.get<T>(url).then(responseBody),
+  put: <T>(url: string, body: any, objective?: string) =>
+    axios
+      .put<T>(url, body, {
+        headers: {
+          OBJECTIVE_TAG: objective,
+        },
+      })
+      .then(responseBody),
+  delete: <T>(url: string, objective?: string) =>
+    axios
+      .delete<T>(url, {
+        headers: {
+          OBJECTIVE_TAG: objective,
+        },
+      })
+      .then(responseBody),
+  post: <T>(url: string, body: any, objective?: string) =>
+    axios
+      .post<T>(url, body, {
+        headers: {
+          OBJECTIVE_TAG: objective,
+        },
+      })
+      .then(responseBody),
 };
 
 //  * * *  C A T E G O R Y  * * *
@@ -112,19 +143,31 @@ const loadCategoryLabelList = (
 ) =>
   request.post<ListResponse<CategoryLabel>>(
     `inventory/category/list?index=${payload.ui_only.index}&size=${payload.ui_only.size}`,
-    payload
+    payload,
+    "X"
   );
 
 const loadCategoryById = (id: number) => {
-  return request.get<any>(`inventory/category/${id}`);
+  return request.get<any>(
+    `inventory/category/${id}`,
+    "Category retrieved successfully"
+  );
 };
 
 const addCategory = (payload: any) => {
-  return request.post<Category>(`inventory/category`, payload);
+  return request.post<Category>(
+    `inventory/category`,
+    payload,
+    "Category created successfully"
+  );
 };
 
 const updateCategory = (id: number, payload: any) => {
-  return request.put<Category>(`inventory/category/${id}`, payload);
+  return request.put<Category>(
+    `inventory/category/${id}`,
+    payload,
+    "Category updated"
+  );
 };
 
 //  * * *  S U B - C A T E G O R Y  * * *
@@ -144,20 +187,25 @@ const loadSubCategoryLabelList = (
   );
 
 const loadSubCategoryById = (id: number) => {
-  return request.get<SubCategory>(`inventory/category/0/subcategory/${id}`);
+  return request.get<SubCategory>(
+    `inventory/category/0/subcategory/${id}`,
+    "Sub-Category retrieved successfully"
+  );
 };
 
 const addSubCategory = (payload: any) => {
   return request.post<Category>(
     `inventory/category/${payload.ADD_KEY}/subcategory`,
-    payload
+    payload,
+    "Sub-Category created successfully"
   );
 };
 
 const updateSubCategory = (id: number, payload: any) => {
   return request.put<Category>(
     `inventory/category/${payload.ADD_KEY}/subcategory/${id}`,
-    payload
+    payload,
+    "Sub-Category Updated"
   );
 };
 
@@ -171,21 +219,24 @@ const loadProductList = (payload: any = DEFAULT_LIST_PAYLOAD) =>
 
 const loadProductById = (id: number) => {
   return request.get<Product>(
-    `inventory/category/0/subcategory/0/product/${id}`
+    `inventory/category/0/subcategory/0/product/${id}`,
+    "Product retrieved successfully"
   );
 };
 
 const addProduct = (payload: any) => {
   return request.post<Product>(
     `inventory/category/0/subcategory/${payload.ADD_KEY}/product`,
-    payload
+    payload,
+    "Product created successfully"
   );
 };
 
 const updateProduct = (id: number, payload: any) => {
   return request.put<Product>(
     `inventory/category/0/subcategory/${payload.ADD_KEY}/product/${id}`,
-    payload
+    payload,
+    "Product Updated"
   );
 };
 
