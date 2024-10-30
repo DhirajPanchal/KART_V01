@@ -38,11 +38,15 @@ function EntityNewOrEdit({
   catSubListApi,
 }: EntityNewOrEditProps) {
   console.log(`< EntityNewOrEdit > ${mode}***`);
+
   const navigation = useNavigate();
+
   const [entity, setEntity] = useState<any>(undefined);
-  const [catOrSub, setCatOrSub] = useState<
-    CategoryLabel[] | SubCategoryLabel[]
-  >([]);
+
+  const [categories, setCategories] = useState<CategoryLabel[]>([]);
+
+  const [subCategories, setSubCategories] = useState<SubCategoryLabel[]>([]);
+
   const handleSubmit = (event: any) => {
     event.preventDefault();
     console.log("__handleSubmit");
@@ -134,8 +138,10 @@ function EntityNewOrEdit({
               controls.push(genTextField(formItem));
             } else if (formItem.type === "boolean") {
               controls.push(genBooleanField(formItem));
-            } else if (formItem.type === "category" || formItem.type === "subCategory") {
+            } else if (formItem.type === "category") {
               controls.push(genCategoryField(formItem));
+            } else if (formItem.type === "subCategory") {
+              controls.push(genSubCategoryField(formItem));
             }
           });
         }
@@ -191,8 +197,8 @@ function EntityNewOrEdit({
     );
   }
   function genCategoryField(formItem: ActiveEntity): ReactNode {
-    if (catOrSub.length === 0) {
-      loadCatOrSub();
+    if (categories.length === 0) {
+      loadCategories();
     }
     if (mode === "EDIT") {
       entity.ADD_KEY = entity[formItem.key]["id"];
@@ -201,12 +207,12 @@ function EntityNewOrEdit({
     return (
       <FormControl key={formItem.key}>
         <Autocomplete
-          value={entity[formItem.key]}
+          value={entity[formItem.key] || null}
           disablePortal
-          options={catOrSub ? catOrSub : []}
+          options={categories ? categories : []}
           getOptionLabel={(obj) => dropdownLabel(obj)}
           sx={{ width: 240 }}
-          onChange={(event, value) => handleCatOrSubChange(value)}
+          onChange={(event, value) => handleCategoryChange(value)}
           renderInput={(params) => (
             <TextField {...params} label="Select Category" required />
           )}
@@ -215,31 +221,74 @@ function EntityNewOrEdit({
     );
   }
 
-  const loadCatOrSub = (payload: any = DEFAULT_LABEL_LIST_PAYLOAD) => {
+  function genSubCategoryField(formItem: ActiveEntity): ReactNode {
+    if (subCategories.length === 0) {
+      loadSubCategories();
+    }
+    if (mode === "EDIT") {
+      entity.ADD_KEY = entity[formItem.key]["id"];
+    }
+
+    return (
+      <FormControl key={formItem.key}>
+        <Autocomplete
+          value={entity[formItem.key] || null}
+          disablePortal
+          options={subCategories ? subCategories : []}
+          getOptionLabel={(obj) => dropdownLabel(obj)}
+          sx={{ width: 240 }}
+          onChange={(event, value) => handleSubCategoryChange(value)}
+          renderInput={(params) => (
+            <TextField {...params} label="Select Sub-Category" required />
+          )}
+        />
+      </FormControl>
+    );
+  }
+
+  const loadCategories = (payload: any = DEFAULT_LABEL_LIST_PAYLOAD) => {
     console.log("< CATEGORT DROP DOWN > API - LIST : ", payload);
     // console.log(payload);
     if (catSubListApi) {
       catSubListApi(payload)
         .then((data: any) => {
-          setCatOrSub(data.list);
+          setCategories(data.list);
         })
         .catch(() => {});
     }
   };
-  const handleCatOrSubChange = (value: any) => {
+
+  const loadSubCategories = (payload: any = DEFAULT_LABEL_LIST_PAYLOAD) => {
+    console.log("< SUB-CATEGORT DROP DOWN > API - LIST : ", payload);
+    // console.log(payload);
+    if (catSubListApi) {
+      catSubListApi(payload)
+        .then((data: any) => {
+          setSubCategories(data.list);
+        })
+        .catch(() => {});
+    }
+  };
+
+  const handleCategoryChange = (value: any) => {
     console.log("__handleCategoryChange");
     console.log(value);
     if (value && value.id) {
-      updateValue("ADD_KEY", value.id);
-      if (entityType === "subCategory") {
-        setEntity((pre: any) => {
-          return { ...pre, category: value };
-        });
-      } else if (entityType === "subCategory") {
-        setEntity((pre: any) => {
-          return { ...pre, suCategory: value };
-        });
-      }
+      //updateValue("ADD_KEY", value.id);
+      setEntity((pre: any) => {
+        return { ...pre, category: value, ADD_KEY: value.id };
+      });
+    }
+  };
+
+  const handleSubCategoryChange = (value: any) => {
+    console.log("__handleSubCategoryChange");
+    console.log(value);
+    if (value && value.id) {
+      //updateValue("ADD_KEY", value.id);
+      setEntity((pre: any) => {
+        return { ...pre, subCategory: value, ADD_KEY: value.id };
+      });
     }
   };
 

@@ -75,10 +75,6 @@ public class SubCategoryService
                 .orElseThrow(() -> new ResourceNotFoundException("Category", "id", categoryId));
 
         entity.setCategory(category);
-//
-//        SubCategory entityFromDb = repository.findById(subCategoryId)
-//                .orElseThrow(() -> new ResourceNotFoundException("Sub-Category", "id", subCategoryId));
-
 
         SubCategory savedEntity = repository.save(entity);
 

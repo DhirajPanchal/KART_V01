@@ -72,6 +72,23 @@ public class ProductService extends BaseService<Product, ProductDTO, ProductRepo
     }
 
 
+    public ProductDTO put(Long subCategoryId, Long productId, ProductDTO dto) {
+
+        System.out.println("__ ProductService . POST : " + dto);
+
+        Product entity = mapper.map(dto, typeEntityClass);
+
+        SubCategory subCategory = subCategoryRepository.findById(subCategoryId)
+                .orElseThrow(() -> new ResourceNotFoundException("SubCategory", "id", subCategoryId));
+        entity.setSubCategory(subCategory);
+        entity.setCategory(subCategory.getCategory());
+
+        Product savedEntity = repository.save(entity);
+
+        return mapper.map(savedEntity, typeDtoClass);
+
+    }
+
     public ListResponse<ProductDTO> list(Long categoryId, Long subCategoryId, int index, int size, ListRequest requestBody) {
 
         System.out.println("__ ProductService . POST . LIST ");

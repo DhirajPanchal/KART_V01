@@ -5,6 +5,7 @@ import io.active.kart.base.core.BaseController;
 import io.active.kart.base.dto.ListRequest;
 import io.active.kart.base.dto.ListResponse;
 import io.active.kart.base.dto.ProductDTO;
+import io.active.kart.base.dto.SubCategoryDTO;
 import io.active.kart.base.entity.Product;
 import io.active.kart.inventory.repository.ProductRepository;
 import io.active.kart.inventory.service.ProductService;
@@ -35,6 +36,21 @@ public class ProductController
 
         System.out.println("__ ProductController . POST : " + categoryId + " , " + subCategoryId + " , " + dto);
         ProductDTO savedDto = service.post(subCategoryId, dto);
+
+        return new ResponseEntity<>(savedDto, HttpStatus.CREATED);
+
+    }
+
+
+    @PutMapping("/{productId}")
+    public ResponseEntity<ProductDTO> put(@PathVariable Long categoryId,
+                                              @PathVariable Long subCategoryId,
+                                              @PathVariable Long productId,
+                                              @Valid @RequestBody ProductDTO dto) {
+
+        System.out.println("__ ProductController . PUT ******************** : " + categoryId + " , " + subCategoryId + " , " + productId + " , "+ dto);
+
+        ProductDTO savedDto = service.put(subCategoryId, productId,  dto);
 
         return new ResponseEntity<>(savedDto, HttpStatus.CREATED);
 
