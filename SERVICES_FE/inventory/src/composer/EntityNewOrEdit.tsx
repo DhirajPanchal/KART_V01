@@ -37,7 +37,7 @@ function EntityNewOrEdit({
   refreshDatagrid,
   catSubListApi,
 }: EntityNewOrEditProps) {
-  console.log(`< EntityNewOrEdit > ${mode}***`);
+  // console.log(`< EntityNewOrEdit > ${mode}***`);
 
   const navigation = useNavigate();
 
@@ -49,20 +49,20 @@ function EntityNewOrEdit({
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    console.log("__handleSubmit");
-    console.log(entity);
+    // console.log("__handleSubmit");
+    // console.log(entity);
     // return;
     if (mode === "NEW") {
       if (entityCreateApi) {
         entityCreateApi(entity)
           .then((data: any) => {
-            console.log("---");
-            console.log(data);
+            // console.log("---");
+            // console.log(data);
             if (refreshDatagrid) {
               refreshDatagrid();
             }
             if (data && data.id) {
-              console.log("NAV " + data.id);
+              // console.log("NAV " + data.id);
               navigation(`../${data.id}`);
             }
           })
@@ -72,13 +72,13 @@ function EntityNewOrEdit({
       if (entityUpdateApi) {
         entityUpdateApi(entity.id, entity)
           .then((data: any) => {
-            console.log("---");
-            console.log(data);
+            // console.log("---");
+            // console.log(data);
             if (refreshDatagrid) {
               refreshDatagrid();
             }
             if (data && data.id) {
-              console.log("NAV " + data.id);
+              // console.log("NAV " + data.id);
               navigation(`../${data.id}`);
             }
           })
@@ -88,16 +88,16 @@ function EntityNewOrEdit({
   };
 
   const updateValue = (key: string, value: any) => {
-    console.log(`-------------------------------${key} :: ${value}`);
+    // console.log(`-------------------------------${key} :: ${value}`);
     let input = { ...entity };
-    // console.log(input);
+    // // console.log(input);
     input[key] = value;
-    // console.log(input);
+    // // console.log(input);
     setEntity(input);
   };
 
   useEffect(() => {
-    console.log(`< EntityNewOrEdit > EFFECT : ${entityType} - ${entityId}`);
+    // console.log(`< EntityNewOrEdit > EFFECT : ${entityType} - ${entityId}`);
     if (mode === "NEW") {
       setEntity(defaultCategory());
     } else if (mode === "EDIT") {
@@ -116,16 +116,16 @@ function EntityNewOrEdit({
   }, [entityType, entityId]);
 
   function drawForm(): ReactNode[] {
-    console.log(
-      `< EntityNewOrEdit > DRAW : ${entityType} - ${entityId} `,
-      entity
-    );
+    // console.log(
+    //   `< EntityNewOrEdit > DRAW : ${entityType} - ${entityId} `,
+    //   entity
+    // );
     const controls: ReactNode[] = [];
     if (entity && ENTITY_CONFIG.has(entityType)) {
       const config: ActiveEntity | undefined = ENTITY_CONFIG.get(entityType);
       if (config && config.fields) {
-        console.log(config);
-        console.log(config.fields.get("name"));
+        // console.log(config);
+        // console.log(config.fields.get("name"));
         const formList: ActiveEntity[] = entityMapToFormList(
           config.fields.getInternalMap()
         );
@@ -147,7 +147,7 @@ function EntityNewOrEdit({
         }
       }
     }
-    console.log(" CONTROLS : " + controls.length);
+    // console.log(" CONTROLS : " + controls.length);
     return controls;
   }
 
@@ -247,8 +247,8 @@ function EntityNewOrEdit({
   }
 
   const loadCategories = (payload: any = DEFAULT_LABEL_LIST_PAYLOAD) => {
-    console.log("< CATEGORT DROP DOWN > API - LIST : ", payload);
-    // console.log(payload);
+    // console.log("< CATEGORT DROP DOWN > API - LIST : ", payload);
+    // // console.log(payload);
     if (catSubListApi) {
       catSubListApi(payload)
         .then((data: any) => {
@@ -259,8 +259,8 @@ function EntityNewOrEdit({
   };
 
   const loadSubCategories = (payload: any = DEFAULT_LABEL_LIST_PAYLOAD) => {
-    console.log("< SUB-CATEGORT DROP DOWN > API - LIST : ", payload);
-    // console.log(payload);
+    // console.log("< SUB-CATEGORT DROP DOWN > API - LIST : ", payload);
+    // // console.log(payload);
     if (catSubListApi) {
       catSubListApi(payload)
         .then((data: any) => {
@@ -271,8 +271,8 @@ function EntityNewOrEdit({
   };
 
   const handleCategoryChange = (value: any) => {
-    console.log("__handleCategoryChange");
-    console.log(value);
+    // console.log("__handleCategoryChange");
+    // console.log(value);
     if (value && value.id) {
       //updateValue("ADD_KEY", value.id);
       setEntity((pre: any) => {
@@ -282,8 +282,8 @@ function EntityNewOrEdit({
   };
 
   const handleSubCategoryChange = (value: any) => {
-    console.log("__handleSubCategoryChange");
-    console.log(value);
+    // console.log("__handleSubCategoryChange");
+    // console.log(value);
     if (value && value.id) {
       //updateValue("ADD_KEY", value.id);
       setEntity((pre: any) => {

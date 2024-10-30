@@ -36,9 +36,11 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
   async (response) => {
+    responseAnalysis(response);
+
     console.log("[INBOUND] __API (INV) RESPONSE", response.data);
     // console.log(response);
-    toast.success("Success");
+    //toast.success("Success");
     return response;
   },
   (error: AxiosError) => {
@@ -70,6 +72,24 @@ axios.interceptors.response.use(
 );
 
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;
+
+function responseAnalysis(response: AxiosResponse<any, any>) {
+  console.log("**************************************************** START");
+  console.log(response);
+  console.log("METHOD : ", response?.config?.method);
+  console.log("URL   : ", response?.config?.url);
+  if (response?.config?.method === "put") {
+    toast.success("Updated successful");
+  } else if (response?.config?.method === "post") {
+    if (response?.config?.url?.includes("/list")) {
+      toast.success("Data grid refreshed");
+    } else {
+      toast.success("Created successful");
+    }
+  }
+
+  console.log("****************************************************");
+}
 
 const request = {
   get: <T>(url: string) => axios.get<T>(url).then(responseBody),
@@ -185,7 +205,7 @@ const ApiHub = {
   loadProductList,
   loadProductById,
   addProduct,
-  updateProduct
+  updateProduct,
 };
 
 export default ApiHub;

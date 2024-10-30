@@ -26,11 +26,11 @@ function EntityViewRenderer({
 
   const [showMore, setShowMore] = useState<boolean>(true);
 
-  console.log(`<EVR> : ${entityType} `, entity);
+  // console.log(`<EVR> : ${entityType} `, entity);
   // console.log("[SCHEMA]", ENTITY_CONFIG);
 
   useEffect(() => {
-    console.log(`<EVR> - LOAD : ${params.id}`);
+    // console.log(`<EVR> - LOAD : ${params.id}`);
     let entityId = params.id ? +params.id : 0;
     if (!isNaN(entityId) && entityId > 0) {
       if (entityGetApi) {
@@ -46,12 +46,12 @@ function EntityViewRenderer({
   }, [params.id]);
 
   const tableGenerator = (): RowRenderer[] => {
-    console.log(`[EVR] - ViewGenerator() : ${entityType}`);
+    // console.log(`[EVR] - ViewGenerator() : ${entityType}`);
     let rowList: RowRenderer[] = [];
     rowList = entityMining(entity, entityType, rowList);
-    console.log(` FIELDS : ${rowList.length}`);
+    // console.log(` FIELDS : ${rowList.length}`);
 
-    console.table(rowList);
+    // console.table(rowList);
 
     return rowList;
   };
@@ -62,13 +62,13 @@ function EntityViewRenderer({
     rowList: RowRenderer[],
     depth: number = 0
   ): RowRenderer[] => {
-    console.log("-------------------------------------- " + depth);
+    // console.log("-------------------------------------- " + depth);
 
     if (node && ENTITY_CONFIG.has(nodeType)) {
       const config = ENTITY_CONFIG.get(nodeType);
 
       for (const [key, value] of Object.entries(node)) {
-        console.log(`(F) ${key} : ${value} ? ${config?.fields?.has(key)}`);
+        // console.log(`(F) ${key} : ${value} ? ${config?.fields?.has(key)}`);
         if (config?.fields?.has(key)) {
           const fieldConfig = config?.fields?.get(key);
           // console.log(" _ ", fieldConfig);

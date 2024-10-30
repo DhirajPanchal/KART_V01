@@ -50,7 +50,7 @@ export const entityListToMap = (entities: ActiveEntity[]): ActiveMap<any> => {
 };
 
 export const entityMapToFormList = (map: { [key: string]: any }):ActiveEntity[] => {
-  console.log("-----------------------", map);
+  // console.log("-----------------------", map);
   const list:ActiveEntity[] = [];
   for (const [key, value] of Object.entries(map)) {
     // console.log(`(F) ${key}  `);
@@ -61,7 +61,7 @@ export const entityMapToFormList = (map: { [key: string]: any }):ActiveEntity[] 
       feildMap.mode &&
       (feildMap.mode === "write" || feildMap.mode === "generated")
     ) {
-      console.log(feildMap);
+      // console.log(feildMap);
       list.push(feildMap);
     }    
   }
